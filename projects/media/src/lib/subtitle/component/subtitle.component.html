@@ -1,0 +1,9 @@
+<div *ngIf="(isSubtitleHidden$ | async) === false" class="subtitle__container">
+  <div class="subtitle__text" id="subtitle__row-1">
+    {{ (subtitleText$ | async)?.row1 }}
+  </div>
+  <div [style.visibility]="(showSecondSubtitleRow$ | async) ? 'visible' : 'hidden'" class="subtitle__text"
+       id="subtitle__row-2">
+    {{ (subtitleText$ | async)?.row2 }}
+  </div>
+</div>

@@ -1,0 +1,63 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "baseUrl": "./",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
+    "paths": {
+      "@shared/*": [
+        "shared/*"
+      ],
+      "@media/*": [
+        "./dist/media"
+      ],
+      "@ui-components/*": [
+        "./dist/ui-components"
+      ],
+      "@utility/*": [
+        "./dist/utility"
+      ],
+      "@games/*": [
+        "./dist/games"
+      ],
+      "@build/*": [
+        "projects/fyra-satt-att-gora-el/src/app/build/*"
+      ],
+      "@energy-settings/*": [
+        "projects/fyra-satt-att-gora-el/src/app/settings/*"
+      ],
+      "@energy-film/*": [
+        "projects/fyra-satt-att-gora-el/src/app/film/*"
+      ],
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

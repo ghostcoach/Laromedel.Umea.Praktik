@@ -1,0 +1,21 @@
+<!--  [muted]="!(isSoundEnabled$| async)"-->
+<video
+  #videoElement
+  *ngIf="baseSrc"
+  [id]="id"
+  [poster]="posterSrc"
+  playsinline
+  preload="metadata"
+  tabindex="-1"
+>
+  <source [src]="webmSrc" type="video/webm" />
+  <source [src]="mp4Src" type="video/mp4" />
+  <track
+    *ngIf="trackSrc"
+    [src]="trackSrc"
+    default
+    kind="metadata"
+    label="Swedish"
+    srclang="sv"
+  />
+</video>

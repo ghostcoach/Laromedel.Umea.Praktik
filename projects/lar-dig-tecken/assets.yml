@@ -1,0 +1,50 @@
+﻿name: 0.0.0-assets-ci-$(Rev:rr)
+
+trigger:
+  branches:
+    include:
+      - develop
+  paths:
+    include:
+      - projects/[lar-dig-tecken]/public/*
+      - projects/[lar-dig-tecken]/assets.yml
+pool:
+  name: "Server2022"
+
+steps:
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: "$(Build.SourcesDirectory)/projects/[lar-dig-tecken]/public"
+      Contents: "**"
+      TargetFolder: "$(Build.SourcesDirectory)/dist/[lar-dig-tecken]/assets"
+    displayName: "Copy assets to dist folder"
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: "$(Build.SourcesDirectory)/projects/ui-components/src/assets"
+      Contents: "**"
+      TargetFolder: "$(Build.SourcesDirectory)/dist/[lar-dig-tecken]/assets"
+    displayName: "Copy ui-components assets to dist folder"
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: "$(Build.SourcesDirectory)/projects/ui-components/src/assets"
+      Contents: "**"
+      TargetFolder: "$(Build.SourcesDirectory)/dist/[lar-dig-tecken]/assets"
+    displayName: "Copy ui-components assets to dist folder"
+
+  - task: OctopusPack@4
+    inputs:
+      PackageId: "Laromedel.[LarDigTecken].Assets"
+      PackageFormat: "NuPkg"
+      PackageVersion: "$(Build.BuildNumber)"
+      SourcePath: "$(Build.SourcesDirectory)/dist/[lar-dig-tecken]/assets"
+      OutputPath: "$(Build.ArtifactStagingDirectory)"
+    displayName: "Create OctopusPackage artifact"
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      ArtifactName: "OctopusPackage"
+      publishLocation: "Container"
+    displayName: "Publish OctopusPackage artifact"

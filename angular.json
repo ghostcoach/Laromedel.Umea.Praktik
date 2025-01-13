@@ -1,0 +1,258 @@
+﻿{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "media": {
+      "projectType": "library",
+      "root": "projects/media",
+      "sourceRoot": "projects/media/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/media/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/media/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/media/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/media/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/media/**/*.ts",
+              "projects/media/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "ui-components": {
+      "projectType": "library",
+      "root": "projects/ui-components",
+      "sourceRoot": "projects/ui-components/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ui-components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ui-components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ui-components/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ui-components/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ui-components/**/*.ts",
+              "projects/ui-components/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "utility": {
+      "projectType": "library",
+      "root": "projects/utility",
+      "sourceRoot": "projects/utility/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/utility/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/utility/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/utility/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/utility/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ui-components/**/*.ts",
+              "projects/ui-components/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "games": {
+      "projectType": "library",
+      "root": "projects/games",
+      "sourceRoot": "projects/games/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/games/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/games/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/games/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/games/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/games/**/*.ts",
+              "projects/games/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "lar-dig-tecken": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/lar-dig-tecken",
+      "sourceRoot": "projects/lar-dig-tecken/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/lar-dig-tecken",
+            "index": "projects/lar-dig-tecken/src/index.html",
+            "browser": "projects/lar-dig-tecken/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "projects/lar-dig-tecken/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "input": "dist/ui-components/src/assets",
+                "glob": "**/*",
+                "output": "/assets/"
+              },
+              "projects/lar-dig-tecken/src/web.config"
+            ],
+            "styles": ["projects/lar-dig-tecken/src/styles/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kB",
+                  "maximumError": "4kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "assets": [
+                {
+                  "input": "projects/lar-dig-tecken/public",
+                  "glob": "**/*",
+                  "output": "/assets"
+                }
+              ],
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "lar-dig-tecken:build:production"
+            },
+            "development": {
+              "buildTarget": "lar-dig-tecken:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "projects/lar-dig-tecken/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/lar-dig-tecken/public"
+              }
+            ],
+            "styles": ["projects/lar-dig-tecken/src/styles/styles.scss"],
+            "scripts": []
+          }
+        }
+      }
+    }
+  }
+}

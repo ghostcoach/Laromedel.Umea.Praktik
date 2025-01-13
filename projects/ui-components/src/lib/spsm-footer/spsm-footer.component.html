@@ -1,0 +1,65 @@
+<footer
+  [class.footer--spsm-blue]="isSpsmBlue"
+  [class.footer--underline-links]="isUnderline"
+  class="spsm__footer">
+  <div class="footer__wrapper" [class.footer__wrapper--full-width]="isFullWidth">
+    <div class="logo__container">
+      <button (click)="openSpsmWebpage()" (keydown.enter)="openSpsmWebpage()" class="logo__image-btn">
+        <img
+          [src]="spsmLogo"
+          alt="Logotyp för Specialpedagogiska Skolmyndigheten, klicka för att besöka hemsidan"
+          class="logo__image"
+          aria-label="Specialpedagogiska Skolmyndigheten logotyp, klicka för att besöka hemsidan"
+        />
+      </button>
+    </div>
+
+    <div [class.spsm-footer__inner--mobile]="isMobile" class="spsm-footer__inner">
+      <div *ngIf="!isMobile" class="custom__container">
+        <ng-content></ng-content>
+      </div>
+
+      <div *ngIf="!isMobile" class="learning__container">
+        <h4 class="font-semibold">Läromedel</h4>
+        <ul>
+          <li>
+            <a class="spsm-footer__link external__link" href="https://www.spsm.se/laromedel"
+               rel="noopener" target="_blank" aria-label="Läs mer om våra läromedel, öppnas i nytt fönster">
+              Läs mer om våra läromedel
+            </a>
+            <mat-icon aria-hidden="true">launch</mat-icon>
+          </li>
+        </ul>
+      </div>
+
+      <div class="contact__container">
+        <h4 class="font-semibold">Kontakt SPSM</h4>
+        <ul>
+          <li>
+            <span>Telefon:</span>
+            <a class="spsm-footer__link" href="tel:0104735000"
+               aria-label="Ring Specialpedagogiska Skolmyndigheten: 010 473 50 00">010 473 50
+              00</a>
+          </li>
+          <li>
+            <span>E-post:</span>
+            <a class="external__link spsm-footer__link" href="mailto:spsm@spsm.se"
+               aria-label="Skicka e-post till spsm@spsm.se">spsm&#64;spsm.se</a>
+          </li>
+          <li>
+            <span>Hemsida:</span>
+            <a class="external__link spsm-footer__link" href="https://www.spsm.se" rel="noopener" target="_blank"
+               aria-label="Besök SPSM:s hemsida, öppnas i nytt fönster">
+              spsm.se
+            </a>
+            <mat-icon aria-hidden="true">launch</mat-icon>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="link__container">
+      <button (click)="scrollToTop()" class="top__link" aria-label="Till toppen av sidan">Till toppen</button>
+    </div>
+  </div>
+</footer>

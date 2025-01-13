@@ -1,0 +1,16 @@
+{
+  "name": "media",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "@angular/common": "^18.0.3",
+    "@angular/core": "^18.0.3",
+    "@ngxs/store": "^18.0.0",
+    "@ngxs/devtools-plugin": "^18.0.0",
+    "@ngxs/logger-plugin": "^18.0.0",
+    "howler": "^2.2.3"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

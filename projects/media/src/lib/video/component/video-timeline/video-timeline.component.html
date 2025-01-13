@@ -1,0 +1,39 @@
+<div class="video-control-outer">
+  <div
+    #timeLineElement
+    (mousedown)="timeLineMouseDown($event)"
+    (mouseenter)="timeLineMouseEnter()"
+    (mouseleave)="timeLineMouseLeave()"
+    (mouseup)="timeLineMouseUp()"
+    (touchstart)="timeLineMouseDown($event)"
+    (touchend)="timeLineMouseUp()"
+    class="time-line"
+  >
+    <div
+      #progressUnderlayElement
+      [style.width.px]="progressUnderlayWidth"
+      class="progress-underlay"
+    ></div>
+    <div
+      #progressLineElement
+      (cdkDragEnded)="progressLineDragEnded($event)"
+      (cdkDragMoved)="progressLineDragMoved($event)"
+      (cdkDragStarted)="progressLineDragStarted()"
+      cdkDrag
+      cdkDragBoundary=".time-line"
+      cdkDragLockAxis="x"
+      class="progress-line"
+    >
+      <div
+        [style.visibility]="showTimeBall || isDragging ? 'visible' : 'hidden'"
+        class="progress-circle"
+      ></div>
+      <div
+        [style.visibility]="showTimeBall || isDragging ? 'visible' : 'hidden'"
+        class="timestamp"
+      >
+        {{ timestampMilliseconds | date : "mm:ss" }}
+      </div>
+    </div>
+  </div>
+</div>

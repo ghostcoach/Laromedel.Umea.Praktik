@@ -1,0 +1,129 @@
+name: 0.0.0-frontend-ci-$(Rev:rr)
+
+trigger:
+  branches:
+    include:
+      - develop
+  paths:
+    include:
+      - projects/[app-name]/*
+      - projects/ui-component/*
+      - shared/*
+      - package.json
+
+    exclude:
+      - projects/[app-name]/src/assets/*
+      - projects/[app-name]/assets.yml
+pool:
+  name: "Server2022"
+
+steps:
+  - checkout: self
+    clean: false
+    fetchDepth: 1
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "20.x"
+    displayName: "Install Node.js"
+
+  - task: Npm@1
+    inputs:
+      command: "install"
+    displayName: "Run npm install"
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run lint media"
+    displayName: "Check linting for media library"
+
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      customCommand: 'run test:ci media'
+    env:
+      CI: true
+    displayName: 'Run unit tests for media'
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run build media"
+    displayName: "Build media library"
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run lint ui-components"
+    displayName: "Check linting for ui-components library"
+
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      customCommand: 'run test:ci ui-components'
+    env:
+      CI: true
+    displayName: 'Run unit tests for ui-components'
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run build ui-components"
+    displayName: "Build ui-components library"
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run lint utility"
+    displayName: "Check linting for utility library"
+
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      customCommand: 'run test:ci utility'
+    env:
+      CI: true
+    displayName: 'Run unit tests for utility'
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run build utility"
+    displayName: "Build utility library"
+
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      customCommand: 'run test:ci [app-name]'
+    env:
+      CI: true
+    displayName: 'Run unit tests for [app-name]'
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run lint [app-name]"
+    displayName: "Check linting for [app-name] project"
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run build [app-name]"
+    displayName: "Build [app-name] project"
+
+  - task: OctopusPack@4
+    inputs:
+      PackageId: "Laromedel.[AppName].Frontend"
+      PackageFormat: "NuPkg"
+      PackageVersion: "$(Build.BuildNumber)"
+      SourcePath: "$(Build.SourcesDirectory)/dist/[app-name]/browser"
+      OutputPath: "$(Build.ArtifactStagingDirectory)"
+    displayName: "Create OctopusPackage artifact"
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      ArtifactName: 'OctopusPackage'
+      publishLocation: 'Container'
+    displayName: "Publish build artifacts"
