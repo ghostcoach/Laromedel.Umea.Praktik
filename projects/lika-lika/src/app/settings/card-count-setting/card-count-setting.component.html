@@ -1,0 +1,17 @@
+<div>
+  <h4 class="menu-title">Antal kort du vill spela med:</h4>
+  <div class="grid grid-cols-4 gap-4">
+    <label *ngFor="let number of cardNumbers" class="input-label"
+           [ngClass]="number > 6 ? 'hidden lg:block' : 'flex'">
+      <input
+        type="radio"
+        name="cardCount"
+        [value]="number"
+        (change)="handleCardSelectionChange(number)"
+        [checked]="(numberOfCards$ | async) === number"
+        class="menu-input"
+      />
+      <span class="input-number">{{ number }}</span>
+    </label>
+  </div>
+</div>

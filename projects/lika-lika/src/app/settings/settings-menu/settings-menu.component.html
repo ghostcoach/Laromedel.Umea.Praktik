@@ -1,0 +1,27 @@
+<button
+  [matMenuTriggerFor]="menu"
+  class="settings-button">
+  <img
+    [src]="'assets/layout/icons/settings.svg'"
+    [alt]="'Kugghjul'"
+    class="w-3/5"
+  />
+</button>
+<mat-menu #menu="matMenu" class="settings-menu" matMenuContent>
+  <app-number-of-players-setting></app-number-of-players-setting>
+  <hr class="menu-separator">
+  <table class="text-center max-w-lg">
+    <thead>
+    <th class="w-40"></th>
+    <th class="w-12">på</th>
+    <th class="w-12">av</th>
+    </thead>
+    <tbody>
+    <tr app-sound-setting></tr>
+    <tr app-subtitle-setting></tr>
+    <tr app-text-transform-setting></tr>
+    </tbody>
+  </table>
+  <hr class="menu-separator">
+  <app-card-count-setting></app-card-count-setting>
+</mat-menu>

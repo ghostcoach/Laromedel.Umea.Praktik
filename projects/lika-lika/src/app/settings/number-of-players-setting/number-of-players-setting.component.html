@@ -1,0 +1,18 @@
+<table class="text-center max-w-lg">
+  <thead>
+  <th class="w-40"></th>
+  <th class="w-12">1</th>
+  <th class="w-12">2</th>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="table-title">Antal spelare:</td>
+    <td>
+      <input type="radio" [checked]="isOnePlayer$ | async" (click)="handleOnePlayerSelectionChange($event)">
+    </td>
+    <td>
+      <input type="radio" [checked]="(isTwoPlayers$ | async)" (click)="handleTwoPlayersSelectionChange($event)">
+    </td>
+  </tr>
+  </tbody>
+</table>

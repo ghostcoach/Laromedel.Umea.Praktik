@@ -1,0 +1,107 @@
+@use '@angular/material' as mat;
+@import 'shared/styles/shared.scss';
+@import './variables.scss';
+
+
+body {
+  background-color: $primary-bg-color;
+  font-family: Open Sans, sans-serif;
+}
+
+
+h1, h2, h3, a {
+  color: White;
+}
+
+h2 {
+  letter-spacing: 0.075em;
+  font-size: clamp(1rem, 0.7083rem + 1.5556vw, 3.625rem);
+
+  span {
+    font-size: clamp(1rem, 0.7083rem + 1.5556vw, 3.625rem);
+  }
+}
+
+h3 {
+  font-size: clamp(1rem, 0.8333rem + 0.8889vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.menu-title {
+  @apply font-semibold mb-2 text-black;
+}
+
+.table-title {
+  @apply font-semibold text-left;
+}
+
+th {
+  font-size: clamp(1rem, 0.8376rem + 0.2538vw, 1.25rem);
+}
+
+.menu-input {
+  @apply h-5 w-5 text-blue-600;
+}
+
+.input-number, h4, td {
+  font-size: clamp(1rem, 0.9769rem + 0.1235vw, 1.125rem);
+}
+
+.input-label {
+  @apply items-center space-x-2 cursor-pointer;
+}
+
+hr {
+  border-color: #476897
+}
+
+.menu-separator {
+  @apply relative -mx-8 my-4;
+}
+
+
+.settings-button {
+  @apply flex items-center justify-center  bg-gray-200 px-1.5 rounded-lg shadow w-12 aspect-[1.7] lg:w-14 xl:w-14 3xl:w-16;
+}
+
+.settings-menu {
+  @apply px-8 py-3 pt-2 rounded-lg shadow-lg 3xl:max-w-3xl ;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 0.5em;
+}
+
+:root {
+  @include mat.menu-overrides((
+    container-color: #ececed,
+    divider-top-spacing:5rem,
+  ));
+
+  @include mat.dialog-overrides((
+    content-padding:5rem,
+  ));
+}
+
+input[type="radio"] {
+  accent-color: $primary-bg-color;
+  @apply h-5 w-5 text-blue-600;
+}
+
+input[type="number"] {
+  @apply block w-16 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm
+}
+
+
+.mat-mdc-menu-panel {
+  max-width: 600px !important;
+  border: 1.5px solid lightslategray;
+  border-top: 3px solid $secondary-bg-color;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.4);
+}
+
+.card-size {
+  @apply aspect-[63/50] w-full
+}

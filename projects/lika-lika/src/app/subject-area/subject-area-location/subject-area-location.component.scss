@@ -1,0 +1,46 @@
+@import "../../../variables.scss";
+
+span {
+  color: white;
+}
+
+li span {
+  font-size: clamp(1rem, 0.8148rem + 0.9877vw, 2rem);
+}
+
+ul li:first-child {
+  padding-top: 0;
+}
+
+.subject-area-estetisk-verksamhet {
+  h2 {
+    color: $arts-color;
+  }
+}
+
+.subject-area-kommunikation {
+  background-color: $communication-color;
+
+  h2 {
+    color: $communication-color;
+  }
+}
+
+.subject-area-motorik {
+  h2 {
+    color: $motor-color;
+  }
+}
+
+.subject-area-vardagsaktiviteter {
+  h2 {
+    color: $everyday-color;
+  }
+}
+
+.subject-area-verklighetsuppfattning {
+
+  h2 {
+    color: $reality-color;
+  }
+}

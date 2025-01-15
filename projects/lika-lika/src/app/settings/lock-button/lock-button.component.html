@@ -1,0 +1,10 @@
+<button
+  class="settings-button"
+  (click)="handleLocking()"
+>
+  <img
+    [src]="(isSettingsLocked$ | async) ? 'assets/layout/icons/locked.svg' : 'assets/layout/icons/unlocked.svg'"
+    [alt]="'Ett hänglås'"
+    class="w-3/5 p-1"
+  />
+</button>

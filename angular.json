@@ -159,6 +159,131 @@
         }
       }
     },
+    "lika-lika": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/lika-lika",
+      "sourceRoot": "projects/lika-lika/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/lika-lika",
+            "index": "projects/lika-lika/src/index.html",
+            "browser": "projects/lika-lika/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/lika-lika/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/lika-lika/src/web.config"
+            ],
+            "styles": [
+              "projects/lika-lika/src/variables.scss",
+              "projects/lika-lika/src/styles.scss",
+              "projects/lika-lika/src/cards.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "shared/styles/"
+              ]
+            },
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "howler"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kB",
+                  "maximumError": "4kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "assets": [
+                {
+                  "glob": "**/*",
+                  "input": "projects/lika-lika/public",
+                  "output": "/assets"
+                },
+                {
+                  "glob": "**/*",
+                  "input": "dist/ui-components/src/assets",
+                  "output": "/assets/"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "lika-lika:build:production"
+            },
+            "development": {
+              "buildTarget": "lika-lika:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/lika-lika/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/lika-lika/public"
+              }
+            ],
+            "styles": [
+              "projects/lika-lika/src/variables.scss",
+              "projects/lika-lika/src/styles.scss",
+              "projects/lika-lika/src/cards.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/lika-lika/**/*.ts",
+              "projects/lika-lika/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "lar-dig-tecken": {
       "projectType": "application",
       "schematics": {

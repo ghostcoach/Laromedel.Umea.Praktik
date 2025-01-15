@@ -1,0 +1,8 @@
+<div class="cards grid grid-cols-3 gap-12 place-items-center bg-blue-300"
+     [ngClass]="'cards-' + (numberOfCards$ | async)">
+  <app-card *ngFor="let memoryCard of (playingDeck$ | async)"
+            [memoryCard]="memoryCard"
+            [cardBackImage]="category.cardBackImage"
+            [cardFrontImage]="category.cardFrontImage"
+  ></app-card>
+</div>

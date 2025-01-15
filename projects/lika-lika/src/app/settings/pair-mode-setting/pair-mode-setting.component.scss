@@ -1,0 +1,4 @@
+select option, select {
+  text-indent: 5px;
+  font-size: clamp(0.875rem, 0.7126rem + 0.2538vw, 1.125rem);
+}

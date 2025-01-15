@@ -1,0 +1,14 @@
+<button
+  [matMenuTriggerFor]="menu"
+  class="settings-button">
+  <img
+    [src]="'assets/layout/icons/card-settings.svg'"
+    [alt]="'Två spelkort med ett kugghjul på baksidan'"
+    class="w-3/5"
+  />
+</button>
+<mat-menu #menu="matMenu" class="settings-menu">
+  <app-pair-mode-setting></app-pair-mode-setting>
+  <hr class="menu-separator">
+  <a class="text-black underline text-center" [routerLink]="'/kortinstallningar'">Visa och hantera kortens innehåll</a>
+</mat-menu>

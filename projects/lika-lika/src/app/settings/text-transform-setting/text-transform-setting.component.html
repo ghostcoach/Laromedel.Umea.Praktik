@@ -1,0 +1,8 @@
+<td class="table-title">Stora bokstäver:</td>
+<td>
+  <input type="radio" [checked]="isUppercaseTextTransform$ | async" (click)="handleTextTransformChange($event)">
+</td>
+<td>
+  <input type="radio" [checked]="(isUppercaseTextTransform$ | async) === false"
+         (click)="handleTextTransformChange($event)">
+</td>

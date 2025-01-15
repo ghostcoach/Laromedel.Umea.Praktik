@@ -1,0 +1,7 @@
+<td class="table-title">Undertexter:</td>
+<td>
+  <input type="radio" [checked]="isSubtitleEnabled$ | async" (click)="handleSubtitleChange($event)">
+</td>
+<td>
+  <input type="radio" [checked]="(isSubtitleEnabled$ | async) === false" (click)="handleSubtitleChange($event)">
+</td>

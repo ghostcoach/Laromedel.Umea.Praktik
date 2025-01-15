@@ -1,0 +1,25 @@
+<div class="card-content absolute grid place-items-center card-size">
+  <span class="card-word"
+        *ngIf="isWordContent"
+        [class.uppercase]="isUppercaseTextTransform$ | async"
+        [class.long-word]="isLongWord()"
+  >
+<!--    {{ memoryCard.word }}-->
+    kollektivtrafik
+  </span>
+
+  <picture *ngIf="isIllustrationContent">
+    <source [srcset]="memoryCard.illustrationWebp" type="image/webp">
+    <source [srcset]="memoryCard.illustrationSvg" type="image/svg">
+    <img class="card-media" [src]="memoryCard.illustrationSvg" [alt]="imageAlt">
+  </picture>
+
+  <picture *ngIf="isRitadeTeckenContent">
+    <source [srcset]="memoryCard.ritadeteckenWebp" type="image/webp">
+    <source [srcset]="memoryCard.ritadeteckenSvg" type="image/svg">
+    <img class="card-media" [src]="memoryCard.ritadeteckenSvg" [alt]="imageAlt">
+  </picture>
+  <video *ngIf="isVideoContent" class="card-media h-4/5" #cardVideo>
+    <source [src]="memoryCard.videoMp4" type="video/mp4">
+  </video>
+</div>

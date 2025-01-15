@@ -1,0 +1,10 @@
+<a
+  class="w-full flex mx-auto"
+  [routerLink]="['/amnesomrade', subjectAreaDataName]"
+  [ngClass]="subjectArea ? 'subject-area-' + subjectAreaDataName : ''">
+  <span
+    class="tracking-wide font-semibold"
+  >
+    {{ subjectArea | capitalize }}
+  </span>
+</a>

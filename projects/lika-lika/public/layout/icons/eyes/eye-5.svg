@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71.73 33.15">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke: #1d1d1b;
+        stroke-width: 2.4px;
+      }
+
+      .cls-2 {
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+  <g id="icon-settings">
+    <path class="cls-1" d="M70.03,16.54s-15.3,15.34-34.17,15.34S1.69,16.54,1.69,16.54c0,0,15.3-15.34,34.17-15.34s34.17,15.34,34.17,15.34Z"/>
+    <g>
+      <path class="cls-1" d="M49.45,23.53c-2.52,5-7.66,8.42-13.59,8.42s-11.43-3.67-13.85-8.96"/>
+      <path class="cls-2" d="M70.03,16.54s-15.3,15.34-34.17,15.34S1.69,16.54,1.69,16.54c0,0,15.3,7.92,34.17,7.92s34.17-7.92,34.17-7.92Z"/>
+    </g>
+  </g>
+</svg>

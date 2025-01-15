@@ -1,0 +1,20 @@
+<header class="grid place-items-center border-b border-amber-50 p-1 xs:p-10">
+  <img
+    class="w-full sm:w-2/3 md:w-1/2 lg:w-2/5 2xl:w-2/5 3xl:w-2/5 max-w-2xl"
+    src="/assets/layout/home-title.svg"
+    alt="Logotyp som visar texten Lika=Lika Memory"
+    role="presentation">
+</header>
+<main class="p-8 flex flex-col gap-y-5 ">
+  <h2 class="font-semibold text-center">Välj ämnesområde</h2>
+  <nav>
+    <ul class="grid portrait:grid-cols-1 grid-cols-2 gap-4">
+      <li *ngFor="let key of subjectAreaKeys">
+        <app-subject-area-link
+          [subjectArea]="subjectAreaEnum[key]"
+          class="w-full block"
+        ></app-subject-area-link>
+      </li>
+    </ul>
+  </nav>
+</main>

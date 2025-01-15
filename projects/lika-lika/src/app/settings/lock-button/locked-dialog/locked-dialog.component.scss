@@ -1,0 +1,14 @@
+@import "../../../../variables";
+
+.locked-dialog-container h2, .answer-container {
+  background-color: $primary-bg-color;
+}
+
+.locked-dialog-container h2 {
+  color: white;
+  font-weight: 500;
+}
+
+.answer-container {
+  font-size: clamp(1.25rem, 0.8613rem + 0.6073vw, 2rem);
+}

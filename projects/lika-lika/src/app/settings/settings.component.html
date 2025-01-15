@@ -1,0 +1,40 @@
+<header class="px-4 py-3 md:p-4 flex justify-between items-center 2xl:px-10 3xl:py-5">
+  <a [routerLink]="['/']"
+     class="w-3/5 landscape-mobile:w-2/5 md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 3xl:w-1/8 4xl:w-[300px]">
+    <img
+      src="/assets/layout/header-title.svg"
+      alt="Lika=Lika Memory"
+      role="presentation"
+      class="w-full"
+    />
+  </a>
+  <ul class="flex gap-x-8" [class.locked-settings]="isSettingsLocked$ |async">
+    <li class="lg:hidden">
+      <app-go-to-settings></app-go-to-settings>
+    </li>
+    <li class="hidden lg:block">
+      <app-settings-menu></app-settings-menu>
+    </li>
+    <li class="hidden lg:block 2xl:mr-12">
+      <app-card-settings-menu></app-card-settings-menu>
+    </li>
+    <li class="hidden lg:block">
+      <app-play-mode-setting></app-play-mode-setting>
+    </li>
+    <li class="hidden lg:block 2xl:mr-24">
+      <app-replay-button></app-replay-button>
+    </li>
+    <li class="hidden lg:block pointer-events-auto">
+      <app-lock-button></app-lock-button>
+    </li>
+    <li class="hidden lg:block">
+      <app-fullscreen-button></app-fullscreen-button>
+    </li>
+    <li class="hidden lg:block">
+      <app-info-button></app-info-button>
+    </li>
+    <li class="hidden lg:block">
+      <app-home-button></app-home-button>
+    </li>
+  </ul>
+</header>

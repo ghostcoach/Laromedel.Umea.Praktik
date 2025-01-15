@@ -1,0 +1,32 @@
+<app-settings></app-settings>
+<main [ngClass]="'subject-area-' + (subjectAreaDataName$ | async)"
+      class="lg:pt-10 xl:pt-20 flex flex-col lg:gap-y-8 2xl:gap-y-10 2xl:pt-30 4xl:gap-y-12 4xl:pt-40">
+  <h2
+    class="font-semibold tracking-wide text-center p-5 pb-0 flex flex-col lg:flex-row lg:items-baseline lg:mx-auto lg:w-fit">
+    {{ subjectAreaCapitalized$ | async }}.
+    <span class="font-light lg:ml-2">Välj det kort du vill spela med.</span>
+  </h2>
+
+  <nav>
+    <ul
+      class="grid grid-cols-2 mx-auto portrait-mobile:grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-8 xl:gap-12 3xl:max-w-screen-3xl p-4 lg:p-8"
+    >
+      <li
+        *ngFor="let category of (categories$ | async)"
+        class="portrait-mobile:border-b-2"
+      >
+        <a
+          [routerLink]="['/kategori', category.name]"
+          class="grid place-items-center"
+        >
+          <img
+            [src]="category.menuImage"
+            [alt]="category.menuImageAlt"
+          />
+          <span
+            class="font-medium tracking-wider relative bottom-5 sm:bottom-7 lg:bottom-0">{{ category.displayName }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</main>

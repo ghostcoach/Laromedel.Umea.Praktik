@@ -1,0 +1,43 @@
+name: 3.0.1-assets-ci-$(Rev:rr)
+
+trigger:
+  branches:
+    include:
+      - develop
+  paths:
+    include:
+      - projects/lika-lika/public/*
+      - projects/lika-lika/assets.yml
+pool:
+  name: "Server2022"
+
+steps:
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: "$(Build.SourcesDirectory)/projects/lika-lika/public"
+      Contents: "**"
+      TargetFolder: "$(Build.SourcesDirectory)/dist/lika-lika/assets"
+    displayName: "Copy assets to dist folder"
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: "$(Build.SourcesDirectory)/projects/ui-components/src/assets"
+      Contents: "**"
+      TargetFolder: "$(Build.SourcesDirectory)/dist/lika-lika/assets"
+    displayName: "Copy ui-components assets to dist folder"
+
+  - task: OctopusPack@4
+    inputs:
+      PackageId: "Laromedel.LikaLika.Assets"
+      PackageFormat: "NuPkg"
+      PackageVersion: "$(Build.BuildNumber)"
+      SourcePath: "$(Build.SourcesDirectory)/dist/lika-lika/assets"
+      OutputPath: "$(Build.ArtifactStagingDirectory)"
+    displayName: "Create OctopusPackage artifact"
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      ArtifactName: "OctopusPackage"
+      publishLocation: "Container"
+    displayName: "Publish OctopusPackage artifact"

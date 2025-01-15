@@ -1,0 +1,21 @@
+<button class="card-btn w-36 aspect-[63/50] relative landscape-mobile:w-40 md:w-48 lg:w-50 xl:w-56 2xl:w-60"
+        (click)="handleCardSelect()"
+        [class.selected]="(isSelected$ | async)"
+        [class.matched]="isMatched$ | async"
+        [class.mismatched]="(hasMatchError$ | async) && (isSelected$ | async)"
+        [class.disappear]="shouldDisappear">
+  <div class="card-container w-full h-full">
+    <div class="card w-full h-full"
+         [ngClass]="{ 'is-face-down': (isSelected$ | async) === true && (isMatched$ | async) === true}">
+      <div class="card-front card-size" [style.backgroundImage]="'url(' + cardFrontImage + ')'">
+        <app-card-content
+          #cardContent
+          [memoryCard]="memoryCard"
+        ></app-card-content>
+      </div>
+      <div class="card-back card-size">
+        <img class="object-cover w-full h-full" [src]="cardBackImage" alt="Baksidan av spelkorten" role="presentation">
+      </div>
+    </div>
+  </div>
+</button>

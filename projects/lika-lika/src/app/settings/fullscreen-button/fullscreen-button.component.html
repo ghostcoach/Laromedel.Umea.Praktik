@@ -1,0 +1,10 @@
+<button
+  class="settings-button"
+  (click)="handleFullscreenToggle()"
+>
+  <img
+    [src]="(isFullscreen$ | async) ? 'assets/layout/icons/fullscreen-exit.svg' : 'assets/layout/icons/fullscreen-enter.svg'"
+    [alt]="'Fullskärm'"
+    class="w-3/5 p-0.5"
+  />
+</button>

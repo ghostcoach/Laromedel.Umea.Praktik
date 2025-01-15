@@ -1,0 +1,33 @@
+<app-settings></app-settings>
+<main class="grid p-5 gap-y-4 lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl lg:mx-auto">
+  <a class="underline pl-1" tabindex="0" (click)="goBack()" (keydown)="goBack()">Tillbaka</a>
+  <section class="bg-white w-full p-4 flex flex-col gap-y-4 ">
+    <h3 class="text-black border-b-2 border-b-black">Inställningar</h3>
+    <table class="text-center max-w-md">
+      <thead>
+      <th class="w-24"></th>
+      <th class="w-12">på</th>
+      <th class="w-12">av</th>
+      </thead>
+      <tbody>
+      <tr app-sound-setting></tr>
+      <tr app-subtitle-setting></tr>
+      <tr app-text-transform-setting></tr>
+      <td class="table-title">Öppna kort</td>
+      <td>
+        <input type="radio" [checked]="isOpenCardsPlayMode$ | async" (click)="handlePlayModeChange()">
+      </td>
+      <td>
+        <input type="radio" [checked]="(isOpenCardsPlayMode$ | async) === false" (click)="handlePlayModeChange()">
+      </td>
+      </tbody>
+    </table>
+  </section>
+  <section class="bg-white w-full p-4 flex flex-col gap-y-4">
+    <h3 class="text-black border-b-2 border-b-black">Kortinställningar</h3>
+    <app-card-count-setting></app-card-count-setting>
+    <hr>
+    <app-pair-mode-setting></app-pair-mode-setting>
+  </section>
+
+</main>

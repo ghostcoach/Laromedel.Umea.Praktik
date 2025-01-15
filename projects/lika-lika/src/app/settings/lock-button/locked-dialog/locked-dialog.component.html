@@ -1,0 +1,27 @@
+<div class="locked-dialog-container">
+  <h2 mat-dialog-title>Knapparna i inställningsfältet är låsta. Svara på frågan för att låsa upp </h2>
+  <div class="answer-container p-5 flex items-center gap-3 w-1/2 mx-auto my-5 justify-center">
+    <label for="math-answer" class="font-medium text-white">{{ number1 }} x {{ number2 }} =</label>
+    <input
+      id="math-answer"
+      type="number"
+      [(ngModel)]="submittedAnswer"
+      class="block w-20 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+    />
+    <button
+      (click)="handleAnswerSubmit()"
+      class="px-3 py-1 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+    >
+      Ok
+    </button>
+  </div>
+
+  <div class="error-container mx-auto my-2 w-1/2" *ngIf="correctAnswer !== submittedAnswer && isAnswered">
+    <p class="text-red-500 text-center">{{ submittedAnswer }} är fel svar på frågan</p>
+  </div>
+
+  <div class="success-container mx-auto my-2 w-1/2" *ngIf="correctAnswer === submittedAnswer && isAnswered">
+    <p class="text-green-500 text-center">Rätt svar! Tryck på Ok för att stänga rutan</p>
+  </div>
+
+</div>

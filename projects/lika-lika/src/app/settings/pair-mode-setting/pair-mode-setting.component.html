@@ -1,0 +1,21 @@
+<div class="p-4 lg:pl-0">
+  <h4 class="font-semibold mb-4 text-black">Välj hur paren ska visas. Para ihop:</h4>
+
+  <div class="flex flex-col gap-y-2 lg:flex-row lg:items-center" matMenuContent>
+    <select
+      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-700 focus:border-blue-950 sm:text-sm"
+      [ngModel]="firstCard$ | async" (ngModelChange)="handleFirstCardChange($event, $event)"
+      (click)="$event.stopImmediatePropagation()">
+      <option *ngFor="let cardContent of cardContents" [value]="cardContent">{{ cardContent }}
+      </option>
+    </select>
+    <span class="lg:mx-4 lg:py-2">med</span>
+    <select
+      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-700 focus:border-blue-950 sm:text-sm"
+      [ngModel]="secondCard$ | async" (ngModelChange)="handleSecondCardChange($event, $event)"
+      (click)="$event.stopImmediatePropagation()">
+      <option class="pr-10" *ngFor="let cardContent of cardContents" [value]="cardContent">{{ cardContent }}
+    </select>
+  </div>
+
+</div>

@@ -1,0 +1,8 @@
+<td class="table-title">Ljud:</td>
+<td>
+  <input type="radio" class="menu-input" [checked]="isSoundEnabled$ | async" (click)="handleSoundChange($event)">
+</td>
+<td>
+  <input type="radio" class="menu-input" [checked]="(isSoundEnabled$ | async) === false"
+         (click)="handleSoundChange($event)">
+</td>

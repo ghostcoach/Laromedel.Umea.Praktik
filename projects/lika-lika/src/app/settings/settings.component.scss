@@ -1,0 +1,9 @@
+@import "../../variables.scss";
+
+header {
+  background-color: $secondary-bg-color;
+}
+
+.locked-settings {
+  pointer-events: none;
+}

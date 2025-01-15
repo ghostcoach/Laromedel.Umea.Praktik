@@ -1,0 +1,152 @@
+name: 3.0.1-frontend-ci-$(Rev:rr)
+
+trigger:
+  branches:
+    include:
+      - develop
+  paths:
+    include:
+      - projects/lika-lika/*
+      - projects/ui-component/*
+      - projects/media/*
+      - projects/utility/*
+      - projects/games/*
+      - shared/*
+      - package.json
+
+    exclude:
+      - projects/lika-lika/src/assets/*
+      - projects/lika-lika/assets.yml
+pool:
+  name: "Server2022"
+
+steps:
+  - checkout: self
+    clean: false
+    fetchDepth: 1
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "20.x"
+    displayName: "Install Node.js"
+
+  - task: Npm@1
+    inputs:
+      command: "install"
+    displayName: "Run npm install"
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run lint media"
+    displayName: "Check linting for media library"
+
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      customCommand: 'run test:ci media'
+    env:
+      CI: true
+    displayName: 'Run unit tests for media'
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run build media"
+    displayName: "Build media library"
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run lint ui-components"
+    displayName: "Check linting for ui-components library"
+
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      customCommand: 'run test:ci ui-components'
+    env:
+      CI: true
+    displayName: 'Run unit tests for ui-components'
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run build ui-components"
+    displayName: "Build ui-components library"
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run lint utility"
+    displayName: "Check linting for utility library"
+
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      customCommand: 'run test:ci utility'
+    env:
+      CI: true
+    displayName: 'Run unit tests for utility'
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run build utility"
+    displayName: "Build utility library"
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run lint games"
+    displayName: "Check linting for games library"
+
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      customCommand: 'run test:ci games'
+    env:
+      CI: true
+    displayName: 'Run unit tests for games'
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run build games"
+    displayName: "Build games library"
+
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      customCommand: 'run test:ci lika-lika'
+    env:
+      CI: true
+    displayName: 'Run unit tests for lika-lika'
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run lint lika-lika"
+    displayName: "Check linting for lika-lika project"
+
+  - task: Npm@1
+    inputs:
+      command: "custom"
+      customCommand: "run build lika-lika"
+    displayName: "Build lika-lika project"
+
+  - task: OctopusPack@4
+    inputs:
+      PackageId: "Laromedel.LikaLika.Frontend"
+      PackageFormat: "NuPkg"
+      PackageVersion: "$(Build.BuildNumber)"
+      SourcePath: "$(Build.SourcesDirectory)/dist/lika-lika/browser"
+      OutputPath: "$(Build.ArtifactStagingDirectory)"
+    displayName: "Create OctopusPackage artifact"
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      ArtifactName: 'OctopusPackage'
+      publishLocation: 'Container'
+    displayName: "Publish build artifacts"

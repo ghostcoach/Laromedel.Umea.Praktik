@@ -1,0 +1,12 @@
+<div class="page-layout page-layout_header-main-footer hidden lg:grid">
+  <app-settings></app-settings>
+  <div class="bg-red-300 w-full h-full grid place-items-center">
+    <!--    <app-score></app-score>-->
+    <app-board [category]="category"></app-board>
+  </div>
+</div>
+
+<div class="bg-red-300 w-full h-full grid place-items-center lg:hidden">
+  <app-board [category]="category"></app-board>
+</div>
+
