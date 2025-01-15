@@ -1,5 +1,5 @@
 import {MemoryCard} from "../api/memory-card";
-import {IPairingMode} from "../api/pairing-mode";
+import {IPairingMode} from "../../api/pairing-mode";
 import {PlayMode} from "../api/play-mode";
 
 export class NewMemoryGame {

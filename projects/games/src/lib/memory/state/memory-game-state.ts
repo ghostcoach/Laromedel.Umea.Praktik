@@ -22,8 +22,8 @@ import {
   ToggleCurrentPlayer,
 } from "../../state/game-state-actions";
 import {GameStateQueries} from "../../state/game-state-queries";
-import {IPairingMode} from "../api/pairing-mode";
-import {CardContent} from "../api/card-content";
+import {IPairingMode} from "../../api/pairing-mode";
+import {CardContent} from "../../api/card-content";
 import {PlayMode} from "../api/play-mode";
 import {AudioService} from "@media/audio.service";
 import {AudioStateQueries} from "@media/state/audio-state-queries";
