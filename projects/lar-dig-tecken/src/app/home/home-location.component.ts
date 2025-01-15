@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component} from "@angular/core";
 import {UntilDestroy} from "@ngneat/until-destroy";
-import {CardMedia} from "./api/card-media";
+
 
 @UntilDestroy()
 @Component({
@@ -21,5 +21,4 @@ export class HomeLocationComponent {
 
   }
 
-  protected readonly CardMedia = CardMedia;
 }
