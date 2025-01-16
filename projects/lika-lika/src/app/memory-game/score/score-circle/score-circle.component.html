@@ -1,0 +1,13 @@
+<div class="score-circle w-16 h-16 rounded-full grid place-items-center" [class.rotate-circle]="shouldRotate">
+  <div class="score-front grid place-items-center rounded-full">
+    <span class="text-3xl font-semibold text-black">
+      @if (isFirstPlayer) {
+        {{ playerOneScore$ | async }}
+      } @else {
+        {{ playerTwoScore$ | async }}
+      }
+    </span>
+  </div>
+  <div class="score-back rounded-full">
+  </div>
+</div>

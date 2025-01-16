@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from "@angular/core";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {AfterViewInit, Component, Input, OnDestroy, ViewChild} from "@angular/core";
+import {UntilDestroy} from "@ngneat/until-destroy";
 import {MemoryCard} from "@games/memory-card";
 import {Store} from "@ngxs/store";
 import {map, Observable} from "rxjs";
@@ -20,7 +20,7 @@ import {AudioStateQueries} from "@media/audio-state-queries";
   templateUrl: "./card.component.html",
   styleUrl: "./card.component.scss",
 })
-export class CardComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CardComponent implements AfterViewInit, OnDestroy {
   @ViewChild("cardContent") public cardContent: CardContentComponent;
 
   @Input() public memoryCard: MemoryCard;
@@ -48,16 +48,6 @@ export class CardComponent implements OnInit, AfterViewInit, OnDestroy {
     private store: Store,
     private audioService: AudioService,
   ) {}
-
-  public ngOnInit(): void {
-    this.isMatched$.pipe(untilDestroyed(this)).subscribe((isMatched: boolean): void => {
-      if (!isMatched || this.shouldDisappear) return;
-
-      this.disappearTimeout = setTimeout((): void => {
-        this.shouldDisappear = true;
-      }, MemoryGameState.TIME_TO_SHOW_MATCH_BEFORE_DISAPPEAR_MS);
-    });
-  }
 
   public ngAfterViewInit(): void {
     this.loadCardMedia();

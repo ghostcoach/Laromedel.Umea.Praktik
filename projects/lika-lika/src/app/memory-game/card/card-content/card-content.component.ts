@@ -21,7 +21,7 @@ export class CardContentComponent {
 
   @Input() public memoryCard: MemoryCard;
 
-  public readonly NUMBER_OF_CHAR_FOR_LONG_WORD: number = 13;
+  public readonly NUMBER_OF_CHAR_FOR_LONG_WORD: number = 14;
 
   public isUppercaseTextTransform$: Observable<boolean> = inject(Store).select(SettingsStateQueries.isUpperCaseTextTransform$);
 
@@ -69,7 +69,6 @@ export class CardContentComponent {
   }
 
   public isLongWord(): boolean {
-    return true;
-    // return this.memoryCard.word.length > this.NUMBER_OF_CHAR_FOR_LONG_WORD;
+    return this.memoryCard.word.length > this.NUMBER_OF_CHAR_FOR_LONG_WORD;
   }
 }

@@ -1,0 +1,57 @@
+@import "variables";
+
+.score-circle {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  position: relative;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.score-front,
+.score-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.score-back {
+  transform: rotateY(180deg);
+}
+
+.rotate-circle {
+  animation: score-animation 2s linear 1;
+  transform-origin: 50% 50%
+}
+
+
+.player-1 {
+  .score-circle {
+    background-color: $player1-color;
+  }
+
+  .score-back {
+    background-color: $player1-color-back;
+  }
+}
+
+.player-2 {
+  .score-circle {
+    background-color: $player2-color;
+  }
+
+  .score-back {
+    background-color: $player2-color-back;
+  }
+}
+
+@keyframes score-animation {
+  0% {
+    transform: perspective(1000px) translateZ(1rem) rotateY(0)
+  }
+
+  to {
+    transform: perspective(1000px) translateZ(1rem) rotateY(360deg)
+  }
+}
