@@ -1,0 +1,31 @@
+<p>settings works!</p>
+<div>
+    <div>
+        <button (click)="toggleDropdown('first')">Välj kortinnehåll till första kortet</button>
+        <ul *ngIf="isFirstDropdownOpen">
+            <li 
+            *ngFor="let option of firstCardOptions" 
+            tabindex="0" 
+            (click)="updateFirstPairingMode(option)" 
+            (keydown.enter)="updateFirstPairingMode(option)" 
+            class="hover:cursor-pointer"
+        >
+            {{ option }}
+        </li>
+        </ul>
+    </div>
+    <div>
+        <button (click)="toggleDropdown('second')">Select Second Card Option</button>
+        <ul *ngIf="isSecondDropdownOpen">
+          <li 
+            *ngFor="let option of secondCardOptions" 
+            tabindex="0" 
+            (click)="updateSecondPairingMode(option)" 
+            (keydown.enter)="updateSecondPairingMode(option)" 
+            class="hover:cursor-pointer"
+          >
+            {{ option }}
+          </li>
+        </ul>
+      </div>
+</div>

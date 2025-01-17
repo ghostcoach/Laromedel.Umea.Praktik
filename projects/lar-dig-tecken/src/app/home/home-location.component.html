@@ -2,4 +2,10 @@
 <img class="w-32" src="/assets/subject-area/estetisk-verksamhet/bildbegrepp/illustration/lim.svg"
      alt="Illustration av två typer av lim. Till vänster en flaska med grön pip och blå etikett med texten 'LIM'. Till höger ett rött limstift med svart kork och texten 'LIM' på etiketten">
 
-<p class="font-semibold">{{CardMedia.ILLUSTRATION}}
+<!-- <p class="font-semibold">{{CardMedia.ILLUSTRATION}}</p> -->
+<!-- <img src={{CardMedia.ILLUSTRATION}} alt=""> -->
+<app-game-settings
+     [gameSettings]="currentGameSettings"
+     (settingSelected)="onSettingSelected($event)"
+></app-game-settings>
+
