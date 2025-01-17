@@ -1,3 +1,5 @@
-<div class="bg-green-400">
-  <span class="font-2xl">Score: {{ playerOneScore$ | async }}</span>
+<div class="score-container w-36 h-full flex justify-center pt-4"
+     [ngClass]="isFirstPlayer ? 'player-1' : 'player-2'"
+>
+  <app-score-circle [isFirstPlayer]="isFirstPlayer"></app-score-circle>
 </div>

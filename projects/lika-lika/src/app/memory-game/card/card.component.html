@@ -2,11 +2,12 @@
         (click)="handleCardSelect()"
         [class.selected]="(isSelected$ | async)"
         [class.matched]="isMatched$ | async"
+        [class.animate-hide]="isMatched$ | async"
         [class.mismatched]="(hasMatchError$ | async) && (isSelected$ | async)"
         [class.disappear]="shouldDisappear">
   <div class="card-container w-full h-full">
     <div class="card w-full h-full"
-         [ngClass]="{ 'is-face-down': (isSelected$ | async) === true && (isMatched$ | async) === true}">
+         [ngClass]="{ 'is-face-down': (isSelected$ | async) === false && (isMatched$ | async) === false}">
       <div class="card-front card-size" [style.backgroundImage]="'url(' + cardFrontImage + ')'">
         <app-card-content
           #cardContent

@@ -85,10 +85,13 @@
 }
 
 .cards-14, .cards-16 {
+  grid-template-columns: repeat(4, fit-content(100%));
+  grid-auto-rows: 1fr;
+
   @apply gap-5 lg:gap-8 xl:gap-10 2xl:gap-12;
 
   .card-btn {
-    @apply lg:w-48 xl:w-56 2xl:w-64
+    @apply lg:w-48 xl:w-56 2xl:w-56
   }
 
   .card-word {
@@ -100,11 +103,6 @@
   }
 }
 
-.cards-14,
-.cards-16 {
-  grid-template-columns: repeat(4, fit-content(100%));
-  grid-auto-rows: 1fr;
-}
 
 @media (orientation: landscape) {
   .cards-10 > :nth-child(9) {
@@ -151,7 +149,7 @@
 
 }
 
-@media (max-height: 1024px) and (min-width: 1024px) {
+@media (max-height: 950px) and (min-width: 1024px) {
   .cards-4 {
     @apply 2xl:gap-16;
     .card-btn {

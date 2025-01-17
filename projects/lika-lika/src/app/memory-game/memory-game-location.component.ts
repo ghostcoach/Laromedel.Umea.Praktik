@@ -9,16 +9,21 @@ import {SettingsStateQueries} from "../settings/state/settings-state-queries";
 import {SettingsComponent} from "../settings/settings.component";
 import {BoardComponent} from "./board/board.component";
 import {ScoreComponent} from "./score/score.component";
+import {AsyncPipe, NgIf} from "@angular/common";
+import {Observable} from "rxjs";
+import {Player} from "@games/player";
 
 @UntilDestroy()
 @Component({
   standalone: true,
-  imports: [SettingsComponent, BoardComponent, ScoreComponent],
+  imports: [SettingsComponent, BoardComponent, ScoreComponent, NgIf, AsyncPipe],
   templateUrl: "./memory-game-location.component.html",
   styleUrl: "./memory-game-location.component.scss",
 })
 export class MemoryGameLocationComponent implements OnInit, AfterViewInit {
   public category: ICategory;
+  public isTwoPlayers$: Observable<boolean> = this.store.select(SettingsStateQueries.isTwoPlayers$);
+  public playerEnum = Player;
 
   constructor(
     private route: ActivatedRoute,
