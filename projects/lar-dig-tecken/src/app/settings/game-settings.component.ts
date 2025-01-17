@@ -15,7 +15,7 @@ import { CardContent } from '../../../../games/src/lib/api/card-content'
   selector: 'app-game-settings',
   imports: [CommonModule],
   templateUrl: './game-settings.component.html',
-  styleUrl: './game-settings.component.scss',
+  // styleUrl: './game-settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameSettingsComponent {

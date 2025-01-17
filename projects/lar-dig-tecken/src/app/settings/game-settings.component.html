@@ -1,31 +1,46 @@
-<p>settings works!</p>
-<div>
-    <div>
-        <button (click)="toggleDropdown('first')">Välj kortinnehåll till första kortet</button>
-        <ul *ngIf="isFirstDropdownOpen">
-            <li 
-            *ngFor="let option of firstCardOptions" 
-            tabindex="0" 
-            (click)="updateFirstPairingMode(option)" 
-            (keydown.enter)="updateFirstPairingMode(option)" 
-            class="hover:cursor-pointer"
+
+<div class=" border border-1 border-black gap-5 p-5">
+  <h1 class="mb-5">Inställningar</h1>
+      <div class="flex gap-3 ">
+        <button 
+          (click)="toggleDropdown('first')"
+          class="flex items-center gap-3"
         >
-            {{ option }}
-        </li>
-        </ul>
-    </div>
-    <div>
-        <button (click)="toggleDropdown('second')">Select Second Card Option</button>
-        <ul *ngIf="isSecondDropdownOpen">
-          <li 
-            *ngFor="let option of secondCardOptions" 
-            tabindex="0" 
-            (click)="updateSecondPairingMode(option)" 
-            (keydown.enter)="updateSecondPairingMode(option)" 
-            class="hover:cursor-pointer"
-          >
-            {{ option }}
-          </li>
-        </ul>
+          <img 
+          class="w-10"
+          src="/assets/layout/icons/card-settings.svg" alt="">
+          <h1>Kortval</h1>
+        </button>
       </div>
+        <div *ngIf="isFirstDropdownOpen"
+        class="p-3 flex justify-around"
+        >
+          <ul class="flex gap-3 flex-col ">
+            <h1 class="font-bold">Första kortet:</h1>
+              <li 
+              *ngFor="let option of firstCardOptions" 
+              tabindex="0" 
+              (click)="updateFirstPairingMode(option)" 
+              (keydown.enter)="updateFirstPairingMode(option)" 
+              class="py-1 px-2 hover:cursor-pointer hover:border-2 hover:border-orange-400 "
+          >
+              {{ option }}
+          </li>
+          </ul>
+          <ul class="flex gap-3 flex-col">
+            <h1 class="font-bold">Resterande kort:</h1>
+            <li 
+              *ngFor="let option of secondCardOptions" 
+              tabindex="0" 
+              (click)="updateSecondPairingMode(option)" 
+              (keydown.enter)="updateSecondPairingMode(option)" 
+              class="py-1 px-2 hover:border-2 hover:border-orange-400 hover:cursor-pointer"
+            >
+              {{ option }}
+              <img src="" alt="">
+            </li>
+          </ul>
+        </div>
 </div>
+
+<!-- <img class="w-32" src="/assets/subject-area/estetisk-verksamhet/bildbegrepp/illustration/lim.svg" -->
