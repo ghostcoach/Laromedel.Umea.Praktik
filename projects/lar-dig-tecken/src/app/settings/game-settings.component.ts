@@ -5,10 +5,9 @@ import { IGameSettingStateModel } from '../settings/state/api/game-settings-stat
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { GameSettingsStateQueries } from '../settings/state/game-settings-queries'
-import { UpdateFirstPairingMode } from '../settings/state/game-settings-actions';
-import { UpdateSecondPairingMode } from '../settings/state/game-settings-actions';
+import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory } from '../settings/state/game-settings-actions';
 import { CardContent } from '../../../../games/src/lib/api/card-content'
-
+import { Category } from "../category/api/category"
 
 @UntilDestroy()
 @Component({
@@ -34,6 +33,29 @@ export class GameSettingsComponent {
     CardContent.RITADE_TECKEN,
     CardContent.TAKK,
     CardContent.WORD
+  ];
+
+  public categoryOptions: Category[] = [
+    Category.ALLA,
+    Category.BILDBEGREPP,
+    Category.SYSLOJD,
+    Category.TRASLOJD,
+    Category.ALFABETET,
+    Category.ENKLA_ORD,
+    Category.KANSLOR,
+    Category.SKOLORD,
+    Category.SPORT,
+    Category.VATTENSAKERHET,
+    Category.RORELSE,
+    Category.IDROTTSHALL,
+    Category.KOKSREDSKAP,
+    Category.FRUKT,
+    Category.GRONSAKER_OCH_ROTFRUKTER,
+    Category.LIVSMEDEL,
+    Category.DJUR,
+    Category.VAXTER,
+    Category.ANTAL,
+    Category.LAGESORD
   ];
 
   public isFirstDropdownOpen = false;
@@ -63,5 +85,11 @@ export class GameSettingsComponent {
     this.store.dispatch(new UpdateSecondPairingMode(option));
     console.log('Andra kortet upddaterat till', option);
   }
+
+  updateCategory(option: Category): void {
+    this.store.dispatch(new UpdateCategory(option));
+    console.log('Kategorin upddaterat till', option);
+  }
+  
 
 }

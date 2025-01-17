@@ -22,7 +22,7 @@
               tabindex="0" 
               (click)="updateFirstPairingMode(option)" 
               (keydown.enter)="updateFirstPairingMode(option)" 
-              class="py-1 px-2 hover:cursor-pointer hover:border-2 hover:border-orange-400 "
+              class="h-10 py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 "
           >
               {{ option }}
           </li>
@@ -31,15 +31,26 @@
             <h1 class="font-bold">Resterande kort:</h1>
             <li 
               *ngFor="let option of secondCardOptions" 
-              tabindex="0" 
+              tabindex="1" 
               (click)="updateSecondPairingMode(option)" 
               (keydown.enter)="updateSecondPairingMode(option)" 
-              class="py-1 px-2 hover:border-2 hover:border-orange-400 hover:cursor-pointer"
+              class="h-10 py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 "
             >
               {{ option }}
               <img src="" alt="">
             </li>
           </ul>
+          <ul class="flex gap-3 flex-col">
+            <h1 class="font-bold">Välj kategori:</h1>
+            <li *ngFor="let option of categoryOptions"
+              tabindex="2"
+              (click)="updateCategory(option)"
+              (keydown.enter)="updateCategory(option)"
+              class="h-10 py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 "
+            >
+          {{option}}
+          </li>
+            </ul>
         </div>
 </div>
 
