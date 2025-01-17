@@ -1,0 +1,15 @@
+.pow__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+
+  width: 100%;
+  top: 0;
+  opacity: 0;
+  animation: fadeinout 1.5s linear 1s forwards;
+}
+
+svg {
+  width: 300px;
+}
