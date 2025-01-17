@@ -1,0 +1,21 @@
+import { IPairingMode } from "@games/*"
+import { Category } from "../../../category/api/category"
+
+export interface IGameSettingStateModel {
+    numberOfOptions: number,
+    pairingMode: IPairingMode,
+    category: Category,
+    numberOfRounds: number
+}
+
+// export interface IPairingMode {
+//     first: CardContent;
+//     second: CardContent; 
+// }
+
+// export declare enum CardContent {
+//     WORD = "ord",
+//     ILLUSTRATION = "bild",
+//     RITADE_TECKEN = "ritade tecken",
+//     TAKK = "tecken som st\u00F6d"
+// }

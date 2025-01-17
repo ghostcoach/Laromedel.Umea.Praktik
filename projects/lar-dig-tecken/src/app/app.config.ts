@@ -5,12 +5,15 @@ import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { routes } from "./app.routes";
 import { environment } from "@shared/environments/environment";
+import {GameSettingsState} from '../app/settings/state/game-settings-state'
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     importProvidersFrom(
-      NgxsModule.forRoot([], {
+      NgxsModule.forRoot([
+        GameSettingsState
+      ], {
         developmentMode: !environment.production,
       }),
     ),
