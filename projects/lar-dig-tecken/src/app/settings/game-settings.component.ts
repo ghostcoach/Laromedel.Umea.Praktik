@@ -14,7 +14,7 @@ import { Category } from "../category/api/category"
   selector: 'app-game-settings',
   imports: [CommonModule],
   templateUrl: './game-settings.component.html',
-  // styleUrl: './game-settings.component.scss',
+  styleUrl: './game-settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameSettingsComponent {
@@ -61,10 +61,10 @@ export class GameSettingsComponent {
   public isFirstDropdownOpen = false;
   public isSecondDropdownOpen = false; 
 
-  // public pairingModeFirstCard$: Observable<string> = this.store.select(GameSettingsStateQueries.pairingModeFirstCard$);
-  // public pairingModeSecondCard$: Observable<string> = this.store.select(GameSettingsStateQueries.pairingModeSecondCard$);
-  // public category$: Observable<string> = this.store.select(GameSettingsStateQueries.category$);
-  // public numberOfRounds$: Observable<number> = this.store.select(GameSettingsStateQueries.numberOfRounds$);
+  public pairingModeFirstCard$: Observable<string> = this.store.select(GameSettingsStateQueries.pairingModeFirstCard$);
+  public pairingModeSecondCard$: Observable<string> = this.store.select(GameSettingsStateQueries.pairingModeSecondCard$);
+  public category$: Observable<string> = this.store.select(GameSettingsStateQueries.category$);
+  public numberOfRounds$: Observable<number> = this.store.select(GameSettingsStateQueries.numberOfRounds$);
 
   constructor(private store: Store){}
 

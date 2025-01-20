@@ -22,6 +22,7 @@
               tabindex="0" 
               (click)="updateFirstPairingMode(option)" 
               (keydown.enter)="updateFirstPairingMode(option)" 
+              [class.selected]="option === (pairingModeFirstCard$ | async)"
               class="h-10 py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 "
           >
               {{ option }}
@@ -33,7 +34,8 @@
               *ngFor="let option of secondCardOptions" 
               tabindex="1" 
               (click)="updateSecondPairingMode(option)" 
-              (keydown.enter)="updateSecondPairingMode(option)" 
+              (keydown.enter)="updateSecondPairingMode(option)"
+              [class.selected]="option === (pairingModeSecondCard$ | async)" 
               class="h-10 py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 "
             >
               {{ option }}
@@ -46,6 +48,7 @@
               tabindex="2"
               (click)="updateCategory(option)"
               (keydown.enter)="updateCategory(option)"
+              [class.selected]="option === (category$ | async)"
               class="h-10 py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 "
             >
           {{option}}
