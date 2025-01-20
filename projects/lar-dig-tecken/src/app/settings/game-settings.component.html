@@ -13,8 +13,9 @@
         </button>
       </div>
         <div *ngIf="isFirstDropdownOpen"
-        class="p-3 flex justify-around"
+        class="p-3 flex justify-between"
         >
+        <!-- Första kortets inställningar -->
           <ul class="flex gap-3 flex-col ">
             <h1 class="font-bold">Första kortet:</h1>
               <li 
@@ -28,6 +29,8 @@
               {{ option }}
           </li>
           </ul>
+
+          <!-- Andra kortens inställningar -->
           <ul class="flex gap-3 flex-col">
             <h1 class="font-bold">Resterande kort:</h1>
             <li 
@@ -42,6 +45,8 @@
               <img src="" alt="">
             </li>
           </ul>
+
+          <!-- Kategoriinställningar -->
           <ul class="flex gap-3 flex-col">
             <h1 class="font-bold">Välj kategori:</h1>
             <li *ngFor="let option of categoryOptions"
@@ -51,9 +56,24 @@
               [class.selected]="option === (category$ | async)"
               class="h-10 py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 "
             >
-          {{option}}
-          </li>
-            </ul>
+            {{option}}
+            </li>
+          </ul>
+
+          <ul class="flex gap-3 flex-col">
+            <h1 class="font-bold">Välj antal kortval:</h1>
+            <li *ngFor="let option of numberOfOptions"
+              tabindex="3"
+              (click)="updateNumberOfOptions(option)"
+              (keydown.enter)="updateNumberOfOptions(option)"
+              [class.selected]="option === (numberOfOptions$ | async)"
+              class="h-10 py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 "
+            >
+            {{option}}
+            </li>
+          </ul>
+
+
         </div>
 </div>
 

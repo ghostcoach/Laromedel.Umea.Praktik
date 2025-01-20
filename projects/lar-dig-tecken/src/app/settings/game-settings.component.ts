@@ -5,7 +5,7 @@ import { IGameSettingStateModel } from '../settings/state/api/game-settings-stat
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { GameSettingsStateQueries } from '../settings/state/game-settings-queries'
-import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory } from '../settings/state/game-settings-actions';
+import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory, UpdateNumberOfOptions } from '../settings/state/game-settings-actions';
 import { CardContent } from '../../../../games/src/lib/api/card-content'
 import { Category } from "../category/api/category"
 
@@ -58,6 +58,8 @@ export class GameSettingsComponent {
     Category.LAGESORD
   ];
 
+  public numberOfOptions: number[] = [2, 3];
+
   public isFirstDropdownOpen = false;
   public isSecondDropdownOpen = false; 
 
@@ -65,6 +67,7 @@ export class GameSettingsComponent {
   public pairingModeSecondCard$: Observable<string> = this.store.select(GameSettingsStateQueries.pairingModeSecondCard$);
   public category$: Observable<string> = this.store.select(GameSettingsStateQueries.category$);
   public numberOfRounds$: Observable<number> = this.store.select(GameSettingsStateQueries.numberOfRounds$);
+  public numberOfOptions$: Observable<number> = this.store.select(GameSettingsStateQueries.numberOfOptions$);
 
   constructor(private store: Store){}
 
@@ -89,6 +92,11 @@ export class GameSettingsComponent {
   updateCategory(option: Category): void {
     this.store.dispatch(new UpdateCategory(option));
     console.log('Kategorin upddaterat till', option);
+  }
+
+  updateNumberOfOptions(option: number): void {
+    this.store.dispatch(new UpdateNumberOfOptions(option));
+    console.log('Antal uppdaterat till', option);
   }
   
 
