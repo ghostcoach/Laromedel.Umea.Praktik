@@ -23,3 +23,17 @@ export class UseAllCategories {
 
     constructor(public useAllCategories: IGameSettingStateModel["category"]) {}
 }
+
+export class UpdateNumberOfOptions {
+    static readonly type: string = '[Pairing] Update Number of Options';
+
+    constructor(public numberOfOptions: IGameSettingStateModel["numberOfOptions"]) {}
+
+}
+
+export class UpdateNumberOfRounds {
+    static readonly type: string = '[Pairing] Update Number of Rounds';
+
+    constructor(public numberOfRounds: IGameSettingStateModel["numberOfRounds"]) {}
+
+}

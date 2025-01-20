@@ -1,7 +1,7 @@
 import {Action, State, StateContext, StateToken} from '@ngxs/store'
 import {Injectable} from '@angular/core'
 import { IGameSettingStateModel } from './api/game-settings-state-model'
-import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory, UseAllCategories } from './game-settings-actions'
+import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory, UseAllCategories, UpdateNumberOfOptions, UpdateNumberOfRounds } from './game-settings-actions'
 import { CardContent } from '../../../../../games/src/lib/api/card-content'
 import { Category } from '../../category/api/category'
 
@@ -62,5 +62,25 @@ export class GameSettingsState {
 
         //Lägg till funktionell kod här
         patchState({category: useAllCategories})
+    }
+
+    @Action(UpdateNumberOfOptions)
+    public updateNumberOfOptions(
+        {patchState}: StateContext<IGameSettingStateModel>,
+        {numberOfOptions}: UpdateNumberOfOptions
+    ) : void {
+
+        //Lägg till funktionell kod här
+        patchState({numberOfOptions: numberOfOptions})
+    }
+
+    @Action(UpdateNumberOfRounds)
+    public updateNumberOfRounds(
+        {patchState}: StateContext<IGameSettingStateModel>,
+        {numberOfRounds}: UpdateNumberOfRounds
+    ) : void {
+
+        //Lägg till funktionell kod här
+        patchState({numberOfRounds: numberOfRounds})
     }
 }

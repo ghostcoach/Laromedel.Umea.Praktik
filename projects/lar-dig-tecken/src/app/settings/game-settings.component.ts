@@ -5,7 +5,7 @@ import { IGameSettingStateModel } from '../settings/state/api/game-settings-stat
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { GameSettingsStateQueries } from '../settings/state/game-settings-queries'
-import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory } from '../settings/state/game-settings-actions';
+import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory, UpdateNumberOfOptions, UpdateNumberOfRounds } from '../settings/state/game-settings-actions';
 import { CardContent } from '../../../../games/src/lib/api/card-content'
 import { Category } from "../category/api/category"
 
@@ -14,7 +14,7 @@ import { Category } from "../category/api/category"
   selector: 'app-game-settings',
   imports: [CommonModule],
   templateUrl: './game-settings.component.html',
-  // styleUrl: './game-settings.component.scss',
+  styleUrl: './game-settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameSettingsComponent {
@@ -58,21 +58,39 @@ export class GameSettingsComponent {
     Category.LAGESORD
   ];
 
-  public isFirstDropdownOpen = false;
-  public isSecondDropdownOpen = false; 
+  public numberOfOptions: number[] = [2, 3];
+  public numberOfRounds: number[] = [1, 2, 3, 4, 5];
 
-  // public pairingModeFirstCard$: Observable<string> = this.store.select(GameSettingsStateQueries.pairingModeFirstCard$);
-  // public pairingModeSecondCard$: Observable<string> = this.store.select(GameSettingsStateQueries.pairingModeSecondCard$);
-  // public category$: Observable<string> = this.store.select(GameSettingsStateQueries.category$);
-  // public numberOfRounds$: Observable<number> = this.store.select(GameSettingsStateQueries.numberOfRounds$);
+  public isDropdownOpen = false;
+  public isFirstCardSettingsDropdownOpen = false;
+  public isSecondCardSettingsDropdownOpen = false;
+  public isCategorySettingsDropdownOpen = false;
+  public isNumberOfOptionsSettingsDropdownOpen = false;
+  public isNumberOfRoundsSettingsDropdownOpen = false;
+
+  public pairingModeFirstCard$: Observable<string> = this.store.select(GameSettingsStateQueries.pairingModeFirstCard$);
+  public pairingModeSecondCard$: Observable<string> = this.store.select(GameSettingsStateQueries.pairingModeSecondCard$);
+  public category$: Observable<string> = this.store.select(GameSettingsStateQueries.category$);
+  public numberOfRounds$: Observable<number> = this.store.select(GameSettingsStateQueries.numberOfRounds$);
+  public numberOfOptions$: Observable<number> = this.store.select(GameSettingsStateQueries.numberOfOptions$);
 
   constructor(private store: Store){}
 
-  toggleDropdown(type: 'first' | 'second') : void {
-    if (type === 'first'){
-      this.isFirstDropdownOpen = !this.isFirstDropdownOpen;
-    } else {
-      this.isSecondDropdownOpen = !this.isSecondDropdownOpen;
+  toggleDropdown() : void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  toggleSettingOptionsDropdown(type: 'firstCard' | 'secondCard' | 'category' | 'rounds' | 'options') : void {
+    if (type === 'firstCard'){
+      this.isFirstCardSettingsDropdownOpen = !this.isFirstCardSettingsDropdownOpen;
+    } else if (type === 'secondCard') {
+      this.isSecondCardSettingsDropdownOpen = !this.isSecondCardSettingsDropdownOpen;
+    } else if (type === 'category') {
+      this.isCategorySettingsDropdownOpen = !this.isCategorySettingsDropdownOpen;
+    } else if (type === 'rounds') {
+      this.isNumberOfRoundsSettingsDropdownOpen = !this.isNumberOfRoundsSettingsDropdownOpen;
+    } else if (type === 'options') {
+      this.isNumberOfOptionsSettingsDropdownOpen = !this.isNumberOfOptionsSettingsDropdownOpen;
     }
   }
 
@@ -89,6 +107,16 @@ export class GameSettingsComponent {
   updateCategory(option: Category): void {
     this.store.dispatch(new UpdateCategory(option));
     console.log('Kategorin upddaterat till', option);
+  }
+
+  updateNumberOfOptions(option: number): void {
+    this.store.dispatch(new UpdateNumberOfOptions(option));
+    console.log('Antal uppdaterat till', option);
+  }
+
+  updateNumberOfRounds(option: number): void {
+    this.store.dispatch(new UpdateNumberOfRounds(option));
+    console.log('Antal rundor uppdaterat till', option);
   }
   
 
