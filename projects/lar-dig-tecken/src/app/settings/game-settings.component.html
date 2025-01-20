@@ -1,5 +1,5 @@
 
-<div class=" border border-1 border-black gap-5 p-5">
+<div class=" border border-1 border-black gap-5 p-5 flex flex-col w-fit">
       <div class="flex gap-3 ">
         <button 
           (click)="toggleDropdown()"
@@ -10,9 +10,9 @@
           src="/assets/layout/icons/card-settings.svg" alt="">
           <h1>Kortinställningar</h1>
         </button>
-      </div>
+      </div>  
         <div *ngIf="isDropdownOpen"
-        class="p-3 flex justify-between items-start space-x-3"
+        class="p-3 flex flex-col justify-between items-start space-y-3"
         >
         <!-- Första kortets inställningar -->
          <section 
