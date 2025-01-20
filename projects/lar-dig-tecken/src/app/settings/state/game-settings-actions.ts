@@ -30,3 +30,10 @@ export class UpdateNumberOfOptions {
     constructor(public numberOfOptions: IGameSettingStateModel["numberOfOptions"]) {}
 
 }
+
+export class UpdateNumberOfRounds {
+    static readonly type: string = '[Pairing] Update Number of Rounds';
+
+    constructor(public numberOfRounds: IGameSettingStateModel["numberOfRounds"]) {}
+
+}
