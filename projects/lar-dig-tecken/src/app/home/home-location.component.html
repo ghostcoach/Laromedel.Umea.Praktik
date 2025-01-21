@@ -6,8 +6,23 @@
 
 <!-- <p class="font-semibold">{{CardMedia.ILLUSTRATION}}</p> -->
 <!-- <img src={{CardMedia.ILLUSTRATION}} alt=""> -->
-<app-game-settings
+
+<section class="flex gap-5 items-start">
+
+     <app-game-settings
      [gameSettings]="currentGameSettings"
      (settingSelected)="onSettingSelected($event)"
-></app-game-settings>
+     ></app-game-settings>
 
+     <div class=" flex flex-wrap gap-5">
+          <div 
+          *ngFor="let key of selectedGameKeys"
+          >
+          <app-selected-game-link
+          [selectedGame]="selectedGameEnum[key]"
+          class="flex"
+          ></app-selected-game-link>
+     </div>
+     </div>
+     
+</section>
