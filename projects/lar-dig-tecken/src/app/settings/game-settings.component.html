@@ -3,12 +3,12 @@
       <div class="flex gap-3 ">
         <button 
           (click)="toggleDropdown()"
-          class="flex items-center gap-3"
+          class="flex items-center gap-3 min-w-max"
         >
           <img 
           class="w-10"
           src="/assets/layout/icons/card-settings.svg" alt="">
-          <h1>Kortinställningar</h1>
+          <h1 class="">Kortinställningar</h1>
         </button>
       </div>  
         <div *ngIf="isDropdownOpen"
