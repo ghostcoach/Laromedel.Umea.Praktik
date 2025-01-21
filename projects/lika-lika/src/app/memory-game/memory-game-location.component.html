@@ -1,11 +1,12 @@
 <div class="page-layout page-layout_header-main-footer hidden lg:grid">
   <app-settings></app-settings>
   <div class="w-full h-full play-container flex">
-    <app-score></app-score>
-    <div class="w-full h-full grid place-items-center">
+    <app-score [category]="category"></app-score>
+    <app-game-over class="w-full place-items-center" *ngIf="isGameOver$ | async"></app-game-over>
+    <div class="w-full h-full grid place-items-center" *ngIf="(isGameOver$ | async) === false">
       <app-board [category]="category"></app-board>
     </div>
-    <app-score *ngIf="isTwoPlayers$ | async" [isFirstPlayer]="false"></app-score>
+    <app-score [category]="category" *ngIf="isTwoPlayers$ | async" [isFirstPlayer]="false"></app-score>
   </div>
 </div>
 

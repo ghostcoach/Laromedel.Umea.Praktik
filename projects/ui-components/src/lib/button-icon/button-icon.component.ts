@@ -2,10 +2,11 @@ import { Component, Input } from "@angular/core";
 import { NgOptimizedImage } from "@angular/common";
 
 @Component({
-    selector: "lib-button-icon",
-    imports: [NgOptimizedImage],
-    templateUrl: "./button-icon.component.html",
-    styleUrl: "./button-icon.component.scss"
+  selector: "lib-button-icon",
+  standalone: true,
+  imports: [NgOptimizedImage],
+  templateUrl: "./button-icon.component.html",
+  styleUrl: "./button-icon.component.scss",
 })
 export class ButtonIconComponent {
   @Input() src: string;

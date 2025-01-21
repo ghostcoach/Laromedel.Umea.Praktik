@@ -1,0 +1,6 @@
+<span
+  class="text-sm xl:text-lg 3xl:text-xl font-semibold tracking-wide"
+  [ngClass]="isFirstPlayer ? 'player-1' : 'player-2'"
+  *ngIf="isPlayersTurn$ | async">
+  {{ color }} tur
+</span>

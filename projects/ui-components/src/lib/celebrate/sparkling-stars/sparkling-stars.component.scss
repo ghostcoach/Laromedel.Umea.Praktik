@@ -1,4 +1,4 @@
-@import "../../../styles/colors";
+$correct-color--light: gold;
 
 .loader {
   position: relative;
@@ -9,10 +9,12 @@
   display: inline-block;
   vertical-align: middle;
 }
+
 .loader-star {
   position: absolute;
   top: calc(50% - 12px);
 }
+
 /*LOADER-18*/
 
 .css-star {
@@ -62,6 +64,7 @@
   -o-transform: rotate(-70deg);
   content: "";
 }
+
 .loader-18 .css-star {
   position: absolute;
   -webkit-transform: rotate(180deg) scale(0.5);
@@ -137,6 +140,7 @@ $star-5-top: 40px;
   -webkit-animation: star-crazyness 1s 1s ease infinite;
   animation: star-crazyness 1s 1s ease infinite;
 }
+
 @-webkit-keyframes star-crazyness {
   0% {
     opacity: 0.4;

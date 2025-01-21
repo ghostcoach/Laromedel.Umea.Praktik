@@ -9,6 +9,9 @@ const instrumentBaseHref: string = `${estetiskVerksamhetBaseHref}/instrument`;
 const syslojdBaseHref: string = `${estetiskVerksamhetBaseHref}/syslojd`;
 const traslojdBaseHref: string = `${estetiskVerksamhetBaseHref}/traslojd`;
 
+const estetiskVerksamhetScoreCardAltText: string = "Två spelkort med blåmönstrad bakgrund och vit ram lagda över varandra";
+const scoreCardImage: string = `${estetiskVerksamhetBaseHref}/poang-kort.svg`;
+
 export const estetiskVerksamhetData: ICategory[] = [
   {
     name: "bildbegrepp",
@@ -19,6 +22,8 @@ export const estetiskVerksamhetData: ICategory[] = [
       "Illustration av en vit konstnärspalett med blå färgfläckar och en pensel, placerad på en ljusblå bakgrund med prickmönster.",
     cardFrontImage: `${estetiskVerksamhetBaseHref}/spelkort-framsida.svg`,
     cardBackImage: `${estetiskVerksamhetBaseHref}/spelkort-baksida.svg`,
+    scoreCardImage: scoreCardImage,
+    scoreCardImageAlt: estetiskVerksamhetScoreCardAltText,
     subjectArea: SubjectArea.ESTETISK_VERKSAMHET,
     cards: [
       new MemoryCard(generateId(), "färgpenna", bildbegreppBaseHref),
@@ -50,6 +55,8 @@ export const estetiskVerksamhetData: ICategory[] = [
     menuImageAlt: "Illustration av en vit akustisk gitarr med blå detaljer, mot en ljusblå bakgrund med prickmönster.",
     cardFrontImage: "",
     cardBackImage: "",
+    scoreCardImage: scoreCardImage,
+    scoreCardImageAlt: estetiskVerksamhetScoreCardAltText,
     subjectArea: SubjectArea.ESTETISK_VERKSAMHET,
     cards: [
       new MemoryCard(generateId(), "gitarr", instrumentBaseHref),
@@ -79,6 +86,8 @@ export const estetiskVerksamhetData: ICategory[] = [
     menuImageAlt: "Illustration av en vit trådrulle med blå tråd och en synål, mot en ljusblå bakgrund med prickmönster.",
     cardFrontImage: "",
     cardBackImage: "",
+    scoreCardImage: scoreCardImage,
+    scoreCardImageAlt: estetiskVerksamhetScoreCardAltText,
     subjectArea: SubjectArea.ESTETISK_VERKSAMHET,
     cards: [
       new MemoryCard(generateId(), "nål", syslojdBaseHref),
@@ -108,6 +117,8 @@ export const estetiskVerksamhetData: ICategory[] = [
     menuImageAlt: "Illustration av en såg med vit blad och blått handtag, placerad på en ljusblå bakgrund med prickmönster.",
     cardFrontImage: "",
     cardBackImage: "",
+    scoreCardImage: scoreCardImage,
+    scoreCardImageAlt: estetiskVerksamhetScoreCardAltText,
     subjectArea: SubjectArea.ESTETISK_VERKSAMHET,
     cards: [
       new MemoryCard(generateId(), "hammare", traslojdBaseHref),

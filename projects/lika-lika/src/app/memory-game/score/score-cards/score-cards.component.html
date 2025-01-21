@@ -1,0 +1,9 @@
+<div class="w-full h-full flex items-end align">
+  <div *ngIf="playerScore$ | async as playerScore">
+    <img *ngFor="let _ of [].constructor(playerScore)"
+         [src]="category.scoreCardImage"
+         [alt]="category.scoreCardImageAlt"
+         class="object-cover w-3/5 aspect-1 mx-auto"
+         role="presentation">
+  </div>
+</div>
