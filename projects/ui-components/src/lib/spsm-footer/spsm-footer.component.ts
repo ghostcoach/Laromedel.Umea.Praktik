@@ -3,10 +3,11 @@ import {NgIf, NgOptimizedImage} from "@angular/common";
 import {MatIconModule} from "@angular/material/icon";
 
 @Component({
-    selector: "lib-spsm-footer",
-    imports: [NgOptimizedImage, MatIconModule, NgIf],
-    templateUrl: "./spsm-footer.component.html",
-    styleUrl: "./spsm-footer.component.scss"
+  selector: "lib-spsm-footer",
+  standalone: true,
+  imports: [NgOptimizedImage, MatIconModule, NgIf],
+  templateUrl: "./spsm-footer.component.html",
+  styleUrl: "./spsm-footer.component.scss",
 })
 export class SpsmFooterComponent {
   @Input() isSpsmBlue: boolean = false;
