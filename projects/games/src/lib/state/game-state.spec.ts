@@ -1,4 +1,4 @@
-import {TestBed} from "@angular/core/testing";
+import {fakeAsync, TestBed, tick} from "@angular/core/testing";
 import {NgxsModule, Store} from "@ngxs/store";
 import {Player} from "../api/player";
 import {GameState} from "./game-state";
@@ -34,12 +34,14 @@ describe("GameState", (): void => {
     expect(state.currentPlayer).toBe(Player.PLAYER2);
   });
 
-  it("should set game over when SetGameOver is dispatched", (): void => {
+  it("should set game over when SetGameOver is dispatched", fakeAsync((): void => {
     store.dispatch(new SetGameOver());
+
+    tick(GameState.TIME_TO_GAME_OVER_SCREEN_MS + 250);
 
     const state: IGameStateModel = store.selectSnapshot((state) => state.gameState);
     expect(state.gameOver).toBe(true);
-  });
+  }));
 
   it("should increment score for the current player when IncrementScoreForCurrentPlayer is dispatched", (): void => {
     store.dispatch(new IncrementScoreForCurrentPlayer());

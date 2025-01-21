@@ -23,6 +23,9 @@ const defaultState: IGameStateModel = {
 })
 @Injectable()
 export class GameState {
+  public gameOverTimeout: ReturnType<typeof setTimeout>;
+  public static TIME_TO_GAME_OVER_SCREEN_MS: number = 3000;
+
   @Action(ToggleCurrentPlayer)
   public toggleCurrentPlayer({getState, patchState}: StateContext<IGameStateModel>): void {
     const {currentPlayer} = getState();
@@ -33,9 +36,11 @@ export class GameState {
 
   @Action(SetGameOver)
   public setGameOver({patchState}: StateContext<IGameStateModel>): void {
-    patchState({
-      gameOver: true,
-    });
+    this.gameOverTimeout = setTimeout((): void => {
+      patchState({
+        gameOver: true,
+      });
+    }, GameState.TIME_TO_GAME_OVER_SCREEN_MS);
   }
 
   @Action(IncrementScoreForCurrentPlayer)
@@ -62,5 +67,6 @@ export class GameState {
   @Action(ResetGameState)
   public resetGameState({patchState}: StateContext<IGameStateModel>): void {
     patchState(defaultState);
+    clearTimeout(this.gameOverTimeout);
   }
 }

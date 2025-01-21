@@ -22,8 +22,8 @@ import {
   ToggleCurrentPlayer,
 } from "../../state/game-state-actions";
 import {GameStateQueries} from "../../state/game-state-queries";
-import {IPairingMode} from "../../api/pairing-mode";
-import {CardContent} from "../../api/card-content";
+import {IPairingMode} from "../api/pairing-mode";
+import {CardContent} from "../api/card-content";
 import {PlayMode} from "../api/play-mode";
 import {AudioService} from "@media/audio.service";
 import {AudioStateQueries} from "@media/state/audio-state-queries";
@@ -46,7 +46,7 @@ const defaultState: IMemoryGameStateModel = {
 export class MemoryGameState {
   public static readonly TIME_UNTIL_CARDS_FLIP_MS: number = 600;
   public static readonly TIME_AFTER_FLIP_OVER_TO_PLAY_AUDIO_MS: number = 300;
-  public static readonly MEAN_MEDIA_DURATION_MS: number = 3500;
+  public static readonly MEAN_MEDIA_DURATION_MS: number = 2500;
   public static readonly TIMEOUT_LENGTH_MEDIA_MS: number =
     MemoryGameState.TIME_UNTIL_CARDS_FLIP_MS + MemoryGameState.TIME_AFTER_FLIP_OVER_TO_PLAY_AUDIO_MS;
 
@@ -128,9 +128,13 @@ export class MemoryGameState {
 
     const state: IMemoryGameStateModel = ctx.getState();
 
-    this.isSelectedCardSamePair(state.selectedCards)
-      ? this.handleMatchedCards(ctx, state.selectedCards)
-      : ctx.dispatch(new IndicateError());
+    if (this.isSelectedCardSamePair(state.selectedCards)) {
+      this.handleMatchedCards(ctx, state.selectedCards);
+      return;
+    }
+
+    ctx.dispatch(new IndicateError());
+    this.switchPlayer(ctx);
   }
 
   @Action(IndicateError)
@@ -151,7 +155,6 @@ export class MemoryGameState {
   public continueAfterMismatch(ctx: StateContext<IMemoryGameStateModel>): void {
     this.resetIndicateError(ctx);
     this.resetSelectedCards(ctx);
-    this.switchPlayer(ctx);
   }
 
   @Action(ResetMemoryGame)
