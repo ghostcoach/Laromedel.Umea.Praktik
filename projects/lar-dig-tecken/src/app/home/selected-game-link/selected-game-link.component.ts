@@ -11,7 +11,7 @@ import { SelectedGame } from "../../selected-game/api/selected-game";
   // standalone: true,
   imports: [NgClass, CapitalizePipe, RouterLink],
   templateUrl: './selected-game-link.component.html',
-  styleUrl: './selected-game-link.component.scss',
+  // styleUrl: './selected-game-link.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectedGameLinkComponent {
