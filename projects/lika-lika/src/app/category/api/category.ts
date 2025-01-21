@@ -11,5 +11,7 @@ export interface ICategory {
   cardBackImage: string;
   subjectArea: SubjectArea;
   cards: MemoryCard[];
+  scoreCardImage: string;
+  scoreCardImageAlt: string;
   wordsNotInSameDeck: string[];
 }

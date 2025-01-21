@@ -27,6 +27,8 @@
 
 
 .player-1 {
+  color: $player1-color;
+
   .score-circle {
     background-color: $player1-color;
   }
@@ -37,6 +39,8 @@
 }
 
 .player-2 {
+  color: $player2-color;
+
   .score-circle {
     background-color: $player2-color;
   }

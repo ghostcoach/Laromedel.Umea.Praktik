@@ -1,5 +1,7 @@
-import {ChangeDetectionStrategy, Component} from "@angular/core";
+import {ChangeDetectionStrategy, Component, inject} from "@angular/core";
 import {UntilDestroy} from "@ngneat/until-destroy";
+import {Store} from "@ngxs/store";
+import {RestartMemoryGame} from "@games/memory-game-actions";
 
 @UntilDestroy()
 @Component({
@@ -11,7 +13,9 @@ import {UntilDestroy} from "@ngneat/until-destroy";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReplayButtonComponent {
+  public store: Store = inject(Store);
+
   public handleReplay(): void {
-    throw new Error("Not implemented");
+    this.store.dispatch(new RestartMemoryGame());
   }
 }

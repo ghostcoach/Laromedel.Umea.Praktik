@@ -1,5 +1,11 @@
-<div class="score-container w-36 h-full flex justify-center pt-4"
+<div class="score-container w-36 h-full flex pt-4 flex-col items-center pb-2 gap-2"
      [ngClass]="isFirstPlayer ? 'player-1' : 'player-2'"
 >
   <app-score-circle [isFirstPlayer]="isFirstPlayer"></app-score-circle>
+  <app-score-text [isFirstPlayer]="isFirstPlayer"></app-score-text>
+  <app-score-cards
+    [category]="category"
+    [isFirstPlayer]="isFirstPlayer"
+    class="h-full flex-grow"
+  ></app-score-cards>
 </div>

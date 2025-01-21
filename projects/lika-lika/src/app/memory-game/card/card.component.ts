@@ -11,6 +11,7 @@ import {ProcessSelectedMemoryCards, SelectMemoryCard} from "@games/memory-game-a
 import {MemoryGameState} from "@games/memory-game-state";
 import {CardContent} from "@games/card-content";
 import {AudioStateQueries} from "@media/audio-state-queries";
+import {SettingsStateQueries} from "../../settings/state/settings-state-queries";
 
 @UntilDestroy()
 @Component({
@@ -43,6 +44,8 @@ export class CardComponent implements AfterViewInit, OnDestroy {
     .pipe(map((isMatchedFn: (id: string) => boolean): boolean => isMatchedFn(this.memoryCard.id)));
 
   public hasMatchError$: Observable<boolean> = this.store.select(MemoryGameQueries.hasMatchError$);
+
+  public isOpenCardsPlayMode$: Observable<boolean> = this.store.select(SettingsStateQueries.isOpenCardsPlayMode$);
 
   constructor(
     private store: Store,
