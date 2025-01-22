@@ -1,10 +1,8 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, ParamMap, RouterLink } from "@angular/router";
+import { ActivatedRoute, ParamMap } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { AsyncPipe, NgClass, NgForOf } from "@angular/common";
-import { CapitalizePipe } from "@utility/capitalize.pipe";
 import { UpdateSelectedGame } from '../state/selected-game-state-actions';
 import { SelectedGame } from '../api/selected-game';
 import { SelectedGameStateQueries } from '../state/selected-game-state-queries';
@@ -13,7 +11,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 @UntilDestroy
 @Component({
   selector: 'app-selected-game-location',
-  imports: [NgForOf, AsyncPipe, RouterLink, CapitalizePipe, NgClass, CommonModule],
+  imports: [CommonModule],
   templateUrl: './selected-game-location.component.html',
   styleUrl: './selected-game-location.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

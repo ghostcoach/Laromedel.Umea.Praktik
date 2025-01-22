@@ -1,4 +1,4 @@
-<h1 class="font-bold text-2xl p-5">Lika = Lika: Lär dig tecken</h1>
+
 
 <!-- <p class="font-semibold">Exempel på hur man refererar till något i public foldern:</p>
 <img class="w-32" src="/assets/subject-area/estetisk-verksamhet/bildbegrepp/illustration/lim.svg"
@@ -6,23 +6,27 @@
 
 <!-- <p class="font-semibold">{{CardMedia.ILLUSTRATION}}</p> -->
 <!-- <img src={{CardMedia.ILLUSTRATION}} alt=""> -->
-
-<section class="flex gap-5 items-start">
-
+<header class="flex justify-between mb-4">
+     <h1 class="font-bold text-2xl p-5">Lika = Lika: Lär dig tecken</h1>
      <app-game-settings
      [gameSettings]="currentGameSettings"
      (settingSelected)="onSettingSelected($event)"
+     class="absolute right-0"
      ></app-game-settings>
+</header>
 
-     <div class=" flex flex-wrap gap-5">
-          <div 
-          *ngFor="let key of selectedGameKeys"
-          >
-          <app-selected-game-link
-          [selectedGame]="selectedGameEnum[key]"
-          class="flex"
-          ></app-selected-game-link>
-     </div>
-     </div>
-     
+<!-- Conditionally show the section only when the router-outlet is not rendering a component -->
+<section *ngIf="!isComponentLoaded" class="flex gap-5 items-start">
+  <div class="flex flex-wrap gap-5">
+    <div *ngFor="let key of selectedGameKeys">
+      <app-selected-game-link
+        [selectedGame]="selectedGameEnum[key]"
+        class="flex"
+      ></app-selected-game-link>
+    </div>
+  </div>
 </section>
+
+<!-- This is where the selected component will be dynamically loaded -->
+<router-outlet (activate)="onComponentActivated()" (deactivate)="onComponentDeactivated()"></router-outlet>
+
