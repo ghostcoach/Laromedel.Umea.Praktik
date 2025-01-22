@@ -5,15 +5,16 @@ import {IGameSettingStateModel} from "../settings/state/api/game-settings-state-
 import {CardContent} from '../../../../games/src/lib/api/card-content'
 import {Category} from '../category/api/category'
 import {Store} from '@ngxs/store'
-import {RouterLink} from "@angular/router";
+import {RouterLink, RouterOutlet, Router, ActivatedRoute} from "@angular/router";
 import {SelectedGameLinkComponent} from  "./selected-game-link/selected-game-link.component";
 import { SelectedGame } from "../selected-game/api/selected-game";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 
 
 @UntilDestroy()
 @Component({
-  imports: [GameSettingsComponent, SelectedGameLinkComponent, NgForOf],
+  imports: [GameSettingsComponent, SelectedGameLinkComponent, NgForOf, RouterOutlet, NgIf],
+  standalone: true,
   templateUrl: "./home-location.component.html",
   styleUrl: "./home-location.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,12 +28,33 @@ export class HomeLocationComponent {
   // CardMedia = {
   //   ILLUSTRATION: '/assets/subject-area/estetisk-verksamhet/bildbegrepp/illustration/lim.svg'
   // }
+  isComponentLoaded = false;
+
+
+  constructor(private router: Router){
+    console.log(this.isComponentLoaded);
+    
+  }
+  
+  onComponentActivated(){
+   this.isComponentLoaded = true
+  }
+  onComponentDeactivated() {
+    this.isComponentLoaded = false;
+  }
 
   public selectedGameEnum = SelectedGame;
 
-  get selectedGameKeys(){
-    return Object.keys(this.selectedGameEnum) as (keyof typeof SelectedGame)[];
+  // get selectedGameKeys(){
+  //   return Object.keys(this.selectedGameEnum) as (keyof typeof SelectedGame)[];
+  // }
+  get selectedGameKeys() {
+    const keys = Object.keys(this.selectedGameEnum) as (keyof typeof SelectedGame)[];
+    console.log('selectedGameKeys:', keys);
+    return keys;
   }
+
+  
 
   currentGameSettings: IGameSettingStateModel = {
     numberOfOptions: 3,
@@ -46,6 +68,7 @@ export class HomeLocationComponent {
 
   onSettingSelected(setting: string):void {
     console.log('Selected setting', setting);
+    
   }
 
 

@@ -6,11 +6,17 @@ export const routes: Routes = [
   {
     path: "",
     component: HomeLocationComponent,
+    children: [
+      {
+        path: "valt-spel/:selected-game",
+        component: SelectedGameLinkComponent,
+      },
+    ],
   },
-  {
-    path: "valt-spel/:selected-game",
-    component: SelectedGameLinkComponent,
-  },
+  // {
+  //   path: "valt-spel/:selected-game",
+  //   component: SelectedGameLinkComponent,
+  // },
   { path: "**", redirectTo: "" },
 ];
 

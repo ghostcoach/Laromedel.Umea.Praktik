@@ -1,7 +1,7 @@
 <a 
     class="px-10 py-5"
     [routerLink]="['/valt-spel', selectedGameDataName]"
-    [ngClass]="selectedGame ? 'selected-game-' + selectedGameDataName : ''"
+    [ngClass]="selectedGame ? 'selected-game-' + selectedGameDataName : '' "
 >
 <span
   class="tracking-wide font-semibold"
@@ -9,3 +9,5 @@
   {{ selectedGame | capitalize }}
 </span>
 </a>
+
+<ng-container *ngIf="dynamicContent" [ngComponentOutlet]="dynamicContent"></ng-container>
