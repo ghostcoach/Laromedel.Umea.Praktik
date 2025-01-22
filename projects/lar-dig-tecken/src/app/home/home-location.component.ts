@@ -14,6 +14,7 @@ import {NgForOf} from "@angular/common";
 @UntilDestroy()
 @Component({
   imports: [GameSettingsComponent, SelectedGameLinkComponent, NgForOf],
+  standalone: true,
   templateUrl: "./home-location.component.html",
   styleUrl: "./home-location.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,9 +31,16 @@ export class HomeLocationComponent {
 
   public selectedGameEnum = SelectedGame;
 
-  get selectedGameKeys(){
-    return Object.keys(this.selectedGameEnum) as (keyof typeof SelectedGame)[];
+  // get selectedGameKeys(){
+  //   return Object.keys(this.selectedGameEnum) as (keyof typeof SelectedGame)[];
+  // }
+  get selectedGameKeys() {
+    const keys = Object.keys(this.selectedGameEnum) as (keyof typeof SelectedGame)[];
+    console.log('selectedGameKeys:', keys);
+    return keys;
   }
+
+  
 
   currentGameSettings: IGameSettingStateModel = {
     numberOfOptions: 3,
@@ -46,6 +54,7 @@ export class HomeLocationComponent {
 
   onSettingSelected(setting: string):void {
     console.log('Selected setting', setting);
+    
   }
 
 
