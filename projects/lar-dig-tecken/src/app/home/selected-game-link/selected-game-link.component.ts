@@ -25,18 +25,18 @@ export class SelectedGameLinkComponent {
   }
 
   constructor(private route: ActivatedRoute) {
-    console.log('SelectedGameLinkComponent constructor');
+    // console.log('SelectedGameLinkComponent constructor');
     
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap): void => {
-      console.log('Params:', params);
+      // console.log('Params:', params);
       
       const selectedGame: string | null = params.get("selected-game") as string;
       if (!selectedGame) return;
       this.dynamicContent = this.componentMap[selectedGame];
-      console.log('Dynamic Content:', this.dynamicContent);  // Log to check the value of dynamicContent
+      // console.log('Dynamic Content:', this.dynamicContent);  // Log to check the value of dynamicContent
 
     });
 

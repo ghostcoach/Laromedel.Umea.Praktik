@@ -1,14 +1,16 @@
-import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
-import {UntilDestroy} from "@ngneat/until-destroy";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from "@angular/core";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {GameSettingsComponent} from '../settings/game-settings.component'
 import {IGameSettingStateModel} from "../settings/state/api/game-settings-state-model";
 import {CardContent} from '../../../../games/src/lib/api/card-content'
 import {Category} from '../category/api/category'
 import {Store} from '@ngxs/store'
-import {RouterLink, RouterOutlet, Router, ActivatedRoute} from "@angular/router";
+import {RouterLink, RouterOutlet, Router, ActivatedRoute, NavigationEnd} from "@angular/router";
 import {SelectedGameLinkComponent} from  "./selected-game-link/selected-game-link.component";
 import { SelectedGame } from "../selected-game/api/selected-game";
 import {NgForOf, NgIf} from "@angular/common";
+import { Subscription } from "rxjs";
+import {filter} from "rxjs/operators"; 
 
 
 @UntilDestroy()
@@ -19,7 +21,7 @@ import {NgForOf, NgIf} from "@angular/common";
   styleUrl: "./home-location.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeLocationComponent {
+export class HomeLocationComponent implements OnInit {
   //In tsconfig paths to libraries are defined. To use them in the code, the following import statement is for example used:
   //import {MemoryCard} from "@games/memory-card";
   //Components that are routes should have to post-fix "Location" in their name and should not have a selector defined (e.g. "app-home-location")
@@ -28,33 +30,37 @@ export class HomeLocationComponent {
   // CardMedia = {
   //   ILLUSTRATION: '/assets/subject-area/estetisk-verksamhet/bildbegrepp/illustration/lim.svg'
   // }
-  isComponentLoaded = false;
 
-
-  constructor(private router: Router){
-    console.log(this.isComponentLoaded);
-    
-  }
-  
-  onComponentActivated(){
-   this.isComponentLoaded = true
-  }
-  onComponentDeactivated() {
-    this.isComponentLoaded = false;
-  }
 
   public selectedGameEnum = SelectedGame;
+  currentPath: string = '';
+  isHomeVisible: boolean = false;
 
-  // get selectedGameKeys(){
-  //   return Object.keys(this.selectedGameEnum) as (keyof typeof SelectedGame)[];
-  // }
-  get selectedGameKeys() {
-    const keys = Object.keys(this.selectedGameEnum) as (keyof typeof SelectedGame)[];
-    console.log('selectedGameKeys:', keys);
-    return keys;
+
+  constructor(private router: Router, private cdr: ChangeDetectorRef){}
+
+  ngOnInit(): void {
+    // Subscribe to NavigationEnd events to detect route changes
+    this.router.events
+    .pipe(
+      filter((event) => event instanceof NavigationEnd), // Only process NavigationEnd events
+      untilDestroyed(this) // Automatically unsubscribe on component destroy
+    )
+    .subscribe((event: NavigationEnd) => {
+      this.currentPath = event.urlAfterRedirects;
+      this.updateHomeVisibility()
+    });
+
+    // Initial check for the current path
+    this.currentPath = this.router.url;
+    this.updateHomeVisibility()
   }
 
-  
+  get selectedGameKeys() {
+    const keys = Object.keys(this.selectedGameEnum) as (keyof typeof SelectedGame)[];
+    
+    return keys;
+  }
 
   currentGameSettings: IGameSettingStateModel = {
     numberOfOptions: 3,
@@ -66,11 +72,13 @@ export class HomeLocationComponent {
     numberOfRounds: 5
   }
 
-  onSettingSelected(setting: string):void {
-    console.log('Selected setting', setting);
-    
-  }
+  updateHomeVisibility(): void {
+    // Determine if the current path is the home page
+    this.isHomeVisible = this.currentPath === '/';
 
+    // Trigger Angular's change detection
+    this.cdr.detectChanges();
+  }
 
 
 }

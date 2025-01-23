@@ -6,18 +6,18 @@
 
 <!-- <p class="font-semibold">{{CardMedia.ILLUSTRATION}}</p> -->
 <!-- <img src={{CardMedia.ILLUSTRATION}} alt=""> -->
+ <div class="flex flex-col min-h-screen">
 <header class="flex justify-between mb-4">
      <h1 class="font-bold text-2xl p-5">Lika = Lika: Lär dig tecken</h1>
      <app-game-settings
      [gameSettings]="currentGameSettings"
-     (settingSelected)="onSettingSelected($event)"
      class="absolute right-0"
      ></app-game-settings>
 </header>
 
 <!-- Conditionally show the section only when the router-outlet is not rendering a component -->
-<section *ngIf="!isComponentLoaded" class="flex gap-5 items-start">
-  <div class="flex flex-wrap gap-5">
+<section *ngIf="isHomeVisible" class="flex p-4 items-center justify-center flex-grow">
+  <div class="flex flex-wrap gap-5 max-w-screen-lg w-full justify-center">
     <div *ngFor="let key of selectedGameKeys">
       <app-selected-game-link
         [selectedGame]="selectedGameEnum[key]"
@@ -28,5 +28,5 @@
 </section>
 
 <!-- This is where the selected component will be dynamically loaded -->
-<router-outlet (activate)="onComponentActivated()" (deactivate)="onComponentDeactivated()"></router-outlet>
-
+<router-outlet></router-outlet>
+</div>
