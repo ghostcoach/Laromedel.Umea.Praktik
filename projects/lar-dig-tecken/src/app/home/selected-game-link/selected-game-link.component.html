@@ -1,6 +1,6 @@
 <a 
-    class="px-10 py-8 w-52 rounded-sm text-center"
-    [routerLink]="['/valt-spel', selectedGameDataName]"
+    class="px-10 py-8 w-52 rounded-sm text-center border border-black border-1"
+    [routerLink]="['/', selectedGameDataName]"
     [ngClass]="selectedGame ? 'selected-game-' + selectedGameDataName : '' "
 >
 <span
@@ -11,3 +11,18 @@
 </a>
 
 <ng-container *ngIf="dynamicContent" [ngComponentOutlet]="dynamicContent"></ng-container>
+<!-- <ng-container *ngIf="currentRoute === ''">
+
+  <a 
+    class="px-10 py-8 w-52 rounded-sm text-center border border-black border-1"
+    [routerLink]="['/', selectedGameDataName]"
+    [ngClass]="selectedGame ? 'selected-game-' + selectedGameDataName : '' "
+  >
+    <span class="tracking-wide font-semibold">
+      {{ selectedGame | capitalize }}
+    </span>
+  </a>
+
+
+  <ng-container *ngIf="dynamicContent" [ngComponentOutlet]="dynamicContent"></ng-container>
+</ng-container> -->

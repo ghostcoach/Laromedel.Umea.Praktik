@@ -8,7 +8,7 @@ export const routes: Routes = [
     component: HomeLocationComponent,
     children: [
       {
-        path: "valt-spel/:selected-game",
+        path: ":selected-game",
         component: SelectedGameLinkComponent,
       },
     ],

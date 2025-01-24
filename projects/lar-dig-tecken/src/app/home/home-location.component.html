@@ -17,7 +17,7 @@
 
 <!-- Conditionally show the section only when the router-outlet is not rendering a component -->
 <section *ngIf="isHomeVisible" class="flex p-4 items-center justify-center flex-grow">
-  <div class="flex flex-wrap gap-5 max-w-screen-lg w-full justify-center">
+  <div class="flex flex-wrap gap-5 max-w-screen-md w-full justify-center">
     <div *ngFor="let key of selectedGameKeys">
       <app-selected-game-link
         [selectedGame]="selectedGameEnum[key]"

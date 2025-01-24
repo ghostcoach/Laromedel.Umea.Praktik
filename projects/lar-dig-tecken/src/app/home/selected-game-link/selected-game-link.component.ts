@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, Input, Type} from "@angular/core";
-import {ActivatedRoute, ParamMap} from "@angular/router";
+import {ActivatedRoute, ActivatedRouteSnapshot, ParamMap} from "@angular/router";
 import { SlumpgeneratorLocationComponent } from "../../slumpgenerator/slumpgenerator-location/slumpgenerator-location.component";
 import {UntilDestroy} from "@ngneat/until-destroy";
 import {CommonModule, NgClass} from "@angular/common";
 import {CapitalizePipe} from "@utility/capitalize.pipe";
-import {RouterLink} from "@angular/router";
+import {RouterLink, Router} from "@angular/router";
 import { SelectedGame } from "../../selected-game/api/selected-game";
 
 @UntilDestroy()
@@ -19,13 +19,21 @@ import { SelectedGame } from "../../selected-game/api/selected-game";
 export class SelectedGameLinkComponent {
   @Input() selectedGame: SelectedGame;
   public dynamicContent: Type<any>
+  currentRoute: string;
+
+  // constructor(private router: Router, private route: ActivatedRoute) {
+  //   this.router.events.subscribe(()=> {
+  //     this.currentRoute = this.router.url;
+  //   })
+  // }
 
   private componentMap: Record<string, Type<any>> = {
     slumpgenerator: SlumpgeneratorLocationComponent
   }
 
   constructor(private route: ActivatedRoute) {
-    // console.log('SelectedGameLinkComponent constructor');
+    this.currentRoute = this.route.snapshot.url.join('');
+    console.log(this.currentRoute);
     
   }
 
