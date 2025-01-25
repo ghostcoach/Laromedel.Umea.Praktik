@@ -1,7 +1,7 @@
 <div class="m-3">
     <section class="relative">
         <h1 class="text-2xl font-bold mb-5 text-center tracking-wide">Slumpgenerator</h1>
-        <div class="flex absolute top-0 right-0">
+        <div class="flex absolute top-0 right-0 gap-2 z-0">
             <ng-container *ngIf="numberOfRounds$ | async as numberOfRounds">
                 <ng-container *ngFor="let i of getNumberArray(numberOfRounds); let idx = index">
                     <app-rounds></app-rounds>
