@@ -15,7 +15,10 @@
 
             <section class="flex gap-4 flex-col items-center justify-center">
                 <ng-container *ngIf="pairingModeFirst$ | async as pairingModeFirst">
-                    <app-card [content]="pairingModeFirst" [content]="getContent(pairingModeFirst, 0)"></app-card>
+                    <app-card 
+                        [pairingMode]="pairingModeFirst" 
+                        [content]="getContent(pairingModeFirst, 0)"
+                    ></app-card>
                 </ng-container>
                 <app-start-button></app-start-button>
             </section>
