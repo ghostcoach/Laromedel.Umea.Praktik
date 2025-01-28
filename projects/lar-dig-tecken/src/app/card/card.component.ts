@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { CardContentComponent } from './card-content/card-content.component';
 import { CommonModule } from "@angular/common";
 
@@ -12,6 +12,7 @@ import { CommonModule } from "@angular/common";
 export class CardComponent {
   @Input() content!: string;
   @Input() pairingMode!: string;
+  @Input() category!: string;
   @Output() cardClick = new EventEmitter<string>()
 
   onCardClick(): void {

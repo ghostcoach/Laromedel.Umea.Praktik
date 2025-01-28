@@ -15,7 +15,7 @@ const stateToken: StateToken<IGameSettingStateModel> = new StateToken<IGameSetti
             first: CardContent.WORD,
             second: CardContent.WORD,
         },
-        category: Category.ALLA,
+        category: Category.BILDBEGREPP,
         numberOfRounds: 5,
     },
 })
