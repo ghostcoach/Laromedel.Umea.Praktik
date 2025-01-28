@@ -8,6 +8,7 @@ import {
   ToggleFullscreen,
   UpdateIsWebMSupported,
   UpdateIsWebPSupported,
+  UpdateWindowDimensions,
 } from "./application-state-actions";
 
 const stateToken: StateToken<IApplicationStateModel> = new StateToken<IApplicationStateModel>("applicationState");
@@ -21,6 +22,8 @@ const stateToken: StateToken<IApplicationStateModel> = new StateToken<IApplicati
     isFullscreen: false,
     isWebMSupported: true,
     isWebPSupported: true,
+    windowWidth: window.innerWidth,
+    windowHeight: window.innerHeight,
   },
 })
 @Injectable()
@@ -62,5 +65,13 @@ export class ApplicationState {
   @Action(UpdateIsWebPSupported)
   public updateIsWebPSupported({patchState}: StateContext<IApplicationStateModel>, {isWebPSupported}: UpdateIsWebPSupported): void {
     patchState({isWebPSupported});
+  }
+
+  @Action(UpdateWindowDimensions)
+  public updateWindowDimensions(
+    {patchState}: StateContext<IApplicationStateModel>,
+    {windowWidth, windowHeight}: UpdateWindowDimensions,
+  ): void {
+    patchState({windowWidth, windowHeight});
   }
 }

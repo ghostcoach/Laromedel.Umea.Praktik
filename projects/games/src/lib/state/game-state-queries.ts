@@ -22,6 +22,16 @@ export class GameStateQueries {
   }
 
   @Selector([GameState])
+  public static isPlayer1Turn$(state: IGameStateModel): boolean {
+    return state.currentPlayer === Player.PLAYER1;
+  }
+
+  @Selector([GameState])
+  public static isPlayer2Turn$(state: IGameStateModel): boolean {
+    return state.currentPlayer === Player.PLAYER2;
+  }
+
+  @Selector([GameState])
   public static player1Score$(state: IGameStateModel): number {
     return state.scores[Player.PLAYER1];
   }

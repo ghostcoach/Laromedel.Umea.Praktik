@@ -1,5 +1,5 @@
 import {generateId, parseName} from "@utility/util";
-import {CardContent} from "../../api/card-content";
+import {CardContent} from "./card-content";
 import {ImageExtension} from "@media/image-extension";
 import {VideoExtension} from "@media/video-extension";
 import {AudioExtension} from "@media/audio-extension";

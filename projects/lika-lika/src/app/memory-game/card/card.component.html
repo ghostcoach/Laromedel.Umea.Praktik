@@ -1,19 +1,17 @@
-<button class="card-btn w-36 aspect-[63/50] relative landscape-mobile:w-40 md:w-48 lg:w-50 xl:w-56 2xl:w-60"
+<button #cardButton
+        class="memory-card"
+        [ngClass]="(isReadyToPlay$ | async) ? 'opacity-100' : 'opacity-0'"
         (click)="handleCardSelect()"
-        [class.selected]="(isSelected$ | async)"
-        [class.selected-open]="(isSelected$ | async) && (isOpenCardsPlayMode$ | async)"
-        [class.matched]="isMatched$ | async"
-        [class.animate-hide]="isMatched$ | async"
-        [class.mismatched]="(hasMatchError$ | async) && (isSelected$ | async)"
+        [class.selected]="(visualState$ | async) === 'selected'"
+        [class.selected-open]="(visualState$ | async) === 'selected' && (isOpenCardsPlayMode$ | async)"
+        [class.matched]="(visualState$ | async) === 'matched'"
+        [class.animate-hide]="(visualState$ | async) === 'matched'"
+        [class.mismatched]="(visualState$ | async) === 'mismatched'"
         [class.disappear]="shouldDisappear">
   <div class="card-container w-full h-full">
     <div class="card w-full h-full"
-         [ngClass]="
-         { 'is-face-down': (isSelected$ | async) === false &&
-         (isMatched$ | async) === false &&
-         (isOpenCardsPlayMode$ | async) === false
-         }"
-    >
+         [ngClass]="{'is-face-down': (visualState$ | async) === 'default' &&
+                 (isOpenCardsPlayMode$ | async) === false}">
       <div class="card-front card-size" [style.backgroundImage]="'url(' + cardFrontImage + ')'">
         <app-card-content
           #cardContent
@@ -26,3 +24,9 @@
     </div>
   </div>
 </button>
+<app-deal-animated-card
+  *ngIf="isLoaded && ((isReadyToPlay$ | async) === false)"
+  [cardButton]="cardButton"
+  [cardBackImage]="cardBackImage"
+  [cardIndex]="cardIndex">
+</app-deal-animated-card>

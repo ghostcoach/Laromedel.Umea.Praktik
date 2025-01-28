@@ -6,12 +6,13 @@ import {SettingsStateQueries} from "../../settings/state/settings-state-queries"
 import {IImage} from "@media/image";
 import {GameStateQueries} from "@games/game-state-queries";
 import {Player} from "@games/src/lib/api/player";
+import {ConfettiCanonComponent} from "@ui-components/confetti-canon.component";
 
 @UntilDestroy()
 @Component({
   selector: "app-game-over",
   standalone: true,
-  imports: [],
+  imports: [ConfettiCanonComponent],
   templateUrl: "./game-over.component.html",
   styleUrl: "./game-over.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
