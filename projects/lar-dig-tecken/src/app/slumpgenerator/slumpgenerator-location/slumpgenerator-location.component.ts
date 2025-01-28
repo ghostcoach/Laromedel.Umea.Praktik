@@ -25,6 +25,8 @@ export class SlumpgeneratorLocationComponent {
   @Select(GameSettingsStateQueries.numberOfRounds$) numberOfRounds$!:Observable<number>
   @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
 
+  private shuffledWords: string[] = [];
+
   constructor() { }
 
   getNumberArray(count: number): number[] {
@@ -39,14 +41,35 @@ export class SlumpgeneratorLocationComponent {
       .replace(/ö/g, 'o');
   }
 
+  shuffleArray<T>(array: T[]): T[] {
+    return array
+      .map(value => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+  }
+
+  initializeWords(category: string, numberOfOptions: number): void {
+    const words = Object.values(BildbegreppWords);
+    this.shuffledWords = this.shuffleArray(words).slice(0, numberOfOptions);
+
+    const firstCardWord = this.shuffledWords[0];
+    if (!this.shuffledWords.includes(firstCardWord)) {
+      this.shuffledWords[Math.floor(Math.random() * numberOfOptions)] = firstCardWord;
+    }
+  }
+
   // Method to determine the card content
   getContent(pairingMode: string, category: string, index: number): string {
-    const words = Object.values(BildbegreppWords);
+    if (!this.shuffledWords.length) {
+      this.initializeWords(category, 10); // Default to 10 words if not initialized
+    }
+
+    // const words = Object.values(BildbegreppWords);
     const normalizedCategory = this.normalizeCharacters(category);
-    const normalizedWord = this.normalizeCharacters(words[index % words.length]);
+    const normalizedWord = this.normalizeCharacters(this.shuffledWords[index % this.shuffledWords.length]);
     switch (pairingMode) {
       case 'ord': // WORD mode
-        return words[index % words.length]; // Cycle through words
+        return this.shuffledWords[index % this.shuffledWords.length]; // Cycle through words
       case 'bild': // ILLUSTRATION mode
         return `/assets/subject-area/estetisk-verksamhet/${category}/illustration/${normalizedWord}.svg`; // Assume images are stored with this path
       case 'ritade tecken': // RITADE_TECKEN mode

@@ -8,20 +8,19 @@ import { CommonModule } from "@angular/common";
   templateUrl: './card-content.component.html',
   styleUrl: './card-content.component.scss'
 })
-export class CardContentComponent {
+export class CardContentComponent implements OnChanges {
 @Input() pairingMode!: string;
 @Input() data!: string;
 @Input() category!: string;
 
 // displayedData!: string;
 
-// ngOnChanges(changes: SimpleChanges): void {
-//   if (changes['data'] || changes['pairingMode']) {
-//     this.updateDisplayedData();
-//     console.log(this.pairingMode);
+ngOnChanges(changes: SimpleChanges): void {
+  if (changes['data'] || changes['pairingMode']) {
+    console.log(this.data);
     
-//   }
-// }
+  }
+}
 
 // // Update the displayed data based on the pairing mode
 // updateDisplayedData(): void {
