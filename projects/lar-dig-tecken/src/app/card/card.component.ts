@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CardContentComponent } from './card-content/card-content.component';
+// import { ICard } from '../slumpgenerator/api/card'
 
 @Component({
   selector: 'app-card',
@@ -10,4 +10,10 @@ import { CardContentComponent } from './card-content/card-content.component';
 })
 export class CardComponent {
   @Input() content!: string;
+  @Output() cardClick = new EventEmitter<string>()
+
+  onCardClick(): void {
+    this.cardClick.emit(this.content);
+    
+  }
 }

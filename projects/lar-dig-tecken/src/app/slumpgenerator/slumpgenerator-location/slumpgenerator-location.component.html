@@ -24,7 +24,10 @@
                 <ng-container *ngIf="pairingModeSecond$ | async as pairingModeSecond">
                     <ng-container *ngIf="numberOfOptions$ | async as numberOfOptions">
                         <ng-container *ngFor="let i of getNumberArray(numberOfOptions); let idx = index">
-                            <app-card [content]="pairingModeSecond + '' + (idx + 1)"></app-card>
+                            <app-card 
+                                [content]="pairingModeSecond + '' + (idx + 1)"
+                                (cardClick)="onCardClicked($event)"
+                            ></app-card>
                         </ng-container></ng-container>
                 </ng-container>
             </section>

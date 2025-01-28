@@ -28,5 +28,9 @@ export class SlumpgeneratorLocationComponent {
   getNumberArray(count: number): number[] {
     return Array.from({ length: count }, (_, index) => index + 1);
   }
+
+  onCardClicked(content: string): void {
+    console.log('Card clicked:', content);
+  }
 }
 
