@@ -30,32 +30,4 @@ export class MemoryGameQueries {
   public static hasMatchError$(state: IMemoryGameStateModel): boolean {
     return state.indicateError;
   }
-
-  @Selector([MemoryGameState])
-  public static isReadyToPlay$(state: IMemoryGameStateModel): boolean {
-    return state.readyToPlay;
-  }
-
-  @Selector([MemoryGameState])
-  public static cardStatus$(state: IMemoryGameStateModel): (id: string) => {
-    isSelected: boolean;
-    isMatched: boolean;
-    hasError: boolean;
-  } {
-    return (id: string) => ({
-      isSelected: state.selectedCards.some((c) => c.id === id),
-      isMatched: state.matchedCards.some((c) => c.id === id),
-      hasError: state.indicateError,
-    });
-  }
-
-  @Selector([MemoryGameState])
-  public static cardVisualState$(state: IMemoryGameStateModel): (id: string) => string {
-    return (id: string) => {
-      if (state.matchedCards.some((c) => c.id === id)) return "matched";
-      if (state.indicateError && state.selectedCards.some((c) => c.id === id)) return "mismatched";
-      if (state.selectedCards.some((c) => c.id === id)) return "selected";
-      return "default";
-    };
-  }
 }

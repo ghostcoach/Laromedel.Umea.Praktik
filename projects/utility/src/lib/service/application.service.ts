@@ -1,5 +1,5 @@
 import {inject, Injectable} from "@angular/core";
-import {debounceTime, filter, fromEvent, Observable, of, switchMap, take} from "rxjs";
+import {filter, fromEvent, Observable, of, switchMap, take} from "rxjs";
 import {Event, NavigationStart, Router} from "@angular/router";
 import {Store} from "@ngxs/store";
 import {ApplicationStateQueries} from "../state/application-state-queries";
@@ -8,14 +8,11 @@ import {
   IndicateUserInteraction,
   UpdateIsWebMSupported,
   UpdateIsWebPSupported,
-  UpdateWindowDimensions,
 } from "../state/application-state-actions";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 @Injectable({
   providedIn: "root",
 })
-@UntilDestroy()
 export class ApplicationService {
   private hasRoutingEventHappened$: Observable<boolean> = inject(Store).select(ApplicationStateQueries.hasRoutingEventHappened$);
 
@@ -26,6 +23,7 @@ export class ApplicationService {
 
   public initApplicationStateSubscriptions(): void {
     this.registerRoutingEvents();
+
     this.registerUserInteractionEvents();
   }
 
@@ -105,13 +103,5 @@ export class ApplicationService {
     const isSupported: CanPlayTypeResult = video.canPlayType(webMTypeString);
 
     return isSupported === "probably" || isSupported === "maybe";
-  }
-
-  public subscribeToWindowResize(): void {
-    fromEvent(window, "resize")
-      .pipe(debounceTime(200), untilDestroyed(this))
-      .subscribe((): void => {
-        this.store.dispatch(new UpdateWindowDimensions(window.innerWidth, window.innerHeight));
-      });
   }
 }

@@ -35,7 +35,7 @@ export const appConfig: ApplicationConfig = {
     ),
     importProvidersFrom(
       NgxsLoggerPluginModule.forRoot({
-        disabled: true,
+        disabled: false,
       }),
     ),
   ],

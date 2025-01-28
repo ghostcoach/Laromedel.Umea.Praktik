@@ -1,5 +1,5 @@
 import {MemoryCard} from "../api/memory-card";
-import {IPairingMode} from "../api/pairing-mode";
+import {IPairingMode} from "../../api/pairing-mode";
 import {PlayMode} from "../api/play-mode";
 
 export class NewMemoryGame {
@@ -9,7 +9,7 @@ export class NewMemoryGame {
     public memoryCards: MemoryCard[],
     public numberOfPlayingCards: number,
     public pairingMode: IPairingMode,
-    public isSinglePlayer: boolean,
+    public isSinglePlayer = true,
   ) {}
 }
 
@@ -27,6 +27,15 @@ export class ResetMemoryGame {
   static readonly type: string = "[MemoryGame] Reset Game";
 }
 
+export class PlayMemoryCardMedia {
+  static readonly type: string = "[MemoryGame] Play Card Media";
+
+  constructor(
+    public memoryCard: MemoryCard,
+    public playMode: PlayMode,
+  ) {}
+}
+
 export class PlayMemoryCardAudio {
   static readonly type: string = "[MemoryGame] Play Card Audio";
 
@@ -36,8 +45,10 @@ export class PlayMemoryCardAudio {
   ) {}
 }
 
-export class RestartMemoryGame {
-  static readonly type: string = "[MemoryGame] Restart Game";
+export class PlayMemoryCardVideo {
+  static readonly type: string = "[MemoryGame] Play Card Video";
+
+  constructor(public memoryCard: MemoryCard) {}
 }
 
 export class IndicateError {
@@ -50,12 +61,4 @@ export class ResetIndicateError {
 
 export class ContinueAfterMismatch {
   static readonly type: string = "[MemoryGame] Continue After Match";
-}
-
-export class IndicateReadyToPlay {
-  static readonly type: string = "[MemoryGame] Indicate Ready To Play";
-}
-
-export class RegisterDealtCard {
-  static readonly type: string = "[MemoryGame] Register Dealt Card";
 }

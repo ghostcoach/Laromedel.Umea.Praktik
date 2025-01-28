@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, inject} from "@angular/core";
 import {GoToSettingsComponent} from "./go-to-settings/go-to-settings.component";
 import {RouterLink} from "@angular/router";
 import {SettingsMenuComponent} from "./settings-menu/settings-menu.component";
+import {CardCountSettingComponent} from "./card-count-setting/card-count-setting.component";
 import {CardSettingsMenuComponent} from "./card-settings-menu/card-settings-menu.component";
 import {PlayModeSettingComponent} from "./play-mode-setting/play-mode-setting.component";
 import {UntilDestroy} from "@ngneat/until-destroy";
@@ -23,6 +24,7 @@ import {HomeButtonComponent} from "./home-button/home-button.component";
     GoToSettingsComponent,
     RouterLink,
     SettingsMenuComponent,
+    CardCountSettingComponent,
     CardSettingsMenuComponent,
     PlayModeSettingComponent,
     ReplayButtonComponent,

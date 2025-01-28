@@ -1,4 +1,4 @@
-<div class="page-layout page-layout_header-main hidden lg:grid" *ngIf="isDesktopLayout$ | async">
+<div class="page-layout page-layout_header-main-footer hidden lg:grid">
   <app-settings></app-settings>
   <div class="w-full h-full play-container flex">
     <app-score [category]="category"></app-score>
@@ -10,14 +10,7 @@
   </div>
 </div>
 
-<div class="w-full h-full page-layout page-layout_header-main lg:hidden" *ngIf="(isDesktopLayout$ | async) === false">
-  <div class="w-full flex justify-end p-4 gap-6">
-    <app-replay-button></app-replay-button>
-    <app-go-to-settings></app-go-to-settings>
-  </div>
-  <div class="w-full h-full grid place-items-center">
-    <app-board [category]="category" *ngIf="(isGameOver$ | async) === false"></app-board>
-    <app-game-over class="w-full" *ngIf="isGameOver$ | async"></app-game-over>
-  </div>
+<div class="w-full h-full grid place-items-center lg:hidden">
+  <app-board [category]="category"></app-board>
 </div>
 

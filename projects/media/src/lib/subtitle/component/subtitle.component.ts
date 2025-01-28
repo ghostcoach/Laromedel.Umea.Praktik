@@ -8,11 +8,10 @@ import { AsyncPipe, NgIf } from "@angular/common";
 
 @UntilDestroy()
 @Component({
-  selector: "lib-subtitle",
-  standalone: true,
-  imports: [AsyncPipe, NgIf],
-  templateUrl: "./subtitle.component.html",
-  styleUrl: "./subtitle.component.css",
+    selector: "lib-subtitle",
+    imports: [AsyncPipe, NgIf],
+    templateUrl: "./subtitle.component.html",
+    styleUrl: "./subtitle.component.css"
 })
 export class SubtitleComponent {
   public subtitleText$: Observable<ISubtitleText> = inject(Store).select(

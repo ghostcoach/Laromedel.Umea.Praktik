@@ -6,6 +6,4 @@ export interface IMemoryGameStateModel {
   selectedCards: MemoryCard[];
   matchedCards: MemoryCard[];
   indicateError: boolean;
-  readyToPlay: boolean;
-  numberOfCardsDealt: number;
 }

@@ -1,6 +1,6 @@
-import {Component, inject, Input} from "@angular/core";
+import {ChangeDetectionStrategy, Component, inject, Input} from "@angular/core";
 import {UntilDestroy} from "@ngneat/until-destroy";
-import {AsyncPipe, NgClass} from "@angular/common";
+import {AsyncPipe, NgClass, NgForOf} from "@angular/common";
 import {CardComponent} from "../card/card.component";
 import {Observable} from "rxjs";
 import {SettingsStateQueries} from "../../settings/state/settings-state-queries";
@@ -13,8 +13,9 @@ import {ICategory} from "../../category/api/category";
 @Component({
   selector: "app-board",
   standalone: true,
-  imports: [AsyncPipe, CardComponent, NgClass],
+  imports: [AsyncPipe, CardComponent, NgForOf, NgClass],
   templateUrl: "./board.component.html",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardComponent {
   @Input() public category: ICategory;

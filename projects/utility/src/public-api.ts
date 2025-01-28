@@ -10,5 +10,4 @@ export * from "./lib/state/application-state-queries";
 export * from "./lib/state/application-state-actions";
 export * from "./lib/api/application-state-model";
 export * from "./lib/service/application.service";
-export * from "./lib/service/timeout.service";
 export {shuffle, generateId, replaceSpecialCharacters, parseName} from "./lib/util";

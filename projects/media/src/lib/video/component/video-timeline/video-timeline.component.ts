@@ -7,11 +7,10 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {fromEvent} from "rxjs";
 
 @Component({
-  selector: "lib-video-timeline",
-  standalone: true,
-  imports: [CdkDrag, DatePipe],
-  templateUrl: "./video-timeline.component.html",
-  styleUrl: "./video-timeline.component.scss",
+    selector: "lib-video-timeline",
+    imports: [CdkDrag, DatePipe],
+    templateUrl: "./video-timeline.component.html",
+    styleUrl: "./video-timeline.component.scss"
 })
 @UntilDestroy()
 export class VideoTimelineComponent implements AfterContentInit {

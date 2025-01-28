@@ -3,8 +3,8 @@ import {IConfettiParticle} from "./confetti-particle";
 
 @Component({
   selector: "lib-confetti-canon",
-  templateUrl: "./confetti-canon.component.html",
-  styleUrls: ["./confetti-canon.component.css"],
+  templateUrl: "./confetti-canvas.component.html",
+  styleUrls: ["./confetti-canvas.component.css"],
   standalone: true,
 })
 export class ConfettiCanonComponent implements AfterViewInit {

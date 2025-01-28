@@ -34,7 +34,7 @@ const stateToken: StateToken<ISettingsStateModel> = new StateToken<ISettingsStat
       first: CardContent.WORD,
       second: CardContent.ILLUSTRATION,
     },
-    numberOfCards: CardCount.FOUR,
+    numberOfCards: CardCount.SIX,
     numberOfPlayers: PlayerCount.ONE_PLAYER,
     playMode: PlayMode.FLIP_CARDS,
     isSettingsLocked: false,
