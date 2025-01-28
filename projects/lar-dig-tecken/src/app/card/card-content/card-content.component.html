@@ -1,4 +1,4 @@
-<div class="w-fit font-bold text-2xl tracking-wide">
+<div class="card-content w-full h-full font-bold text-2xl tracking-wide flex justify-center items-center">
 
     <!-- WORD Mode -->
     <ng-container *ngIf="pairingMode === 'ord'">
@@ -17,7 +17,11 @@
 
   <!-- TAKK Mode -->
   <ng-container *ngIf="pairingMode === 'tecken som stöd'">
-    <video *ngIf="pairingMode === 'tecken som stöd'" [src]="data" controls></video>
+    <video 
+        *ngIf="pairingMode === 'tecken som stöd'" 
+        [src]="data" 
+        controls 
+        class="w-full h-full object-cover"></video>
   </ng-container>
 
 </div>
