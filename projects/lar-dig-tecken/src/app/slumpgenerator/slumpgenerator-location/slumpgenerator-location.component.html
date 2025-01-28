@@ -24,7 +24,8 @@
                 <ng-container *ngIf="pairingModeSecond$ | async as pairingModeSecond">
                     <ng-container *ngIf="numberOfOptions$ | async as numberOfOptions">
                         <ng-container *ngFor="let i of getNumberArray(numberOfOptions); let idx = index">
-                            <app-card 
+                            <app-card
+                            class="hover:cursor-pointer" 
                                 [content]="pairingModeSecond + '' + (idx + 1)"
                                 (cardClick)="onCardClicked($event)"
                             ></app-card>
