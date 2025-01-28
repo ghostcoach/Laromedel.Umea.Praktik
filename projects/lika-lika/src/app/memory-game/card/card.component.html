@@ -1,5 +1,5 @@
 <button #cardButton
-        class="memory-card"
+        class="memory-card card-btn"
         [ngClass]="(isReadyToPlay$ | async) ? 'opacity-100' : 'opacity-0'"
         (click)="handleCardSelect()"
         [class.selected]="(visualState$ | async) === 'selected'"
