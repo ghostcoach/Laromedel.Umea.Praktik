@@ -1,1 +1,19 @@
-<div class="w-min font-bold text-2xl tracking-wide">RÖD</div>
+<div class="w-min font-bold text-2xl tracking-wide">
+
+    <!-- WORD Mode -->
+    <ng-container *ngIf="pairingMode === 'ord'">
+    <p class="text-lg font-bold">{{ displayedData }}</p>
+  </ng-container>
+
+  <!-- ILLUSTRATION Mode -->
+  <ng-container *ngIf="pairingMode === 'bild'">
+    <img [src]="displayedData" alt="Illustration" class="w-full h-full object-contain" />
+  </ng-container>
+
+  <!-- RITADE_TECKEN or TAKK Mode -->
+  <ng-container *ngIf="pairingMode === 'ritade tecken' || pairingMode === 'tecken som stöd'">
+    <video *ngIf="pairingMode === 'tecken som stöd'" [src]="displayedData" controls></video>
+    <img *ngIf="pairingMode === 'ritade tecken'" [src]="displayedData" alt="Ritade Tecken" />
+  </ng-container>
+
+</div>

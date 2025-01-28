@@ -12,8 +12,8 @@ const stateToken: StateToken<IGameSettingStateModel> = new StateToken<IGameSetti
     defaults: {
         numberOfOptions: 3,
         pairingMode: { 
-            first: CardContent.ILLUSTRATION,
-            second: CardContent.RITADE_TECKEN,
+            first: CardContent.WORD,
+            second: CardContent.WORD,
         },
         category: Category.ALLA,
         numberOfRounds: 5,
