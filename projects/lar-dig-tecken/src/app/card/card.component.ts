@@ -1,19 +1,20 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CardContentComponent } from './card-content/card-content.component';
-// import { ICard } from '../slumpgenerator/api/card'
+import { CommonModule } from "@angular/common";
+
 
 @Component({
   selector: 'app-card',
-  imports: [CardContentComponent],
+  imports: [CardContentComponent, CommonModule],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
 })
 export class CardComponent {
   @Input() content!: string;
+  @Input() pairingMode!: string;
   @Output() cardClick = new EventEmitter<string>()
 
   onCardClick(): void {
-    this.cardClick.emit(this.content);
-    
+    this.cardClick.emit(this.content);    
   }
 }

@@ -15,7 +15,7 @@
 
             <section class="flex gap-4 flex-col items-center justify-center">
                 <ng-container *ngIf="pairingModeFirst$ | async as pairingModeFirst">
-                    <app-card></app-card>
+                    <app-card [content]="pairingModeFirst" [content]="getContent(pairingModeFirst, 0)"></app-card>
                 </ng-container>
                 <app-start-button></app-start-button>
             </section>
@@ -25,8 +25,9 @@
                     <ng-container *ngIf="numberOfOptions$ | async as numberOfOptions">
                         <ng-container *ngFor="let i of getNumberArray(numberOfOptions); let idx = index">
                             <app-card
-                            class="hover:cursor-pointer" 
-                                [content]="pairingModeSecond + '' + (idx + 1)"
+                                class="hover:cursor-pointer" 
+                                [content]="getContent(pairingModeSecond, idx)"
+                                [pairingMode]="pairingModeSecond"
                                 (cardClick)="onCardClicked($event)"
                             ></app-card>
                         </ng-container></ng-container>
