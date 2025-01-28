@@ -1,1 +1,37 @@
-<p>slumpgenerator-location works!</p>
+<div class="m-3">
+    <section class="relative">
+        <h1 class="text-2xl font-bold mb-5 text-center tracking-wide">Slumpgenerator</h1>
+        <div class="flex absolute top-0 right-0 gap-2 z-0">
+            <ng-container *ngIf="numberOfRounds$ | async as numberOfRounds">
+                <ng-container *ngFor="let i of getNumberArray(numberOfRounds); let idx = index">
+                    <app-rounds></app-rounds>
+                </ng-container>
+            </ng-container>
+        </div>
+       
+    </section>
+    
+    <section class="flex gap-4 justify-around">
+
+            <section class="flex gap-4 flex-col items-center justify-center">
+                <ng-container *ngIf="pairingModeFirst$ | async as pairingModeFirst">
+                    <app-card></app-card>
+                </ng-container>
+                <app-start-button></app-start-button>
+            </section>
+
+            <section class="flex gap-4 flex-col items-center justify-center flex-wrap min-h-[70vh] max-h-screen">
+                <ng-container *ngIf="pairingModeSecond$ | async as pairingModeSecond">
+                    <ng-container *ngIf="numberOfOptions$ | async as numberOfOptions">
+                        <ng-container *ngFor="let i of getNumberArray(numberOfOptions); let idx = index">
+                            <app-card
+                            class="hover:cursor-pointer" 
+                                [content]="pairingModeSecond + '' + (idx + 1)"
+                                (cardClick)="onCardClicked($event)"
+                            ></app-card>
+                        </ng-container></ng-container>
+                </ng-container>
+            </section>
+    </section>
+    
+</div>

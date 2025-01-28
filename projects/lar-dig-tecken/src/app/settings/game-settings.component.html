@@ -1,5 +1,5 @@
 
-<div class=" border border-1 border-black gap-5 p-5 flex flex-col w-fit">
+<div class=" border border-1 border-black gap-5 p-5 flex flex-col w-fit bg-blue-400 relative z-50 ">
       <div class="flex gap-3 ">
         <button 
           (click)="toggleDropdown()"
@@ -12,11 +12,11 @@
         </button>
       </div>  
         <div *ngIf="isDropdownOpen"
-        class="p-3 flex flex-col justify-between items-start space-y-3"
+        class="p-3 flex flex-col justify-between items-start space-y-3 "
         >
         <!-- Första kortets inställningar -->
          <section 
-          class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1"
+          class="border border-1 border-black px-3 py-1 rounded-sm flex-1 bg-white hover:bg-orange-200"
           [ngClass]="{'bg-orange-200' : isFirstCardSettingsDropdownOpen}"
           >
           <button 
@@ -36,7 +36,7 @@
               (click)="updateFirstPairingMode(option)" 
               (keydown.enter)="updateFirstPairingMode(option)" 
               [class.selected]="option === (pairingModeFirstCard$ | async)"
-              class="py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 "
+              class="py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
           >
               {{ option }}
           </li>
@@ -46,7 +46,7 @@
 
           <!-- Andra kortens inställningar -->
           <section 
-            class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1"
+            class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isSecondCardSettingsDropdownOpen}"
           >
             <button (click)="toggleSettingOptionsDropdown('secondCard')">Resterande kort</button>
@@ -60,7 +60,7 @@
                 (click)="updateSecondPairingMode(option)" 
                 (keydown.enter)="updateSecondPairingMode(option)"
                 [class.selected]="option === (pairingModeSecondCard$ | async)" 
-                class="py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 "
+                class="py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
               >
                 {{ option }}
                 <img src="" alt="">
@@ -71,7 +71,7 @@
 
           <!-- Kategoriinställningar -->
           <section 
-            class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1"
+            class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isCategorySettingsDropdownOpen}"
           >
             <button (click)="toggleSettingOptionsDropdown('category')">Kategori</button>
@@ -84,7 +84,7 @@
                 (click)="updateCategory(option)"
                 (keydown.enter)="updateCategory(option)"
                 [class.selected]="option === (category$ | async)"
-                class="py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 "
+                class="py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
               >
               {{option}}
               </li>
@@ -94,7 +94,7 @@
 
           <!-- Antal kort-inställningar -->
           <section 
-            class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1"
+            class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isNumberOfOptionsSettingsDropdownOpen}"
           >
             <button (click)="toggleSettingOptionsDropdown('options')">Antal kort</button>
@@ -116,7 +116,7 @@
 
            <!-- Antal rundor-inställningar -->
            <section 
-           class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1"
+           class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
            [ngClass]="{'bg-orange-200' : isNumberOfRoundsSettingsDropdownOpen}"
          >
            <button (click)="toggleSettingOptionsDropdown('rounds')">Antal omgångar</button>
