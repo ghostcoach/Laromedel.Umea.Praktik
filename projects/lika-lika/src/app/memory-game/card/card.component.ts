@@ -3,14 +3,13 @@ import {Store} from "@ngxs/store";
 import {map, Observable} from "rxjs";
 import {AsyncPipe, NgClass, NgIf} from "@angular/common";
 import {MemoryCard} from "@games/memory-card";
-import {AudioService} from "@media/audio.service";
 import {CardContentComponent} from "./card-content/card-content.component";
 import {DealAnimatedCardComponent} from "./deal-animated-card/deal-animated-card.component";
 import {CardContent, MemoryGameQueries, SelectMemoryCard} from "@games/memory-game";
 import {TimeoutService} from "@utility/timeout.service";
-import {AudioStateQueries} from "@media/state/audio-state-queries";
 import {SettingsStateQueries} from "../../settings/state/settings-state-queries";
 import {MemoryGameConfig} from "@games/memory-game-config";
+import {PlayAudio} from "@media/audio-state-actions";
 
 @Component({
   selector: "app-card",
@@ -42,7 +41,6 @@ export class CardComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     private readonly store: Store,
-    private readonly audioService: AudioService,
     private readonly timeoutService: TimeoutService,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
@@ -72,8 +70,7 @@ export class CardComponent implements AfterViewInit, OnDestroy {
         if (this.memoryCard.cardContent === CardContent.TAKK) {
           this.cardContent.playVideo();
         } else {
-          const isSoundEnabled: boolean = this.store.selectSnapshot(AudioStateQueries.isSoundEnabled$);
-          this.audioService.playSound(this.memoryCard.audioName, isSoundEnabled);
+          this.store.dispatch(new PlayAudio(this.memoryCard.audio));
         }
       },
       MemoryGameConfig.TIMEOUT_LENGTH_MEDIA_MS,

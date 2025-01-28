@@ -8,7 +8,6 @@ import {
   IndicateError,
   IndicateReadyToPlay,
   NewMemoryGame,
-  PlayMemoryCardAudio,
   ProcessSelectedMemoryCards,
   RegisterDealtCard,
   ResetIndicateError,
@@ -23,11 +22,9 @@ import {
   ToggleCurrentPlayer,
 } from "../../state/game-state-actions";
 import {GameStateQueries} from "../../state/game-state-queries";
-import {PlayMode} from "../api/play-mode";
 import {AudioService} from "@media/audio.service";
-import {AudioStateQueries} from "@media/state/audio-state-queries";
 import {MemoryGameConfig} from "../api/memory-game-config";
-import {createDeck, initializeDefaultState, isMemoryCardMatched, isMemoryCardSelected, MEDIA_TIMEOUT} from "./memory-game-util";
+import {createDeck, initializeDefaultState, isMemoryCardMatched, isMemoryCardSelected} from "./memory-game-util";
 import {TimeoutService} from "@utility/timeout.service";
 
 const stateToken: StateToken<IMemoryGameStateModel> = new StateToken<IMemoryGameStateModel>("memoryGameState");
@@ -194,19 +191,6 @@ export class MemoryGameState {
     ctx.patchState({
       selectedCards: [],
     });
-  }
-
-  @Action(PlayMemoryCardAudio)
-  public playMemoryCardAudio(ctx: StateContext<IMemoryGameStateModel>, {memoryCard, playMode}: PlayMemoryCardAudio): void {
-    const timeoutLengthMs: number = playMode === PlayMode.FLIP_CARDS ? MemoryGameConfig.TIMEOUT_LENGTH_MEDIA_MS : 0;
-
-    this.timeoutService.setTimeout(
-      (): void => {
-        this.audioService.playSound(memoryCard.audioName, this.store.selectSnapshot(AudioStateQueries.isSoundEnabled$));
-      },
-      timeoutLengthMs,
-      MEDIA_TIMEOUT,
-    );
   }
 
   @Action(IndicateReadyToPlay)

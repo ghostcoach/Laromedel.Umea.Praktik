@@ -1,6 +1,5 @@
 import {MemoryCard} from "../api/memory-card";
 import {IPairingMode} from "../api/pairing-mode";
-import {PlayMode} from "../api/play-mode";
 
 export class NewMemoryGame {
   static readonly type: string = "[MemoryGame] New Game";
@@ -25,15 +24,6 @@ export class ProcessSelectedMemoryCards {
 
 export class ResetMemoryGame {
   static readonly type: string = "[MemoryGame] Reset Game";
-}
-
-export class PlayMemoryCardAudio {
-  static readonly type: string = "[MemoryGame] Play Card Audio";
-
-  constructor(
-    public memoryCard: MemoryCard,
-    public playMode: PlayMode,
-  ) {}
 }
 
 export class RestartMemoryGame {

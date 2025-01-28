@@ -3,6 +3,7 @@ import {CardContent} from "./card-content";
 import {ImageExtension} from "@media/image-extension";
 import {VideoExtension} from "@media/video-extension";
 import {AudioExtension} from "@media/audio-extension";
+import {IAudio} from "@media/api/audio";
 
 export interface IMemoryCard {
   pairId: string;
@@ -59,8 +60,11 @@ export class MemoryCard {
     return `${this.ritadeTeckenBaseSrc}${ImageExtension.WEBP}`;
   }
 
-  public get audioName(): string {
-    return this.audioSrc;
+  public get audio(): IAudio {
+    return {
+      src: this.audioSrc,
+      name: this.audioSrc,
+    };
   }
 
   public copy(cardContent: CardContent = this.cardContent): MemoryCard {
