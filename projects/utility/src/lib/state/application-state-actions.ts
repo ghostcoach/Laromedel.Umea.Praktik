@@ -11,7 +11,7 @@ export class ToggleFullscreen {
 }
 
 export class UpdateIsWebMSupported {
-  static readonly type: string = "[ApplicatiApplicationonState] Update Is WebM Supported";
+  static readonly type: string = "[Application] Update Is WebM Supported";
 
   constructor(public isWebMSupported: boolean) {}
 }
@@ -20,4 +20,13 @@ export class UpdateIsWebPSupported {
   static readonly type: string = "[Application] Update Is WeP Supported";
 
   constructor(public isWebPSupported: boolean) {}
+}
+
+export class UpdateWindowDimensions {
+  static readonly type: string = "[Application] Update window dimensions";
+
+  constructor(
+    public windowWidth: number,
+    public windowHeight: number,
+  ) {}
 }

@@ -51,3 +51,11 @@ export class ResetIndicateError {
 export class ContinueAfterMismatch {
   static readonly type: string = "[MemoryGame] Continue After Match";
 }
+
+export class IndicateReadyToPlay {
+  static readonly type: string = "[MemoryGame] Indicate Ready To Play";
+}
+
+export class RegisterDealtCard {
+  static readonly type: string = "[MemoryGame] Register Dealt Card";
+}

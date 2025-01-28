@@ -3,8 +3,9 @@ import { CommonModule } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
-    imports: [CommonModule],
-    template: ""
+  standalone: true,
+  imports: [CommonModule],
+  template: "",
 })
 export class PdfRedirectComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}

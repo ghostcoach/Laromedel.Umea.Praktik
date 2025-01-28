@@ -21,11 +21,12 @@ import {VideoStatus} from "../api/video-status";
 
 @UntilDestroy()
 @Component({
-    selector: "lib-video",
-    imports: [NgIf],
-    templateUrl: "./video.component.html",
-    styleUrl: "./video.component.scss",
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: "lib-video",
+  standalone: true,
+  imports: [NgIf],
+  templateUrl: "./video.component.html",
+  styleUrl: "./video.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() public baseSrc: string | null;

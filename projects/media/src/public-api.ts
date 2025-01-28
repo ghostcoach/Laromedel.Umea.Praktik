@@ -26,3 +26,4 @@ export * from "./lib/audio/api/background-audio";
 export * from "./lib/audio/api/playlist";
 export * from "./lib/audio/api/playlist-playback-mode";
 export * from "./lib/image/api/image-extension";
+export * from "./lib/image/api/image";

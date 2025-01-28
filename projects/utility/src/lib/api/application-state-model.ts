@@ -4,4 +4,6 @@ export interface IApplicationStateModel {
   isFullscreen: boolean;
   isWebMSupported: boolean;
   isWebPSupported: boolean;
+  windowWidth: number;
+  windowHeight: number;
 }

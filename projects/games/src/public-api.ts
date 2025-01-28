@@ -9,6 +9,8 @@ export * from "./lib/api/player-count";
 export * from "./lib/memory/state/memory-game-state";
 export * from "./lib/memory/state/memory-game-actions";
 export * from "./lib/memory/state/memory-game-queries";
+export * from "./lib/memory/api/memory-game-state-model";
+export * from "./lib/memory/api/memory-game-config";
 export * from "./lib/memory/api/card-content";
 export * from "./lib/memory/api/card-count";
 export * from "./lib/memory/api/pairing-mode";

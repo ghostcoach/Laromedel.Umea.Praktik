@@ -1,94 +1,83 @@
-import {AfterViewInit, Component, Input, OnDestroy, ViewChild} from "@angular/core";
-import {UntilDestroy} from "@ngneat/until-destroy";
-import {MemoryCard} from "@games/memory-card";
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, ViewChild} from "@angular/core";
 import {Store} from "@ngxs/store";
 import {map, Observable} from "rxjs";
-import {AsyncPipe, NgClass} from "@angular/common";
-import {CardContentComponent} from "./card-content/card-content.component";
+import {AsyncPipe, NgClass, NgIf} from "@angular/common";
+import {MemoryCard} from "@games/memory-card";
 import {AudioService} from "@media/audio.service";
-import {MemoryGameQueries} from "@games/memory-game-queries";
-import {ProcessSelectedMemoryCards, SelectMemoryCard} from "@games/memory-game-actions";
-import {MemoryGameState} from "@games/memory-game-state";
-import {CardContent} from "@games/card-content";
-import {AudioStateQueries} from "@media/audio-state-queries";
+import {CardContentComponent} from "./card-content/card-content.component";
+import {DealAnimatedCardComponent} from "./deal-animated-card/deal-animated-card.component";
+import {CardContent, MemoryGameQueries, SelectMemoryCard} from "@games/memory-game";
+import {TimeoutService} from "@utility/timeout.service";
+import {AudioStateQueries} from "@media/state/audio-state-queries";
 import {SettingsStateQueries} from "../../settings/state/settings-state-queries";
+import {MemoryGameConfig} from "@games/memory-game-config";
 
-@UntilDestroy()
 @Component({
   selector: "app-card",
   standalone: true,
-  imports: [AsyncPipe, NgClass, CardContentComponent],
+  imports: [AsyncPipe, NgClass, NgIf, CardContentComponent, DealAnimatedCardComponent],
   templateUrl: "./card.component.html",
-  styleUrl: "./card.component.scss",
+  styleUrls: ["./card.component.scss"],
 })
 export class CardComponent implements AfterViewInit, OnDestroy {
-  @ViewChild("cardContent") public cardContent: CardContentComponent;
+  @ViewChild("cardContent", {static: false})
+  public cardContent!: CardContentComponent;
 
-  @Input() public memoryCard: MemoryCard;
-  @Input() public cardBackImage: string;
-  @Input() public cardFrontImage: string;
+  @ViewChild("cardButton", {static: false})
+  public cardButton!: ElementRef<HTMLButtonElement>;
+
+  @Input({required: true}) public memoryCard!: MemoryCard;
+  @Input({required: true}) public cardBackImage!: string;
+  @Input({required: true}) public cardFrontImage!: string;
+  @Input({required: true}) public cardIndex!: number;
 
   public shouldDisappear: boolean = false;
+  public isLoaded: boolean = false;
 
-  private cardMediaTimeout: ReturnType<typeof setTimeout>;
-  private cardProcessTimeout: ReturnType<typeof setTimeout>;
-  private disappearTimeout: ReturnType<typeof setTimeout>;
-  private mediaDurationMs: number;
-
-  public isSelected$: Observable<boolean> = this.store
-    .select(MemoryGameQueries.isMemoryCardSelected$)
-    .pipe(map((isSelectedFn: (id: string) => boolean): boolean => isSelectedFn(this.memoryCard.id)));
-
-  public isMatched$: Observable<boolean> = this.store
-    .select(MemoryGameQueries.isMemoryCardMatched$)
-    .pipe(map((isMatchedFn: (id: string) => boolean): boolean => isMatchedFn(this.memoryCard.id)));
-
-  public hasMatchError$: Observable<boolean> = this.store.select(MemoryGameQueries.hasMatchError$);
-
-  public isOpenCardsPlayMode$: Observable<boolean> = this.store.select(SettingsStateQueries.isOpenCardsPlayMode$);
+  public readonly isReadyToPlay$: Observable<boolean> = this.store.select(MemoryGameQueries.isReadyToPlay$);
+  public readonly visualState$: Observable<string> = this.store
+    .select(MemoryGameQueries.cardVisualState$)
+    .pipe(map((selector) => selector(this.memoryCard.id)));
+  public readonly isOpenCardsPlayMode$: Observable<boolean> = this.store.select(SettingsStateQueries.isOpenCardsPlayMode$);
 
   constructor(
-    private store: Store,
-    private audioService: AudioService,
+    private readonly store: Store,
+    private readonly audioService: AudioService,
+    private readonly timeoutService: TimeoutService,
+    private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   public ngAfterViewInit(): void {
-    this.loadCardMedia();
-  }
+    this.timeoutService.setTimeout((): void => {
+      this.isLoaded = true;
+    }, 150);
 
-  private loadCardMedia(): void {
-    if (this.memoryCard.cardContent === CardContent.TAKK) {
-      this.mediaDurationMs = this.cardContent.loadVideo() * 1000;
-      return;
-    }
-    this.mediaDurationMs = this.audioService.loadSound(this.memoryCard.audioName, this.memoryCard.audioSrc) * 1000;
+    this.changeDetectorRef.detectChanges();
   }
 
   public ngOnDestroy(): void {
-    clearTimeout(this.cardMediaTimeout);
-    clearTimeout(this.disappearTimeout);
-    clearTimeout(this.cardProcessTimeout);
+    this.timeoutService.clearAllTimeouts();
   }
 
   public handleCardSelect(): void {
     this.store.dispatch(new SelectMemoryCard(this.memoryCard));
-
-    this.playCardMedia();
+    this.playMediaContent();
   }
 
-  private playCardMedia(): void {
-    clearTimeout(this.cardMediaTimeout);
+  private playMediaContent(): void {
+    this.timeoutService.clearTimeout("media");
 
-    this.cardMediaTimeout = setTimeout((): void => {
-      this.memoryCard.cardContent === CardContent.TAKK
-        ? this.cardContent.playVideo()
-        : this.audioService.playSound(this.memoryCard.audioName, this.store.selectSnapshot(AudioStateQueries.isSoundEnabled$));
-    }, MemoryGameState.TIMEOUT_LENGTH_MEDIA_MS);
-  }
-
-  private processCardSelection(): void {
-    this.cardProcessTimeout = setTimeout((): void => {
-      this.store.dispatch(new ProcessSelectedMemoryCards());
-    }, MemoryGameState.TIMEOUT_LENGTH_MEDIA_MS + this.mediaDurationMs);
+    this.timeoutService.setTimeout(
+      (): void => {
+        if (this.memoryCard.cardContent === CardContent.TAKK) {
+          this.cardContent.playVideo();
+        } else {
+          const isSoundEnabled: boolean = this.store.selectSnapshot(AudioStateQueries.isSoundEnabled$);
+          this.audioService.playSound(this.memoryCard.audioName, isSoundEnabled);
+        }
+      },
+      MemoryGameConfig.TIMEOUT_LENGTH_MEDIA_MS,
+      "media",
+    );
   }
 }

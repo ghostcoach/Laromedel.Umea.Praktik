@@ -34,4 +34,14 @@ export class ApplicationStateQueries {
   public static isWebpSupported$(state: IApplicationStateModel): boolean {
     return state.isWebPSupported;
   }
+
+  @Selector([ApplicationState])
+  public static windowWidth$(state: IApplicationStateModel): number {
+    return state.windowWidth;
+  }
+
+  @Selector([ApplicationState])
+  public static windowHeight$(state: IApplicationStateModel): number {
+    return state.windowHeight;
+  }
 }
