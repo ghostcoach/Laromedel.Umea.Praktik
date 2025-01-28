@@ -30,25 +30,29 @@ export class SlumpgeneratorLocationComponent {
   getNumberArray(count: number): number[] {
     return Array.from({ length: count }, (_, index) => index + 1);
   }
-// src="/assets/subject-area/estetisk-verksamhet/bildbegrepp/illustration/lim.svg
-// http://localhost:4200/assets/images//assets/images/blå.png.png
-// http://localhost:4200/assets/images//assets/images/blå.png.png
-// http://localhost:4200/assets/images//assets/images/blå.png.png
-// "/assets/images//assets/images/brun.png.png">
-// "/assets/subject-area/estetisk-verksamhet/bildbegrepp/blå.svg
+
+  // Utility function to normalize special characters
+  normalizeCharacters(input: string): string {
+    return input
+      .replace(/ä/g, 'a')
+      .replace(/å/g, 'a')
+      .replace(/ö/g, 'o');
+  }
 
   // Method to determine the card content
   getContent(pairingMode: string, category: string, index: number): string {
     const words = Object.values(BildbegreppWords);
+    const normalizedCategory = this.normalizeCharacters(category);
+    const normalizedWord = this.normalizeCharacters(words[index % words.length]);
     switch (pairingMode) {
       case 'ord': // WORD mode
         return words[index % words.length]; // Cycle through words
       case 'bild': // ILLUSTRATION mode
-        return `/assets/subject-area/estetisk-verksamhet/${category}/illustration/${words[index % words.length]}.svg`; // Assume images are stored with this path
+        return `/assets/subject-area/estetisk-verksamhet/${category}/illustration/${normalizedWord}.svg`; // Assume images are stored with this path
       case 'ritade tecken': // RITADE_TECKEN mode
-        return `/assets/subject-area/estetisk-verksamhet/${category}/ritade-tecken/${words[index % words.length]}.svg`; // Path to drawings
+        return `/assets/subject-area/estetisk-verksamhet/${category}/ritade-tecken/${normalizedWord}.svg`; // Path to drawings
       case 'tecken som stöd': // TAKK mode
-        return `/assets/subject-area/estetisk-verksamhet/${category}/video/${words[index % words.length]}.mp4`; // Path to videos
+        return `/assets/subject-area/estetisk-verksamhet/${category}/video/${normalizedWord}.mp4`; // Path to videos
       default:
         return '';
     }
