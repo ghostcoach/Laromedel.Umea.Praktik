@@ -127,7 +127,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
 
      // Calculate the classes dynamically
      const classes = [
-      this.cardStates[index].isSelected ? 'selected-card' : '',
+      // this.cardStates[index].isSelected ? 'selected-card' : '',
       this.cardStates[index].isCorrect ? 'correct-card' : '',
       (this.cardStates[index].isSelected && !this.cardStates[index].isCorrect) ? 'incorrect-card' : ''
     ].filter(Boolean).join(' ');  // Join non-empty strings into a single class string
