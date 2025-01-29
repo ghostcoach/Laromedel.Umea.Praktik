@@ -13,7 +13,9 @@ export class CardComponent {
   @Input() content!: string;
   @Input() pairingMode!: string;
   @Input() category!: string;
+  @Input() dynamicClass: string = '';
   @Output() cardClick = new EventEmitter<string>()
+
 
   onCardClick(): void {
     this.cardClick.emit(this.content);    
