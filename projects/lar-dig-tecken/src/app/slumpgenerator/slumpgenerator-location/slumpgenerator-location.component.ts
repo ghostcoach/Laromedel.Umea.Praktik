@@ -24,6 +24,9 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   @Select(GameSettingsStateQueries.numberOfOptions$) numberOfOptions$!:Observable<number>
   @Select(GameSettingsStateQueries.numberOfRounds$) numberOfRounds$!:Observable<number>
   @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
+  
+  cardStates: { isSelected: boolean, isCorrect: boolean }[] = []
+  cardStateClasses: string[] = [];
 
   private shuffledWords: string[] = [];
 
@@ -114,8 +117,32 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   }
 
 
-  onCardClicked(content: string): void {
-    console.log('Card clicked:', content);
+  onCardClicked(content: string, index: number): void {
+    const selectedWord = this.shuffledWords[index];
+
+    this.cardStates[index] = {
+      isSelected: true,
+      isCorrect: selectedWord === this.shuffledWords[0]
+    }
+
+     // Calculate the classes dynamically
+     const classes = [
+      this.cardStates[index].isSelected ? 'selected-card' : '',
+      this.cardStates[index].isCorrect ? 'correct-card' : '',
+      (this.cardStates[index].isSelected && !this.cardStates[index].isCorrect) ? 'incorrect-card' : ''
+    ].filter(Boolean).join(' ');  // Join non-empty strings into a single class string
+
+
+     // Save the class object for the clicked card
+     this.cardStateClasses[index] = classes;
+
+    if (this.cardStates[index].isCorrect) {
+      console.log('Correct!');
+    } else {
+      console.log('Incorrect!');
+    }
+
+    console.log('Card clicked:', content, index);
   }
 
   

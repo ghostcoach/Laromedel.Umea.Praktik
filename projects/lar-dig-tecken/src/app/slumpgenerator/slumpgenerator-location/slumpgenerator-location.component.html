@@ -35,8 +35,9 @@
                                     class="hover:cursor-pointer" 
                                     [content]="getContent(pairingModeSecond, category, idx + 1)"
                                     [pairingMode]="pairingModeSecond"
-                                    (cardClick)="onCardClicked($event)"
-                                ></app-card>
+                                    (cardClick)="onCardClicked($event, idx + 1)"
+                                    [ngClass]="cardStateClasses[idx]">
+                                    </app-card>
                             </ng-container>
                         </ng-container>
                     </ng-container>
