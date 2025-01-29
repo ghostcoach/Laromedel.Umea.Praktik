@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { StartButtonComponent } from '../../start-button/start-button.component'
@@ -17,7 +17,7 @@ import { BildbegreppWords } from '../../category/api/bildbegrepp';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class SlumpgeneratorLocationComponent {
+export class SlumpgeneratorLocationComponent implements OnInit{
 
   @Select(GameSettingsStateQueries.pairingModeFirstCard$) pairingModeFirst$!: Observable<string>;
   @Select(GameSettingsStateQueries.pairingModeSecondCard$) pairingModeSecond$!: Observable<string>;
@@ -28,6 +28,14 @@ export class SlumpgeneratorLocationComponent {
   private shuffledWords: string[] = [];
 
   constructor() { }
+
+  ngOnInit():void {
+    this.numberOfOptions$.subscribe(numberOfOptions => {
+      this.category$.subscribe(category => {
+        this.initializeWords(category, numberOfOptions);
+      })
+    })
+  }
 
   getNumberArray(count: number): number[] {
     return Array.from({ length: count }, (_, index) => index + 1);
@@ -50,19 +58,43 @@ export class SlumpgeneratorLocationComponent {
 
   initializeWords(category: string, numberOfOptions: number): void {
     const words = Object.values(BildbegreppWords);
-    this.shuffledWords = this.shuffleArray(words).slice(0, numberOfOptions);
 
-    const firstCardWord = this.shuffledWords[0];
-    if (!this.shuffledWords.includes(firstCardWord)) {
-      this.shuffledWords[Math.floor(Math.random() * numberOfOptions)] = firstCardWord;
-    }
+    // Step 1: Select `numberOfOptions` unique words randomly
+    const selectedWords = this.getRandomUniqueWords(words, numberOfOptions);
+    console.log('selectedWords (before duplication):', selectedWords);
+
+    // Step 2: Pick one word to duplicate
+    const wordToDuplicate = selectedWords[Math.floor(Math.random() * selectedWords.length)];
+
+    // Step 3: Insert the duplicate at index 0
+    this.shuffledWords = [wordToDuplicate, ...selectedWords];
+
+    console.log('shuffledWords (after duplication):', this.shuffledWords);
   }
 
-  // Method to determine the card content
-  getContent(pairingMode: string, category: string, index: number): string {
-    if (!this.shuffledWords.length) {
-      this.initializeWords(category, 10); // Default to 10 words if not initialized
+  // Helper function to retrieve a specified number of unique random words
+  private getRandomUniqueWords(words: string[], numberOfOptions: number): string[] {
+    const selectedWords = [];
+    const uniqueWordsSet = new Set<string>();
+
+    // Ensure we select exactly 'numberOfOptions - 1' unique words
+    while (selectedWords.length < numberOfOptions) {
+      const randomWord = words[Math.floor(Math.random() * words.length)];
+      if (!uniqueWordsSet.has(randomWord)) {
+        uniqueWordsSet.add(randomWord);
+        selectedWords.push(randomWord);
+      }
     }
+    
+    return selectedWords;
+
+  }
+
+    // Method to determine the card content
+    getContent(pairingMode: string, category: string, index: number): string {
+      if (!this.shuffledWords.length) {
+        this.initializeWords(category, 10); // Default to 10 words if not initialized
+      }
 
     // const words = Object.values(BildbegreppWords);
     const normalizedCategory = this.normalizeCharacters(category);

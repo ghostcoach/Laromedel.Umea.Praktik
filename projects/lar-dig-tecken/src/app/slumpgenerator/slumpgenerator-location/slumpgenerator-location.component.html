@@ -33,7 +33,7 @@
                             <ng-container *ngFor="let i of getNumberArray(numberOfOptions); let idx = index">
                                 <app-card
                                     class="hover:cursor-pointer" 
-                                    [content]="getContent(pairingModeSecond, category, idx)"
+                                    [content]="getContent(pairingModeSecond, category, idx + 1)"
                                     [pairingMode]="pairingModeSecond"
                                     (cardClick)="onCardClicked($event)"
                                 ></app-card>
