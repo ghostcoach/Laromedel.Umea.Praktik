@@ -172,6 +172,8 @@ export class SlumpgeneratorLocationComponent implements OnInit{
 
   updateRoundsComponent(): void {
     this.currentRound++;
+    console.log('currentRound in function:', this.currentRound);
+    
   }
 
   // When resetting all cards
@@ -245,12 +247,12 @@ export class SlumpgeneratorLocationComponent implements OnInit{
         
         //Proceed to next round
         setTimeout(()=> {
-          if(this.currentRound < this.maxRounds - 1){
+          if(this.currentRound < this.maxRounds -1){
             console.log('currentRound:', this.currentRound);
             console.log('maxRounds:', this.maxRounds);
             
             
-            this.currentRound++;
+            // this.currentRound++;
             this.shuffleWordsAndFlipBack();
             this.gameStarted = true;
           } else {
