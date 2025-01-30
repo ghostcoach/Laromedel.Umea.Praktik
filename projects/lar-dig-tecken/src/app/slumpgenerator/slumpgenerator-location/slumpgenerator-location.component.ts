@@ -116,6 +116,25 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     }
   }
 
+  getInitialClass(pairingMode: string):string {
+    console.log('pairingmode received:', pairingMode);
+    
+    const normalizedCategory = this.normalizeCharacters(pairingMode);
+    switch (pairingMode){
+      case 'ord': return 'mode-ord';
+      case 'bild': return 'mode-bild';
+      case 'ritade tecken': return 'mode-ritade-tecken';
+      case 'tecken som stöd': return 'mode-tecken-som-stod';
+      default: return 'mode-default'
+    }
+  }
+
+  getDynamicClass(mode: string, index: number): string {
+    return [this.getInitialClass(mode), this.cardStateClasses[index]]
+    .filter(cls => !!cls)
+    .join(' ');
+  }
+
 
   onCardClicked(content: string, index: number): void {
     const selectedWord = this.shuffledWords[index];
@@ -127,7 +146,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
 
      // Calculate the classes dynamically
      const classes = [
-      // this.cardStates[index].isSelected ? 'selected-card' : '',
       this.cardStates[index].isCorrect ? 'correct-card' : '',
       (this.cardStates[index].isSelected && !this.cardStates[index].isCorrect) ? 'incorrect-card' : ''
     ].filter(Boolean).join(' ');  // Join non-empty strings into a single class string
@@ -135,6 +153,14 @@ export class SlumpgeneratorLocationComponent implements OnInit{
 
      // Save the class object for the clicked card
      this.cardStateClasses[index] = classes;
+
+     console.log(`Card clicked at index ${index}:`, {
+      selectedWord,
+      isCorrect: this.cardStates[index].isCorrect,
+      assignedClass: classes,
+      pairingModeClass: this.getInitialClass('someMode') // Ensure 'this' is used
+    });
+  
 
     if (this.cardStates[index].isCorrect) {
       console.log('Correct!');
@@ -146,5 +172,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   }
 
   
-}
 
+
+}

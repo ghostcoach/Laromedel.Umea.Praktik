@@ -19,6 +19,7 @@
                         <app-card 
                         [pairingMode]="pairingModeFirst" 
                         [content]="getContent(pairingModeFirst, category, 0)"
+                        [dynamicClass]="getDynamicClass(pairingModeFirst, 0)"
                         ></app-card>
                     </ng-container>
                     
@@ -26,7 +27,7 @@
                 <app-start-button></app-start-button>
             </section>
 
-            <section class="flex gap-10 flex-col items-center justify-center flex-wrap min-h-[70vh] max-h-screen">
+            <section class="flex gap-6 flex-col items-center justify-center flex-wrap min-h-[70vh] max-h-screen">
                 <ng-container *ngIf="pairingModeSecond$ | async as pairingModeSecond">
                     <ng-container *ngIf="category$ | async as category">
                         <ng-container *ngIf="numberOfOptions$ | async as numberOfOptions">
@@ -36,7 +37,7 @@
                                     [content]="getContent(pairingModeSecond, category, idx + 1)"
                                     [pairingMode]="pairingModeSecond"
                                     (cardClick)="onCardClicked($event, idx + 1)"
-                                    [dynamicClass]="cardStateClasses[idx + 1]"
+                                    [dynamicClass]="getDynamicClass(pairingModeSecond, idx + 1)"
                                     >
                                     </app-card>
                             </ng-container>
