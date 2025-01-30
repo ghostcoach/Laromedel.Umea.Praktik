@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Input } from '@angular/core';
 
 @Component({
   selector: 'app-rounds',
@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './rounds.component.scss'
 })
 export class RoundsComponent {
-
+@Input() round: number = 0;
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, NgZone } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { Select } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { StartButtonComponent } from '../../start-button/start-button.component'
 import { CardComponent } from '../../card/card.component';
 import { RoundsComponent } from '../../rounds/rounds.component';
@@ -24,19 +24,33 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   @Select(GameSettingsStateQueries.numberOfRounds$) numberOfRounds$!:Observable<number>
   @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
   
-  cardStates: { isSelected: boolean, isCorrect: boolean }[] = []
+  gameStarted = false;
+  currentRound = 0;
+  maxRounds = 0;
+  cardStates: { isFlipped: boolean, isSelected: boolean, isCorrect: boolean }[] = []
   cardStateClasses: string[] = [];
 
   private shuffledWords: string[] = [];
 
-  constructor() { }
+  constructor(private cdRef: ChangeDetectorRef, private ngZone: NgZone) { }
 
   ngOnInit():void {
-    this.numberOfOptions$.subscribe(numberOfOptions => {
-      this.category$.subscribe(category => {
+    // this.numberOfOptions$.subscribe(numberOfOptions => {
+    //   this.numberOfOptions = numberOfOptions;
+
+    //   this.category$.subscribe(category => {
+    //     this.initializeWords(category, numberOfOptions);
+
+    //     this.initializeWords(this.category, this.numberOfOptions);
+    //   })
+    // })
+    // Subscribe to both category$ and numberOfOptions$ at the same time
+    combineLatest([this.numberOfOptions$, this.numberOfRounds$, this.category$]).subscribe(
+      ([numberOfOptions, numberOfRounds, category]) => {
+        this.maxRounds = numberOfRounds;
         this.initializeWords(category, numberOfOptions);
-      })
-    })
+      }
+    );
   }
 
   getNumberArray(count: number): number[] {
@@ -58,6 +72,20 @@ export class SlumpgeneratorLocationComponent implements OnInit{
       .map(({ value }) => value);
   }
 
+  shuffleWordsAndFlipBack(): void {
+    // Flip all cards back
+    this.cardStates.forEach(card => card.isFlipped = false);
+    
+    setTimeout(() => {
+      const wordToDuplicate: string = this.shuffledWords[0];
+      this.shuffledWords = this.shuffleArray([...this.shuffledWords, wordToDuplicate]);
+
+      this.initializeWords(this.shuffledWords[0], this.cardStates.length);
+      this.cardStates.forEach(card => card.isFlipped = true);
+      this.cdRef.detectChanges();
+    }, 1500);
+  }
+
   initializeWords(category: string, numberOfOptions: number): void {
     const words: string[] = Object.values(BildbegreppWords);
     
@@ -71,6 +99,19 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     // Step 3: Insert the duplicate at index 0
     this.shuffledWords = [wordToDuplicate, ...selectedWords];
 
+    // Step 4: Set all cards as flipped (hidden state)
+    this.cardStates = this.shuffledWords.map(() => ({ isFlipped: false, isSelected: false, isCorrect: false }));
+    this.cardStateClasses = [];
+  }
+
+  startGame(): void {
+    this.gameStarted = true;
+    this.currentRound = 0;
+
+    setTimeout(() => {
+      this.cardStates.forEach(card => card.isFlipped = true);
+      this.cdRef.detectChanges();
+    }, 500);
   }
 
   // Helper function to retrieve a specified number of unique random words
@@ -129,30 +170,109 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     .join(' ');
   }
 
+  updateRoundsComponent(): void {
+    this.currentRound++;
+  }
+
+  // When resetting all cards
+  // resetCards() {
+  //   this.cardStates.forEach(card => {
+  //     card.isFlipped = false;
+  //     card.isSelected = false;
+  //     card.isCorrect = false;
+  //   });
+
+  //   // Clear card state classes
+  //   this.cardStateClasses = [];
+    
+  //   // Manually trigger change detection after state updates
+  //   this.cdRef.detectChanges();
+  //   console.log('All cards reset.');
+  // }
+
+  resetCards() {
+    // Reset cards using a new array to trigger change detection
+    this.cardStates = this.cardStates.map(card => ({ isFlipped: false, isSelected: false, isCorrect: false }));
+    this.cardStateClasses = []; // Clear card state classes
+    
+    this.cdRef.detectChanges(); // Manually trigger change detection
+    console.log('All cards reset.');
+  }
+
 
   onCardClicked(content: string, index: number): void {
+    if(!this.gameStarted) return;
+
     const selectedWord: string = this.shuffledWords[index];
+    const isCorrect = selectedWord === this.shuffledWords[0];
+
 
     this.cardStates[index] = {
+      isFlipped: true,
       isSelected: true,
-      isCorrect: selectedWord === this.shuffledWords[0]
+      isCorrect: isCorrect
     }
+    
+    this.cdRef.detectChanges(); // Manually trigger change detection
 
      // Calculate the classes dynamically
      const classes: string = [
-      this.cardStates[index].isCorrect ? 'correct-card' : '',
-      (this.cardStates[index].isSelected && !this.cardStates[index].isCorrect) ? 'incorrect-card' : ''
+
+      isCorrect ? 'correct-card' : '',
+      (!isCorrect && this.cardStates[index].isSelected) ? 'incorrect-card' : ''
     ].filter(Boolean).join(' ');  // Join non-empty strings into a single class string
 
 
      // Save the class object for the clicked card
      this.cardStateClasses[index] = classes;  
+     this.cdRef.detectChanges(); // Manually trigger change detection
+     console.log(`Card ${index} updated with classes: ${classes}`);
 
-    if (this.cardStates[index].isCorrect) {
-      console.log('Correct!');
+     this.cdRef.detectChanges(); // Manually trigger change detection
+
+    if(isCorrect){
+      console.log('Correct! Proceed to next round');
+      this.updateRoundsComponent();
+
+      //Disable clicks
+      this.gameStarted = false;
+
+      //Reset all cards after short delay
+      setTimeout(()=> {
+        console.log('Resetting all cards...');
+        this.resetCards();
+        
+        
+        //Proceed to next round
+        setTimeout(()=> {
+          if(this.currentRound < this.maxRounds - 1){
+            console.log('currentRound:', this.currentRound);
+            console.log('maxRounds:', this.maxRounds);
+            
+            
+            this.currentRound++;
+            this.shuffleWordsAndFlipBack();
+            this.gameStarted = true;
+          } else {
+            console.log('You won!');
+            this.gameStarted = false;
+          }
+        }, 500)
+
+      }, 1000)
+
+
+
     } else {
       console.log('Incorrect!');
+      
     }
+
+    // if (this.cardStates[index].isCorrect) {
+    //   console.log('Correct!');
+    // } else {
+    //   console.log('Incorrect!');
+    // }
 
   }
 

@@ -4,7 +4,7 @@
         <div class="flex absolute top-0 right-0 gap-2 z-0">
             <ng-container *ngIf="numberOfRounds$ | async as numberOfRounds">
                 <ng-container *ngFor="let i of getNumberArray(numberOfRounds); let idx = index">
-                    <app-rounds></app-rounds>
+                    <app-rounds [round]="currentRound"></app-rounds>
                 </ng-container>
             </ng-container>
         </div>
@@ -24,7 +24,7 @@
                     </ng-container>
                     
                 </ng-container>
-                <app-start-button></app-start-button>
+                <app-start-button (click)="startGame()"></app-start-button>
             </section>
 
             <section class="flex gap-6 flex-col items-center justify-center flex-wrap min-h-[70vh] max-h-screen">

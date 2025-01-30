@@ -58,7 +58,7 @@ export class GameSettingsComponent {
     Category.LAGESORD
   ];
 
-  public numberOfOptions: number[] = [2, 3];
+  public numberOfOptions: number[] = [2, 3, 4];
   public numberOfRounds: number[] = [1, 2, 3, 4, 5];
 
   public isDropdownOpen = false;
