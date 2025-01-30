@@ -11,7 +11,7 @@ import { ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StartButtonComponent {
-  onStart(){
+  onStart(): void{
     console.log('start button works');
     
   }
