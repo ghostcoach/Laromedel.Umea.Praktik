@@ -31,8 +31,6 @@ export class SelectedGameLocationComponent {
       if (!selectedGameDataName) return;
       const selectedGame: SelectedGame = selectedGameDataName.replace(/-/g, " ") as SelectedGame;
       this.store.dispatch(new UpdateSelectedGame(selectedGame));
-      // console.log('Dynamic Content Component: ', this.dynamicContent);
-
     });
   }
 }

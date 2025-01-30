@@ -96,27 +96,22 @@ export class GameSettingsComponent {
 
   updateFirstPairingMode(option: CardContent): void {
     this.store.dispatch(new UpdateFirstPairingMode(option));
-    console.log('Första kortet upddaterat till', option);
   }
 
   updateSecondPairingMode(option: CardContent): void {
     this.store.dispatch(new UpdateSecondPairingMode(option));
-    console.log('Andra kortet upddaterat till', option);
   }
 
   updateCategory(option: Category): void {
     this.store.dispatch(new UpdateCategory(option));
-    console.log('Kategorin upddaterat till', option);
   }
 
   updateNumberOfOptions(option: number): void {
     this.store.dispatch(new UpdateNumberOfOptions(option));
-    console.log('Antal uppdaterat till', option);
   }
 
   updateNumberOfRounds(option: number): void {
     this.store.dispatch(new UpdateNumberOfRounds(option));
-    console.log('Antal rundor uppdaterat till', option);
   }
   
 

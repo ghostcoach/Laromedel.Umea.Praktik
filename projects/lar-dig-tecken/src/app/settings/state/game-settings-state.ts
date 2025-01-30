@@ -24,7 +24,8 @@ const stateToken: StateToken<IGameSettingStateModel> = new StateToken<IGameSetti
 export class GameSettingsState {
     @Action(UpdateFirstPairingMode)
     updateFirstPairingMode(ctx: StateContext<IGameSettingStateModel>, action: UpdateFirstPairingMode):void {
-        const state = ctx.getState();
+        const state: IGameSettingStateModel = ctx.getState();
+        
         ctx.patchState({
           pairingMode: {
             ...state.pairingMode,
@@ -34,8 +35,8 @@ export class GameSettingsState {
       }
 
     @Action(UpdateSecondPairingMode)
-    updateSecondPairingMode(ctx: StateContext<IGameSettingStateModel>, action: UpdateSecondPairingMode) {
-        const state = ctx.getState();
+    updateSecondPairingMode(ctx: StateContext<IGameSettingStateModel>, action: UpdateSecondPairingMode): void {
+        const state: IGameSettingStateModel = ctx.getState();
         ctx.patchState({
           pairingMode: {
             ...state.pairingMode,

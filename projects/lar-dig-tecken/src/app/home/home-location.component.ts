@@ -1,15 +1,13 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from "@angular/core";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {GameSettingsComponent} from '../settings/game-settings.component'
 import {IGameSettingStateModel} from "../settings/state/api/game-settings-state-model";
 import {CardContent} from '../../../../games/src/lib/api/card-content'
 import {Category} from '../category/api/category'
-import {Store} from '@ngxs/store'
-import {RouterLink, RouterOutlet, Router, ActivatedRoute, NavigationEnd} from "@angular/router";
+import {RouterOutlet, Router, NavigationEnd} from "@angular/router";
 import {SelectedGameLinkComponent} from  "./selected-game-link/selected-game-link.component";
 import { SelectedGame } from "../selected-game/api/selected-game";
 import {NgForOf, NgIf} from "@angular/common";
-import { Subscription } from "rxjs";
 import {filter} from "rxjs/operators"; 
 
 

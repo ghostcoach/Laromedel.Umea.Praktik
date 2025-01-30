@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from "@angular/common";
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 import { StartButtonComponent } from '../../start-button/start-button.component'
 import { CardComponent } from '../../card/card.component';
 import { RoundsComponent } from '../../rounds/rounds.component';
-import { Select } from '@ngxs/store';
-import { Observable } from 'rxjs';
 import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
 import { BildbegreppWords } from '../../category/api/bildbegrepp';
 
@@ -60,29 +59,28 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   }
 
   initializeWords(category: string, numberOfOptions: number): void {
-    const words = Object.values(BildbegreppWords);
-
+    const words: string[] = Object.values(BildbegreppWords);
+    
     // Step 1: Select `numberOfOptions` unique words randomly
-    const selectedWords = this.getRandomUniqueWords(words, numberOfOptions);
-    console.log('selectedWords (before duplication):', selectedWords);
+    const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
+    // console.log('selectedWords (before duplication):', selectedWords);
 
     // Step 2: Pick one word to duplicate
-    const wordToDuplicate = selectedWords[Math.floor(Math.random() * selectedWords.length)];
+    const wordToDuplicate: string = selectedWords[Math.floor(Math.random() * selectedWords.length)];
 
     // Step 3: Insert the duplicate at index 0
     this.shuffledWords = [wordToDuplicate, ...selectedWords];
 
-    console.log('shuffledWords (after duplication):', this.shuffledWords);
   }
 
   // Helper function to retrieve a specified number of unique random words
   private getRandomUniqueWords(words: string[], numberOfOptions: number): string[] {
-    const selectedWords = [];
-    const uniqueWordsSet = new Set<string>();
-
+    const selectedWords: string[] = [];
+    const uniqueWordsSet: Set<string> = new Set<string>();
+    
     // Ensure we select exactly 'numberOfOptions - 1' unique words
     while (selectedWords.length < numberOfOptions) {
-      const randomWord = words[Math.floor(Math.random() * words.length)];
+      const randomWord: string = words[Math.floor(Math.random() * words.length)];
       if (!uniqueWordsSet.has(randomWord)) {
         uniqueWordsSet.add(randomWord);
         selectedWords.push(randomWord);
@@ -99,9 +97,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
         this.initializeWords(category, 10); // Default to 10 words if not initialized
       }
 
-    // const words = Object.values(BildbegreppWords);
-    const normalizedCategory = this.normalizeCharacters(category);
-    const normalizedWord = this.normalizeCharacters(this.shuffledWords[index % this.shuffledWords.length]);
+    const normalizedWord: string = this.normalizeCharacters(this.shuffledWords[index % this.shuffledWords.length]);
     switch (pairingMode) {
       case 'ord': // WORD mode
         return this.shuffledWords[index % this.shuffledWords.length]; // Cycle through words
@@ -117,9 +113,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   }
 
   getInitialClass(pairingMode: string):string {
-    console.log('pairingmode received:', pairingMode);
     
-    const normalizedCategory = this.normalizeCharacters(pairingMode);
     switch (pairingMode){
       case 'ord': return 'mode-ord';
       case 'bild': return 'mode-bild';
@@ -137,7 +131,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
 
 
   onCardClicked(content: string, index: number): void {
-    const selectedWord = this.shuffledWords[index];
+    const selectedWord: string = this.shuffledWords[index];
 
     this.cardStates[index] = {
       isSelected: true,
@@ -145,22 +139,14 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     }
 
      // Calculate the classes dynamically
-     const classes = [
+     const classes: string = [
       this.cardStates[index].isCorrect ? 'correct-card' : '',
       (this.cardStates[index].isSelected && !this.cardStates[index].isCorrect) ? 'incorrect-card' : ''
     ].filter(Boolean).join(' ');  // Join non-empty strings into a single class string
 
 
      // Save the class object for the clicked card
-     this.cardStateClasses[index] = classes;
-
-     console.log(`Card clicked at index ${index}:`, {
-      selectedWord,
-      isCorrect: this.cardStates[index].isCorrect,
-      assignedClass: classes,
-      pairingModeClass: this.getInitialClass('someMode') // Ensure 'this' is used
-    });
-  
+     this.cardStateClasses[index] = classes;  
 
     if (this.cardStates[index].isCorrect) {
       console.log('Correct!');
@@ -168,7 +154,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
       console.log('Incorrect!');
     }
 
-    console.log('Card clicked:', content, index);
   }
 
   
