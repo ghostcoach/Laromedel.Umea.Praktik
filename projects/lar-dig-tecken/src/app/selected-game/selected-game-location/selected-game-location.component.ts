@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { Store } from "@ngxs/store";
@@ -16,7 +16,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
   styleUrl: './selected-game-location.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectedGameLocationComponent {
+export class SelectedGameLocationComponent implements OnInit {
   public selectedGameCapitalized$: Observable<string> = this.store.select(SelectedGameStateQueries.capitalizedSelectedGame$);
   public selectedGameDataName$: Observable<string> = this.store.select(SelectedGameStateQueries.selectedGameDataName$);
 

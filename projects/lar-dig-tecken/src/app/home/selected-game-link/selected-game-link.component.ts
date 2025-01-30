@@ -18,7 +18,7 @@ import { SelectedGame } from "../../selected-game/api/selected-game";
 })
 export class SelectedGameLinkComponent {
   @Input() selectedGame: SelectedGame;
-  public dynamicContent: Type<any>
+  public dynamicContent: Type<string>
   currentRoute: string;
 
   private componentMap: Record<string, Type<any>> = {
@@ -31,7 +31,6 @@ export class SelectedGameLinkComponent {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap): void => {
-      // console.log('Params:', params);
       
       const selectedGame: string | null = params.get("selected-game") as string;
       if (!selectedGame) return;
