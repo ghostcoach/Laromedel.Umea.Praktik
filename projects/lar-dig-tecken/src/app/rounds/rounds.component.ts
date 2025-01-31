@@ -8,4 +8,8 @@ import { Component,Input } from '@angular/core';
 })
 export class RoundsComponent {
 @Input() round: number = 0;
+
+get imageSrc():string {
+  return this.round > 0 ? `/assets/layout/icons/star-filled.svg` : `/assets/layout/icons/star.svg`;
+}
 }

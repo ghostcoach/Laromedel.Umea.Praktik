@@ -29,16 +29,11 @@ export class CardComponent implements OnChanges {
 
   private extractClasses(): void {
     const classes: string[] = this.dynamicClass.split(' '); // Splitting class string into an array
-    console.log(classes);
     
     // Assign values based on conditions
     this.modeClass = classes.find(cls => cls.startsWith('mode-')) || '';
     this.isCorrectClass = classes.find(cls => cls.endsWith('-card')) || '';
     this.flippedClass = classes.find(cls => cls.endsWith('flipped')) || '';
-
-    console.log("Status Class:", this.flippedClass);
-    console.log("Mode Class:", this.modeClass);
-    console.log("Correct Class:", this.isCorrectClass);
   }
 
   onCardClick(): void {

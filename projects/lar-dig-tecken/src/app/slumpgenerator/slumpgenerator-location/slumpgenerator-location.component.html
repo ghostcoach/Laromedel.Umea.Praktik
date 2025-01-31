@@ -4,7 +4,7 @@
         <div class="flex absolute top-0 right-0 gap-2 z-0">
             <ng-container *ngIf="numberOfRounds$ | async as numberOfRounds">
                 <ng-container *ngFor="let i of getNumberArray(numberOfRounds); let idx = index">
-                    <app-rounds [round]="currentRound"></app-rounds>
+                    <app-rounds [round]="idx < currentRound ? idx + 1 : 0"></app-rounds>
                 </ng-container>
             </ng-container>
         </div>

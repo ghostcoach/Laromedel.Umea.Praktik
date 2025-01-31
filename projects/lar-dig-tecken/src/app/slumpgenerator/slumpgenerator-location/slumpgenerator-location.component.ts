@@ -191,7 +191,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
 
     const selectedWord: string = this.shuffledWords[index];
     const isCorrect: boolean = selectedWord === this.shuffledWords[0];
-    // debugger;
     this.cardStates[index] = {
       isFlipped: false,
       isSelected: true,
@@ -211,14 +210,12 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     this.cdRef.detectChanges(); // Manually trigger change detection
 
     if(isCorrect){
-      console.log('Correct! Proceed to next round');
-
+      this.currentRound++;
       //Disable clicks
       this.gameStarted = false;
 
       //Reset all cards after short delay
       setTimeout(()=> {
-        console.log('Resetting all cards...');
         this.cardStates = this.cardStates.map(card => ({
           ...card,
           isFlipped: true,
@@ -227,13 +224,10 @@ export class SlumpgeneratorLocationComponent implements OnInit{
         
         //Proceed to next round
         setTimeout(()=> {
-          if(this.currentRound < this.maxRounds - 1){
-            console.log('currentRound:', this.currentRound);
-            console.log('maxRounds:', this.maxRounds);
+          if(this.currentRound < this.maxRounds){
           
             combineLatest([this.category$, this.numberOfOptions$]).subscribe(
             ([category, numberOfOptions]) => {
-              this.currentRound++;
               this.shuffleWordsAndFlipBack(category, numberOfOptions);
               this.gameStarted = true; // Re-enable clicks
             }
