@@ -28,6 +28,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   maxRounds = 0;
   cardStates: { isFlipped: boolean, isSelected: boolean, isCorrect: boolean }[] = []
   cardStateClasses: string[] = [];
+  startBtnActive = true;
 
   private shuffledWords: string[] = [];
 
@@ -121,6 +122,9 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   startGame(): void {
     this.gameStarted = true;
     this.currentRound = 0;
+    this.startBtnActive = false;
+    console.log('Game started, startBtnActive:', this.startBtnActive);
+    
 
     setTimeout(() => {
       this.cardStates = this.cardStates.map(card => ({...card, isFlipped: false}));
@@ -238,12 +242,15 @@ export class SlumpgeneratorLocationComponent implements OnInit{
             combineLatest([this.category$, this.numberOfOptions$]).subscribe(
               ([category, numberOfOptions]) => {
                 this.initializeWords(category, numberOfOptions);
-                this.gameStarted = true; // Re-enable clicks
+                this.gameStarted = false; // Re-enable clicks
+                this.startBtnActive = true;
+                console.log('Game ended, startBtnActive:', this.startBtnActive);
+                
               }
             );
             this.cdRef.detectChanges(); // Manually trigger change detection
-
-            this.gameStarted = false;
+            // this.startBtnActive = true;
+            // this.gameStarted = false;
           }
         }, 500)
 

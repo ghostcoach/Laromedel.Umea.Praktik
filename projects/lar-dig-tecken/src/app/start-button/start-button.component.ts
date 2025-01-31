@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy } from '@angular/core';
 
@@ -11,8 +11,11 @@ import { ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StartButtonComponent {
+  @Input() startBtnActive: boolean = true;
+
   onStart(): void{
     console.log('start button works');
+    console.log(this.startBtnActive);
     
   }
 }

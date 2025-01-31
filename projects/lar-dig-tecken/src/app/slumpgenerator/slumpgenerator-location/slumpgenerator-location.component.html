@@ -24,7 +24,7 @@
                     </ng-container>
                     
                 </ng-container>
-                <app-start-button (click)="startGame()"></app-start-button>
+                <app-start-button [startBtnActive]="gameStarted" (click)="startGame()"></app-start-button>
             </section>
 
             <section class="flex gap-6 flex-col items-center justify-center flex-wrap min-h-[70vh] max-h-screen">
