@@ -9,7 +9,7 @@ import { CommonModule } from "@angular/common";
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
 })
-export class CardComponent {
+export class CardComponent implements OnChanges {
   @Input() content!: string;
   @Input() pairingMode!: string;
   @Input() category!: string;
@@ -28,7 +28,7 @@ export class CardComponent {
   }
 
   private extractClasses(): void {
-    const classes = this.dynamicClass.split(' '); // Splitting class string into an array
+    const classes: string[] = this.dynamicClass.split(' '); // Splitting class string into an array
     console.log(classes);
     
     // Assign values based on conditions

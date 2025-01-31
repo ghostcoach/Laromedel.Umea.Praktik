@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, NgZone } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { Select } from '@ngxs/store';
 import { Observable, combineLatest } from 'rxjs';
@@ -174,7 +174,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   }
 
   // Method to reset all cards
-  resetCards() {
+  resetCards(): void {
     // Reset cards using a new array to trigger change detection
     this.cardStates = this.cardStates.map(card => ({ isFlipped: false, isSelected: false, isCorrect: false }));
     console.log(this.cardStates);
@@ -190,7 +190,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     if(!this.gameStarted) return;
 
     const selectedWord: string = this.shuffledWords[index];
-    const isCorrect = selectedWord === this.shuffledWords[0];
+    const isCorrect: boolean = selectedWord === this.shuffledWords[0];
     // debugger;
     this.cardStates[index] = {
       isFlipped: false,
