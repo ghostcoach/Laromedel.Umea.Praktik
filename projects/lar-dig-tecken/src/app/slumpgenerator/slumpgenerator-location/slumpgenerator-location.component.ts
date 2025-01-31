@@ -227,16 +227,20 @@ export class SlumpgeneratorLocationComponent implements OnInit{
           if(this.currentRound < this.maxRounds){
           
             combineLatest([this.category$, this.numberOfOptions$]).subscribe(
-            ([category, numberOfOptions]) => {
-              this.shuffleWordsAndFlipBack(category, numberOfOptions);
-              this.gameStarted = true; // Re-enable clicks
-            }
-          );
+              ([category, numberOfOptions]) => {
+                this.shuffleWordsAndFlipBack(category, numberOfOptions);
+                this.gameStarted = true; // Re-enable clicks
+              }
+            );
 
           } else {
             console.log('You won!');
-
-            this.cardStates.forEach((card) => (card.isFlipped = true))
+            combineLatest([this.category$, this.numberOfOptions$]).subscribe(
+              ([category, numberOfOptions]) => {
+                this.initializeWords(category, numberOfOptions);
+                this.gameStarted = true; // Re-enable clicks
+              }
+            );
             this.cdRef.detectChanges(); // Manually trigger change detection
 
             this.gameStarted = false;
