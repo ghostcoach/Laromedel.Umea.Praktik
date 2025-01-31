@@ -4,6 +4,53 @@
 box-shadow: 10px 10px 0px 0px rgba(0,0,0,0.75);
 }
 
+.card-container {
+    perspective: 1000px; /* Enable 3D perspective */
+    position: relative;
+    width: 176px; /* w-44 */
+    height: 240px; /* h-60 */
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d; /* Ensure child elements are rendered in 3D */
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hide the back face when flipped */
+}
+
+.card-front {
+    // background-color: #fff; /* Default front background */
+    transform: rotateY(0deg); /* Initial state: front is visible */
+    z-index: 2; /* Ensure front is above back when not flipped */
+
+}
+
+
+
+.card-back {
+    // background-color: #ccc; /* Default back background */
+    transform: rotateY(180deg); /* Initial state: back is hidden */
+    z-index: 1; /* Ensure back is below front when not flipped */
+}
+
+.flipped .card-inner {
+    transform: rotateY(180deg); /* Flip the card */
+}
+
+.not-flipped .card-inner {
+    transform: rotateY(0deg); /* Reset the card */
+}
+
 .mode-bild {
     background-color: #009CD4;
 }
@@ -28,13 +75,16 @@ box-shadow: 10px 10px 0px 0px rgba(0,0,0,0.75);
     background-color: rgb(255, 6, 6);
 }
 
-.flipped {
-    transform: rotateY(180deg);
-    transition: transform 0.6s;
-}
+// .flipped {
+//     transform: rotateY(180deg);
+//     transition: transform 0.6s;
+// }
   
-.not-flipped {
-    transform: rotateY(0deg);
-    transition: transform 0.6s;
-}
+// .not-flipped {
+//     transform: rotateY(0deg);
+//     transition: transform 0.6s;
+// }
 
+// .card-back {
+//     backface-visibility: hidden;
+// }

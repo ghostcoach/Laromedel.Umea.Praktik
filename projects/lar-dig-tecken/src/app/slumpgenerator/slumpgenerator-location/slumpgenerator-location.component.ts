@@ -173,12 +173,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     .join(' ');
   }
 
-  // Method to update the rounds component
-  // updateRoundsComponent(): void {
-  //   this.currentRound++;
-  //   console.log('currentRound in function:', this.currentRound);
-  // }
-
   // Method to reset all cards
   resetCards() {
     // Reset cards using a new array to trigger change detection
@@ -218,7 +212,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
 
     if(isCorrect){
       console.log('Correct! Proceed to next round');
-      // this.updateRoundsComponent();
 
       //Disable clicks
       this.gameStarted = false;
@@ -237,11 +230,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
           if(this.currentRound < this.maxRounds - 1){
             console.log('currentRound:', this.currentRound);
             console.log('maxRounds:', this.maxRounds);
-            
-            // this.currentRound++;
-            // this.shuffleWordsAndFlipBack(this.category$, this.numberOfOptions$);
-            // this.gameStarted = true;
-            // Pass category and numberOfOptions to shuffleWordsAndFlipBack
+          
             combineLatest([this.category$, this.numberOfOptions$]).subscribe(
             ([category, numberOfOptions]) => {
               this.currentRound++;

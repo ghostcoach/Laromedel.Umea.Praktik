@@ -1,4 +1,4 @@
-<div 
+<!-- <div 
     (click)="onCardClick()"
     (keydown)="onCardClick()"
     aria-disabled="true"
@@ -13,26 +13,30 @@
         >
         </app-card-content>
     </div>
-</div>
-<!-- <div 
+</div> -->
+<div 
     (click)="onCardClick()"
     (keydown)="onCardClick()"
     [attr.aria-disabled]="true"
-    [ngClass]="dynamicClass"
-    class="card-container w-44 h-60"
+    [ngClass]="flippedClass"
+    class="card-container w-44 h-60 rounded-md"
 >
     <div class="card-inner">
-        <div class="card-front">
+        <!-- Back of the Card -->
+        <div class="card-back rounded-md">
+            <div class="bg-slate-600 w-full h-full rounded-md"></div>
         </div>
-        <div class="card-back">
+        
+        <!-- Front of the Card -->
+        <div [ngClass]="[modeClass, isCorrectClass]" class="card-front  flex justify-center items-center card w-44 h-60 border border-1 border-black rounded-lg">
             <div class="border border-1 border-black w-[93%] h-[95%] rounded-md bg-white flex items-center justify-center">
                 <app-card-content
-                [pairingMode]="pairingMode"
-                [data]="content"
-                class="w-full h-full"
+                    [pairingMode]="pairingMode"
+                    [data]="content"
+                    class="w-full h-full"
                 >
                 </app-card-content>
             </div>
         </div>
     </div>
-</div> -->
+</div>
