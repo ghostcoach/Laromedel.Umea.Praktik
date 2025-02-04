@@ -44,12 +44,28 @@ audioIndex = 0; // Keep track of which audio to play next
 
   ngOnInit():void {
     // Subscribe to both category$ and numberOfOptions$ at the same time
-    combineLatest([this.numberOfOptions$, this.numberOfRounds$, this.category$]).subscribe(
-      ([numberOfOptions, numberOfRounds, category]) => {
+    combineLatest([
+      this.numberOfOptions$, 
+      this.numberOfRounds$, 
+      this.category$])
+      .subscribe(([numberOfOptions, numberOfRounds, category]) => {
         this.maxRounds = numberOfRounds;
         this.initializeWords(category, numberOfOptions);
       }
     );
+
+    // Restart game if category or pairing mode changes
+  combineLatest([
+    this.category$, 
+    this.pairingModeFirst$, 
+    this.pairingModeSecond$,
+    this.numberOfOptions$
+  ]).subscribe(([category, pairingModeFirst, pairingModeSecond, numberOfOptions]) => {
+    if (this.gameStarted) {
+      console.log('Game settings changed. Restarting game...');
+      this.restartGame();
+    }
+  });
   }
 
   // HELPER FUNCTIONS
@@ -140,6 +156,21 @@ audioIndex = 0; // Keep track of which audio to play next
       this.cardStates = this.cardStates.map(card => ({...card, isFlipped: false}));
       this.cdRef.detectChanges();
     }, 500);
+    
+  }
+
+  restartGame(): void {
+    combineLatest([this.category$, this.numberOfOptions$]).subscribe(
+      ([category, numberOfOptions]) => {
+        this.initializeWords(category, numberOfOptions);
+        this.gameStarted = false; // Re-enable clicks
+        this.startBtnActive = true;
+        console.log('Game ended, startBtnActive:', this.startBtnActive);
+        
+      }
+    );
+    this.startGame();
+
   }
 
   // Method to determine the card content
@@ -200,16 +231,17 @@ audioIndex = 0; // Keep track of which audio to play next
   }
 
   // Method to reset all cards
-  resetCards(): void {
-    // Reset cards using a new array to trigger change detection
-    this.cardStates = this.cardStates.map(card => ({ isFlipped: false, isSelected: false, isCorrect: false }));
-    console.log(this.cardStates);
+  // resetCards(): void {
+  //   // Reset cards using a new array to trigger change detection
+  //   this.cardStates = this.cardStates.map(card => ({ isFlipped: false, isSelected: false, isCorrect: false }));
+  //   console.log(this.cardStates);
     
-    this.cardStateClasses = []; // Clear card state classes
+  //   this.cardStateClasses = []; // Clear card state classes
     
-    this.cdRef.detectChanges(); // Manually trigger change detection
-    console.log('All cards reset.');
-  }
+  //   this.cdRef.detectChanges(); // Manually trigger change detection
+  //   console.log('All cards reset.');
+  // }
+
 
   // Method to handle card clicks
   onCardClicked(content: string, index: number): void {
@@ -261,15 +293,7 @@ audioIndex = 0; // Keep track of which audio to play next
 
           } else {
             console.log('You won!');
-            combineLatest([this.category$, this.numberOfOptions$]).subscribe(
-              ([category, numberOfOptions]) => {
-                this.initializeWords(category, numberOfOptions);
-                this.gameStarted = false; // Re-enable clicks
-                this.startBtnActive = true;
-                console.log('Game ended, startBtnActive:', this.startBtnActive);
-                
-              }
-            );
+            this.restartGame();
             this.cdRef.detectChanges(); // Manually trigger change detection
           }
         }, 500)
