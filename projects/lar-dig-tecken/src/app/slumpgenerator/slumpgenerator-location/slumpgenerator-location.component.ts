@@ -71,6 +71,8 @@ export class SlumpgeneratorLocationComponent implements OnInit{
 
   // Function to shuffle words and flip back
   shuffleWordsAndFlipBack(category: string, numberOfOptions: number): void {
+
+      //MÅSTE LÄGGA TILL SÅ ATT INTE SAMMA ORD KOMMER IGEN
       this.initializeWords(category, numberOfOptions);
 
       setTimeout(() => {
