@@ -64,6 +64,7 @@ audioIndex = 0; // Keep track of which audio to play next
     if (this.gameStarted) {
       console.log('Game settings changed. Restarting game...');
       this.restartGame();
+      this.startGame();
     }
   });
   }
@@ -169,7 +170,7 @@ audioIndex = 0; // Keep track of which audio to play next
         
       }
     );
-    this.startGame();
+    
 
   }
 
