@@ -29,6 +29,14 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   cardStates: { isFlipped: boolean, isSelected: boolean, isCorrect: boolean }[] = []
   cardStateClasses: string[] = [];
   startBtnActive = true;
+  audioFiles = [
+    '/assets/audio/try-again/try-again_1.mp3',
+    '/assets/audio/try-again/try-again_2.mp3',
+    '/assets/audio/try-again/try-again_3.mp3'
+  ];
+  audio: HTMLAudioElement | null = null;
+
+audioIndex = 0; // Keep track of which audio to play next
 
   private shuffledWords: string[] = [];
 
@@ -155,6 +163,18 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     }
   }
 
+  //AUDIO FUNCTIONS
+
+  playIncorrectAudio() {
+    // Get the current audio file
+    this.audio = new Audio(this.audioFiles[this.audioIndex]); 
+
+    // Play the audio
+    this.audio.play();
+
+    // Move to the next file, looping back to the start
+    this.audioIndex = (this.audioIndex + 1) % this.audioFiles.length;
+  }
 
   //CLASS LOGIC
 
@@ -251,15 +271,14 @@ export class SlumpgeneratorLocationComponent implements OnInit{
               }
             );
             this.cdRef.detectChanges(); // Manually trigger change detection
-            // this.startBtnActive = true;
-            // this.gameStarted = false;
           }
         }, 500)
 
       }, 1000)
 
     } else {
-      console.log('Incorrect!');   
+      console.log('Incorrect!');
+      this.playIncorrectAudio();
     }
 
   }
