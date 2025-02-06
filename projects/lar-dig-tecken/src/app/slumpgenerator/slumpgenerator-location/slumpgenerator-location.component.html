@@ -11,9 +11,9 @@
        
     </section>
     
-    <section class="flex gap-4 justify-around max-h-[75vh]">
+    <section class="flex justify-around max-h-[75vh]">
 
-            <section class="flex gap-4 flex-col items-center justify-center">
+            <section class="flex gap-4 flex-col items-center justify-center max-w-[50%]">
                 <ng-container *ngIf="pairingModeFirst$ | async as pairingModeFirst">
                     <ng-container  *ngIf="category$ | async as category">
                         <app-card 
@@ -27,13 +27,13 @@
                 <app-start-button [startBtnActive]="gameStarted" (click)="startGame()"></app-start-button>
             </section>
 
-            <section class="flex flex-col flex-wrap gap-6 justify-center place-content-center mb-5">
+            <section class="flex flex-col flex-nowrap gap-6 justify-center place-content-center  min-w-fit w-[50%] mt-14 md:flex-wrap md:mb-5 sm:flex-wrap sm:mb-5">
                 <ng-container *ngIf="pairingModeSecond$ | async as pairingModeSecond">
                     <ng-container *ngIf="category$ | async as category">
                         <ng-container *ngIf="numberOfOptions$ | async as numberOfOptions">
                             <ng-container *ngFor="let i of getNumberArray(numberOfOptions); let idx = index">
                                 <app-card
-                                    class="hover:cursor-pointer row-span-2" 
+                                    class="hover:cursor-pointer " 
                                     [content]="getContent(pairingModeSecond, category, idx + 1)"
                                     [pairingMode]="pairingModeSecond"
                                     (cardClick)="onCardClicked($event, idx + 1)"
