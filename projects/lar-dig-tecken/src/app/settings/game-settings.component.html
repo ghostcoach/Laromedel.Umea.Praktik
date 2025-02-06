@@ -12,7 +12,7 @@
         </button>
       </div>  
         <div *ngIf="isDropdownOpen"
-        class="p-3 flex flex-col justify-between items-start space-y-3 "
+        class="p-3 flex flex-col justify-between  space-y-3 "
         >
         <!-- Första kortets inställningar -->
          <section 
@@ -21,9 +21,10 @@
           >
           <button 
             (click)="toggleSettingOptionsDropdown('firstCard')"
-            class=""
+            class="flex items-center gap-3 justify-between w-full"
           >
-            Första kortet
+          <img src="/assets/layout/icons/first-card-icon.svg" alt="" class="h-8">
+          <p>Första kortet</p>
           </button>
           <ul 
             class="flex gap-1 flex-col"
@@ -36,10 +37,22 @@
               (click)="updateFirstPairingMode(option)" 
               (keydown.enter)="updateFirstPairingMode(option)" 
               [class.selected]="option === (pairingModeFirstCard$ | async)"
-              class="py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
+              class="flex gap-3 py-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
           >
+          <div *ngIf="option === 'bild'" >
+            <img class="w-10"  src="/assets/layout/icons/image-icon.svg" alt="">
+          </div>
+          <div *ngIf="option === 'ritade tecken'" >
+            <img class="w-10"  src="/assets/layout/icons/ritade-tecken-icon.svg" alt="">
+          </div>
+          <div *ngIf="option === 'ord'" >
+            <img class="w-10"  src="/assets/layout/icons/ord-icon.svg" alt="">
+          </div>
+          <div *ngIf="option === 'tecken som st\u00F6d'" >
+            <img class="w-10"  src="/assets/layout/icons/takk-icon.svg" alt="">
+          </div>
               {{ option }}
-          </li>
+            </li>
           </ul>
          </section>
         
@@ -49,7 +62,10 @@
             class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isSecondCardSettingsDropdownOpen}"
           >
-            <button (click)="toggleSettingOptionsDropdown('secondCard')">Resterande kort</button>
+            <button (click)="toggleSettingOptionsDropdown('secondCard')" class="flex items-center gap-3 justify-between w-full">
+              <img src="/assets/layout/icons/second-card-icon.svg" alt="" class="h-8">
+              <p>Resterande kort</p>
+            </button>
             <ul 
               class="flex gap-1 flex-col"
               *ngIf="isSecondCardSettingsDropdownOpen"
@@ -60,8 +76,20 @@
                 (click)="updateSecondPairingMode(option)" 
                 (keydown.enter)="updateSecondPairingMode(option)"
                 [class.selected]="option === (pairingModeSecondCard$ | async)" 
-                class="py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
+                class="flex gap-3 py-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
               >
+              <div *ngIf="option === 'bild'" >
+                <img class="w-10"  src="/assets/layout/icons/image-icon.svg" alt="">
+              </div>
+              <div *ngIf="option === 'ritade tecken'" >
+                <img class="w-10"  src="/assets/layout/icons/ritade-tecken-icon.svg" alt="">
+              </div>
+              <div *ngIf="option === 'ord'" >
+                <img class="w-10"  src="/assets/layout/icons/ord-icon.svg" alt="">
+              </div>
+              <div *ngIf="option === 'tecken som st\u00F6d'" >
+                <img class="w-10"  src="/assets/layout/icons/takk-icon.svg" alt="">
+              </div>
                 {{ option }}
                 <img src="" alt="">
               </li>
@@ -74,7 +102,10 @@
             class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isCategorySettingsDropdownOpen}"
           >
-            <button (click)="toggleSettingOptionsDropdown('category')">Kategori</button>
+            <button (click)="toggleSettingOptionsDropdown('category')" class="flex items-center gap-3 justify-between w-full">
+              <img src="/assets/layout/icons/category-icon.png" alt="" class="h-8">
+              <p>Kategori</p>
+            </button>
             <ul 
               class="flex gap-1 flex-col"
               *ngIf="isCategorySettingsDropdownOpen"
@@ -97,7 +128,10 @@
             class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isNumberOfOptionsSettingsDropdownOpen}"
           >
-            <button (click)="toggleSettingOptionsDropdown('options')">Antal kort</button>
+            <button (click)="toggleSettingOptionsDropdown('options')" class="flex items-center gap-3 justify-between w-full">
+              <img src="/assets/layout/icons/number-of-options-icon.svg" alt="" class="h-8">
+              <p>Antal kort</p>
+            </button>
             <ul 
               class="flex gap-1 flex-col"
               *ngIf="isNumberOfOptionsSettingsDropdownOpen"
@@ -119,7 +153,10 @@
            class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
            [ngClass]="{'bg-orange-200' : isNumberOfRoundsSettingsDropdownOpen}"
          >
-           <button (click)="toggleSettingOptionsDropdown('rounds')">Antal omgångar</button>
+           <button (click)="toggleSettingOptionsDropdown('rounds')" class="flex items-center gap-3 justify-between w-full">
+              <img src="/assets/layout/icons/rounds-icon.svg" alt="" class="h-8">
+              <p>Antal omgångar</p>
+            </button>
            <ul 
              class="flex gap-1 flex-col"
              *ngIf="isNumberOfRoundsSettingsDropdownOpen"

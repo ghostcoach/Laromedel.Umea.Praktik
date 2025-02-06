@@ -74,7 +74,13 @@ export class GameSettingsComponent {
   public numberOfRounds$: Observable<number> = this.store.select(GameSettingsStateQueries.numberOfRounds$);
   public numberOfOptions$: Observable<number> = this.store.select(GameSettingsStateQueries.numberOfOptions$);
 
-  constructor(private store: Store){}
+  buttonImg = '';
+  
+
+  constructor(private store: Store){
+    console.log(this.pairingModeFirstCard$);
+
+  }
 
   toggleDropdown() : void {
     this.isDropdownOpen = !this.isDropdownOpen;
