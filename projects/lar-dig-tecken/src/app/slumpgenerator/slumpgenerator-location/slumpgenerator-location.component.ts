@@ -7,10 +7,11 @@ import { CardComponent } from '../../card/card.component';
 import { RoundsComponent } from '../../rounds/rounds.component';
 import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
 import { BildbegreppWords } from '../../category/api/bildbegrepp';
+import { GameOverComponent } from '../../game-over/game-over.component';
 
 @Component({
   selector: 'app-slumpgenerator-location',
-  imports: [CommonModule, StartButtonComponent, CardComponent, RoundsComponent],
+  imports: [CommonModule, StartButtonComponent, CardComponent, RoundsComponent, GameOverComponent],
   templateUrl: './slumpgenerator-location.component.html',
   styleUrl: './slumpgenerator-location.component.scss',
 })
@@ -35,8 +36,9 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     '/assets/audio/try-again/try-again_3.mp3'
   ];
   audio: HTMLAudioElement | null = null;
+  gameOver = false;
 
-audioIndex = 0; // Keep track of which audio to play next
+  audioIndex = 0; // Keep track of which audio to play next
 
   private shuffledWords: string[] = [];
 
@@ -151,6 +153,9 @@ audioIndex = 0; // Keep track of which audio to play next
     this.currentRound = 0;
     this.startBtnActive = false;
     console.log('Game started, startBtnActive:', this.startBtnActive);
+    this.gameOver = false;
+    console.log('Game over:', this.gameOver);
+    
     
 
     setTimeout(() => {
@@ -167,7 +172,9 @@ audioIndex = 0; // Keep track of which audio to play next
         this.gameStarted = false; // Re-enable clicks
         this.startBtnActive = true;
         console.log('Game ended, startBtnActive:', this.startBtnActive);
-        
+        this.gameOver = false;
+        console.log('Game over:', this.gameOver);
+
       }
     );
     
@@ -231,18 +238,6 @@ audioIndex = 0; // Keep track of which audio to play next
     .join(' ');
   }
 
-  // Method to reset all cards
-  // resetCards(): void {
-  //   // Reset cards using a new array to trigger change detection
-  //   this.cardStates = this.cardStates.map(card => ({ isFlipped: false, isSelected: false, isCorrect: false }));
-  //   console.log(this.cardStates);
-    
-  //   this.cardStateClasses = []; // Clear card state classes
-    
-  //   this.cdRef.detectChanges(); // Manually trigger change detection
-  //   console.log('All cards reset.');
-  // }
-
 
   // Method to handle card clicks
   onCardClicked(content: string, index: number): void {
@@ -296,6 +291,9 @@ audioIndex = 0; // Keep track of which audio to play next
             console.log('You won!');
             this.restartGame();
             this.cdRef.detectChanges(); // Manually trigger change detection
+            this.gameOver = true;
+            console.log('Game over:', this.gameOver);
+
           }
         }, 500)
 
