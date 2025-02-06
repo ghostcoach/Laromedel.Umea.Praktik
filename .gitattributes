@@ -1,11 +1,8 @@
 maven.config merge=mavenconfig
-
 # Always keep our version because the file is tied to Maven version of branch.
 org.eclipse.wst.common.component merge=ours
-
 # Set the default behavior, in case people don't have core.autocrlf set.
 * text=auto eol=lf
-
 *.java eol=lf
 *.aj eol=lf
 *.ts eol=lf
@@ -19,33 +16,28 @@ org.eclipse.wst.common.component merge=ours
 *.properties eol=lf
 *.txt text eol=lf
 *.sh text eol=lf
-*.svg text eol=lf
-
+*.svg filter=lfs diff=lfs merge=lfs -text
 tasks.json eol=lf
 .gitignore eol=lf
-
 # Store yarn releases as binary since they will never be diffed https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
 .yarn/releases/*.cjs binary
 .yarn/plugins/** binary
-
 # Windows files with crlf
 *.iss text eol=crlf
 *.isl text eol=crlf
 *.ini text eol=crlf
 *.cmd text eol=crlf
 *.inf text eol=crlf
-
 # Communicate dictionary (cwl) is actually a text file, but will be corrupted if edited by git
 *.cwl binary
 *.cfwl binary
-
 # Windows files where editor should be set to lf
 *.cs text eol=lf
-
-
 # Denote all files that are truly binary and should not be modified.
-*.png binary
+*.png filter=lfs diff=lfs merge=lfs -text
 *.jpg binary
 *.gif binary
 *.zip binary
 *.pdf binary
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.mp3 filter=lfs diff=lfs merge=lfs -text
