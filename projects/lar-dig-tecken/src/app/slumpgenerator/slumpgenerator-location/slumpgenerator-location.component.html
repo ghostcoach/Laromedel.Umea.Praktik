@@ -46,9 +46,7 @@
                 </ng-container>
             </section>
     </section>
-    <!-- <app-game-over></app-game-over> -->
-
     <ng-container *ngIf="gameOver">
-        <app-game-over></app-game-over>
+        <app-game-over [gameOver]="gameOver"></app-game-over>
     </ng-container>
 </div>
