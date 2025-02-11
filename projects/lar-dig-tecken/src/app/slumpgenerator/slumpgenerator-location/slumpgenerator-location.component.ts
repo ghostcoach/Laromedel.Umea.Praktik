@@ -152,11 +152,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     this.gameStarted = true;
     this.currentRound = 0;
     this.startBtnActive = false;
-    console.log('Game started, startBtnActive:', this.startBtnActive);
-    this.gameOver = false;
-    console.log('Game over:', this.gameOver);
-    
-    
+    this.gameOver = false;    
 
     setTimeout(() => {
       this.cardStates = this.cardStates.map(card => ({...card, isFlipped: false}));
@@ -171,9 +167,9 @@ export class SlumpgeneratorLocationComponent implements OnInit{
         this.initializeWords(category, numberOfOptions);
         this.gameStarted = false; // Re-enable clicks
         this.startBtnActive = true;
-        console.log('Game ended, startBtnActive:', this.startBtnActive);
+        // console.log('Game ended, startBtnActive:', this.startBtnActive);
         this.gameOver = false;
-        console.log('Game over:', this.gameOver);
+        // console.log('Game over:', this.gameOver);
 
       }
     );

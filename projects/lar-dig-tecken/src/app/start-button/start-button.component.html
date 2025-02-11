@@ -1,6 +1,6 @@
 <button 
-    (click)="onStart()"
-    [ngClass]="{'bg-green-100': startBtnActive, 'bg-green-300 hover:bg-green-400': !startBtnActive}"
+    (click)="startBtnActive && onStart()"
+    [ngClass]="{'bg-green-100 scale-95 cursor-not-allowed': !startBtnActive, 'bg-green-300 hover:bg-green-400 scale-100 hover:scale-95': startBtnActive}"
     class=" rounded-sm text-xl px-10 py-4 border border-black border-1  tracking-wide font-semibold"
 >
         Starta

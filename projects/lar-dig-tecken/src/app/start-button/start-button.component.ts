@@ -15,7 +15,7 @@ export class StartButtonComponent {
 
   onStart(): void{
     console.log('start button works');
-    console.log(this.startBtnActive);
+    console.log('start btn active:', this.startBtnActive);
     
   }
 }
