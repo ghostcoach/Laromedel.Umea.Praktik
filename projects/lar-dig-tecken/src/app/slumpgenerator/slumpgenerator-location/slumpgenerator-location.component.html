@@ -33,7 +33,7 @@
                         <ng-container *ngIf="numberOfOptions$ | async as numberOfOptions">
                             <ng-container *ngFor="let i of getNumberArray(numberOfOptions); let idx = index">
                                 <app-card
-                                    class="hover:cursor-pointer " 
+                                    [ngClass]="{'cursor-pointer' : gameStarted}"
                                     [content]="getContent(pairingModeSecond, category, idx + 1)"
                                     [pairingMode]="pairingModeSecond"
                                     (cardClick)="onCardClicked($event, idx + 1)"
