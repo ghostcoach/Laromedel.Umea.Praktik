@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { ConfettiCanonComponent } from 'projects/ui-components/src/public-api';
 
 @Component({
   selector: 'app-game-over',
-  imports: [],
+  imports: [ConfettiCanonComponent],
   templateUrl: './game-over.component.html',
   styleUrl: './game-over.component.scss'
 })

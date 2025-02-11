@@ -154,7 +154,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     this.startBtnActive = false;
     this.gameOver = false;
     console.log('game started, gameOver:', this.gameOver);
-        
 
     setTimeout(() => {
       this.cardStates = this.cardStates.map(card => ({...card, isFlipped: false}));
@@ -289,8 +288,15 @@ export class SlumpgeneratorLocationComponent implements OnInit{
             console.log('You won!');
             this.restartGame();
             this.gameOver = true;
+            this.cdRef.detectChanges();
+            
+             // Keep gameOver true for 2 seconds, then reset it
+            setTimeout(() => {
+              this.gameOver = false;
+              this.cdRef.detectChanges();
+            }, 8200);
             console.log('Game over, gameOver:', this.gameOver);
-            this.cdRef.detectChanges(); // Manually trigger change detection
+             // Manually trigger change detection
           }
         }, 500)
 
