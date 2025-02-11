@@ -192,7 +192,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
       case 'ord': // WORD mode
         return this.shuffledWords[index % this.shuffledWords.length]; // Cycle through words
       case 'bild': // ILLUSTRATION mode
-        return `/assets/subject-area/estetisk-verksamhet/${category}/illustration/${normalizedWord}.svg`; // Assume images are stored with this path
+        return `/assets/subject-area/estetisk-verksamhet/${category}/illustration/${normalizedWord}.png`; // Assume images are stored with this path
       case 'ritade tecken': // RITADE_TECKEN mode
         return `/assets/subject-area/estetisk-verksamhet/${category}/ritade-tecken/${normalizedWord}.svg`; // Path to drawings
       case 'tecken som stöd': // TAKK mode
@@ -204,7 +204,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
 
   //AUDIO FUNCTIONS
 
-  playIncorrectAudio() {
+  playIncorrectAudio(): void {
     // Get the current audio file
     this.audio = new Audio(this.audioFiles[this.audioIndex]); 
 
