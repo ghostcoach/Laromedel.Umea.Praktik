@@ -54,10 +54,13 @@ export class HomeLocationComponent implements OnInit {
     this.updateHomeVisibility()
   }
 
-  get selectedGameKeys() {
-    const keys = Object.keys(this.selectedGameEnum) as (keyof typeof SelectedGame)[];
+  // get selectedGameKeys() {
+  //   const keys = Object.keys(this.selectedGameEnum) as (keyof typeof SelectedGame)[];
     
-    return keys;
+  //   return keys;
+  // }
+  get selectedGameKeys() : (keyof typeof SelectedGame)[] {
+    return Object.keys(this.selectedGameEnum) as (keyof typeof SelectedGame)[];
   }
 
   currentGameSettings: IGameSettingStateModel = {
@@ -73,6 +76,8 @@ export class HomeLocationComponent implements OnInit {
   updateHomeVisibility(): void {
     // Determine if the current path is the home page
     this.isHomeVisible = this.currentPath === '/';
+    console.log('isHomeVisible:', this.isHomeVisible);
+    
 
     // Trigger Angular's change detection
     this.cdr.detectChanges();

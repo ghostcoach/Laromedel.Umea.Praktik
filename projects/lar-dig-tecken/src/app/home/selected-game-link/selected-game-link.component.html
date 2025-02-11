@@ -1,4 +1,4 @@
-<a 
+<!-- <a 
     class="px-10 py-8 w-52 rounded-sm text-center border border-black border-1"
     [routerLink]="['/', selectedGameDataName]"
     [ngClass]="selectedGame ? 'selected-game-' + selectedGameDataName : '' "
@@ -10,19 +10,28 @@
 </span>
 </a>
 
-<ng-container *ngIf="dynamicContent" [ngComponentOutlet]="dynamicContent"></ng-container>
-<!-- <ng-container *ngIf="currentRoute === ''">
+<ng-container *ngIf="dynamicContent" [ngComponentOutlet]="dynamicContent"></ng-container> -->
+<section class="flex p-4 items-center justify-center flex-grow">
 
-  <a 
-    class="px-10 py-8 w-52 rounded-sm text-center border border-black border-1"
-    [routerLink]="['/', selectedGameDataName]"
-    [ngClass]="selectedGame ? 'selected-game-' + selectedGameDataName : '' "
-  >
-    <span class="tracking-wide font-semibold">
-      {{ selectedGame | capitalize }}
-    </span>
-  </a>
+  <div class="flex flex-wrap gap-5 max-w-screen-md w-full justify-center">
+    <ng-container *ngIf="isHomeVisible">
+      <div *ngFor="let key of selectedGameKeys">
+        <a 
+        class="flex px-10 py-8 w-52 rounded-sm text-center border border-black border-1"
+        [routerLink]="['/', getSelectedGameDataName(key)]"
+        [ngClass]="'selected-game-' + getSelectedGameDataName(key) "
+        >
+          <span
+            class="tracking-wide font-semibold"
+          >
+            {{ selectedGameEnum[key] | capitalize }}
+          </span>
+        </a>
+      </div>
+    </ng-container>
 
+    <ng-container *ngIf="dynamicContent" [ngComponentOutlet]="dynamicContent"></ng-container>
 
-  <ng-container *ngIf="dynamicContent" [ngComponentOutlet]="dynamicContent"></ng-container>
-</ng-container> -->
+    </div>
+ 
+</section>

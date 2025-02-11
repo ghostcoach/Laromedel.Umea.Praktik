@@ -1,11 +1,5 @@
 
-
-<!-- <p class="font-semibold">Exempel på hur man refererar till något i public foldern:</p>
-<img class="w-32" src="/assets/subject-area/estetisk-verksamhet/bildbegrepp/illustration/lim.svg"
-     alt="Illustration av två typer av lim. Till vänster en flaska med grön pip och blå etikett med texten 'LIM'. Till höger ett rött limstift med svart kork och texten 'LIM' på etiketten"> -->
-
-
- <div class="flex flex-col min-h-screen  bg-blue-200 m-0 p-0 justify-center">
+<div class="flex flex-col min-h-screen  bg-blue-200 m-0 p-0 justify-center">
 <header class="flex justify-between mb-4 absolute top-0 z-10 w-full">
      <h1 class="font-bold text-2xl p-5">Lika = Lika: Lär dig tecken</h1>
      <app-game-settings
@@ -15,7 +9,8 @@
 </header>
 
 <!-- Conditionally show the section only when the router-outlet is not rendering a component -->
-<section *ngIf="isHomeVisible" class="flex p-4 items-center justify-center flex-grow">
+<!-- <ng-container *ngIf="isHomeVisible">
+<section class="flex p-4 items-center justify-center flex-grow">
   <div class="flex flex-wrap gap-5 max-w-screen-md w-full justify-center">
     <div *ngFor="let key of selectedGameKeys">
       <app-selected-game-link
@@ -25,7 +20,16 @@
     </div>
   </div>
 </section>
+</ng-container> -->
+<ng-container>
+        <app-selected-game-link
+          [isHomeVisible]="isHomeVisible"
+          [selectedGameKeys]="selectedGameKeys"
+          [selectedGameEnum]="selectedGameEnum"
+          class="flex"
+        ></app-selected-game-link>
+  </ng-container>
 
 <!-- This is where the selected component will be dynamically loaded -->
-<router-outlet></router-outlet>
+<router-outlet ></router-outlet>
 </div>

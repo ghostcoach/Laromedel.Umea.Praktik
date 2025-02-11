@@ -17,7 +17,10 @@ import { SelectedGame } from "../../selected-game/api/selected-game";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectedGameLinkComponent {
-  @Input() selectedGame: SelectedGame;
+  @Input() selectedGameEnum!: typeof SelectedGame;
+  @Input() selectedGameKeys!:  (keyof typeof SelectedGame)[];
+  @Input() isHomeVisible: boolean;
+  
   public dynamicContent: Type<string>
   currentRoute: string;
 
@@ -26,7 +29,7 @@ export class SelectedGameLinkComponent {
   }
 
   constructor(private route: ActivatedRoute) {
-    this.currentRoute = this.route.snapshot.url.join('');    
+    this.currentRoute = this.route.snapshot.url.join(''); 
   }
 
   ngOnInit(): void {
@@ -35,12 +38,17 @@ export class SelectedGameLinkComponent {
       const selectedGame: string | null = params.get("selected-game") as string;
       if (!selectedGame) return;
       this.dynamicContent = this.componentMap[selectedGame];
+
     });
 
   }
 
-  public get selectedGameDataName(): string {
-    return this.selectedGame ? this.selectedGame.replace(/\s/g, "-").toLowerCase() : '';
+  // public get selectedGameDataName(): string {
+  //   return this.selectedGame ? this.selectedGame.replace(/\s/g, "-").toLowerCase() : '';
+  // }
+  
+  public getSelectedGameDataName(key: keyof typeof SelectedGame): string {
+    return this.selectedGameEnum[key].replace(/\s/g, "-").toLowerCase();
   }
 
 }
