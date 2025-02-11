@@ -13,9 +13,5 @@ import { ChangeDetectionStrategy } from '@angular/core';
 export class StartButtonComponent {
   @Input() startBtnActive: boolean = true;
 
-  onStart(): void{
-    console.log('start button works');
-    console.log('start btn active:', this.startBtnActive);
-    
-  }
+  onStart(): void{}
 }

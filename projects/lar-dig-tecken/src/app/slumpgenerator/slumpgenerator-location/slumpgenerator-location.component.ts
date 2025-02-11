@@ -152,7 +152,9 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     this.gameStarted = true;
     this.currentRound = 0;
     this.startBtnActive = false;
-    this.gameOver = false;    
+    this.gameOver = false;
+    console.log('game started, gameOver:', this.gameOver);
+        
 
     setTimeout(() => {
       this.cardStates = this.cardStates.map(card => ({...card, isFlipped: false}));
@@ -168,8 +170,8 @@ export class SlumpgeneratorLocationComponent implements OnInit{
         this.gameStarted = false; // Re-enable clicks
         this.startBtnActive = true;
         // console.log('Game ended, startBtnActive:', this.startBtnActive);
-        this.gameOver = false;
-        // console.log('Game over:', this.gameOver);
+        // this.gameOver = false;
+        // console.log('Game restarted, gameOver:', this.gameOver);
 
       }
     );
@@ -286,10 +288,9 @@ export class SlumpgeneratorLocationComponent implements OnInit{
           } else {
             console.log('You won!');
             this.restartGame();
-            this.cdRef.detectChanges(); // Manually trigger change detection
             this.gameOver = true;
-            console.log('Game over:', this.gameOver);
-
+            console.log('Game over, gameOver:', this.gameOver);
+            this.cdRef.detectChanges(); // Manually trigger change detection
           }
         }, 500)
 
