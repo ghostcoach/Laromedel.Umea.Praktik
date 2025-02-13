@@ -13,4 +13,5 @@ export class CardContentComponent  {
 @Input() data!: string;
 @Input() category!: string;
 
+
 }

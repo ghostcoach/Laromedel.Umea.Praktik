@@ -170,10 +170,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
         this.initializeWords(category, numberOfOptions);
         this.gameStarted = false; // Re-enable clicks
         this.startBtnActive = true;
-        // console.log('Game ended, startBtnActive:', this.startBtnActive);
-        // this.gameOver = false;
-        // console.log('Game restarted, gameOver:', this.gameOver);
-
       }
     );
     
@@ -199,6 +195,11 @@ export class SlumpgeneratorLocationComponent implements OnInit{
       default:
         return '';
     }
+  }
+
+  getAudioPath(category: string, index: number): string {
+    const normalizedWord: string = this.normalizeCharacters(this.shuffledWords[index % this.shuffledWords.length]);
+    return `/assets/subject-area/estetisk-verksamhet/${category}/audio/${normalizedWord}.mp3`;
   }
 
   //AUDIO FUNCTIONS

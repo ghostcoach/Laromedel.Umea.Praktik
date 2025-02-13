@@ -1,6 +1,4 @@
 <div 
-    (click)="onCardClick()"
-    (keydown)="onCardClick()"
     [attr.aria-disabled]="true"
     [ngClass]="flippedClass"
     class="card-container w-44 h-60 rounded-md"
@@ -12,14 +10,22 @@
         </div>
         
         <!-- Front of the Card -->
-        <div [ngClass]="[modeClass, isCorrectClass]" class="card-front  flex justify-center items-center card w-44 h-60 border border-1 border-black rounded-lg">
+        <div [ngClass]="[modeClass, isCorrectClass]" class="relative card-front  flex justify-center items-center card w-44 h-60 border border-1 border-black rounded-lg">
             <div class="border border-1 border-black w-[93%] h-[95%] rounded-md bg-white flex items-center justify-center">
                 <app-card-content
                     [pairingMode]="pairingMode"
                     [data]="content"
                     class="w-full h-full"
+                    (click)="onCardClick()"
+                    (keydown)="onCardClick()"
                 >
                 </app-card-content>
+                <button 
+                    class="z-30 absolute bottom-0 right-0 rounded-md border-transparent border-solid border-4 p-1 m-2 hover:border-blue-500"
+                    (click)="playAudio()"
+                    >
+                    <img src="assets/layout/icons/play-sound-icon.svg" alt="" class="w-10">
+                </button>
             </div>
         </div>
     </div>

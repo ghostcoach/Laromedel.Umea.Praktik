@@ -14,6 +14,7 @@ export class CardComponent implements OnChanges {
   @Input() pairingMode!: string;
   @Input() category!: string;
   @Input() dynamicClass: string = '';
+  @Input() audioPath: string = '';
   @Output() cardClick = new EventEmitter<string>()
 
   // Variables to store extracted class names
@@ -27,6 +28,11 @@ export class CardComponent implements OnChanges {
     }
   }
 
+constructor() {
+    console.log('audioPath', this.audioPath);
+    
+  }
+
   private extractClasses(): void {
     const classes: string[] = this.dynamicClass.split(' '); // Splitting class string into an array
     
@@ -37,6 +43,13 @@ export class CardComponent implements OnChanges {
   }
 
   onCardClick(): void {
-    this.cardClick.emit(this.content);    
+    this.cardClick.emit(this.content);   
+    console.log(this.audioPath);
+    
+  }
+  
+  playAudio(): void {
+    const audio: HTMLAudioElement = new Audio(this.audioPath);
+    audio.play().catch(error => console.error('Error playing audio:', error));
   }
 }

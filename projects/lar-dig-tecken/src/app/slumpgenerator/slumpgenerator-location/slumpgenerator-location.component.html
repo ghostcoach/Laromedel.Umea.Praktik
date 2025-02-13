@@ -1,4 +1,3 @@
-<!-- <div class="flex flex-col m-3 max-w-5xl w-full mx-auto min-h-full"> -->
 <div class="w-[90vw] h-screen flex flex-col justify-evenly">
     <section class="relative">
         <h1 class="text-2xl font-bold text-left tracking-wide md:text-center">Slumpgenerator</h1>
@@ -27,7 +26,7 @@
                 </ng-container>
                 <app-start-button [startBtnActive]="startBtnActive" (click)="startGame()"></app-start-button>
             </section>
-            <!-- flex flex-col flex-nowrap gap-6 justify-center w-fit mt-14 md:flex-wrap md:w-fit md:mb-5 sm:flex-wrap sm:mb-5 sm:w-fit -->
+
             <section class="flex flex-col flex-nowrap justify-center place-content-center w-full max-w-[500px] items-center gap-4 sm:flex-wrap ">
                 <ng-container *ngIf="pairingModeSecond$ | async as pairingModeSecond">
                     <ng-container *ngIf="category$ | async as category">
@@ -37,6 +36,7 @@
                                 class="w-fit"
                                     [ngClass]="{'cursor-pointer' : gameStarted}"
                                     [content]="getContent(pairingModeSecond, category, idx + 1)"
+                                    [audioPath]="getAudioPath(category, idx + 1)"
                                     [pairingMode]="pairingModeSecond"
                                     (cardClick)="onCardClicked($event, idx + 1)"
                                     [dynamicClass]="getDynamicClass(pairingModeSecond, idx + 1)"
@@ -48,7 +48,9 @@
                 </ng-container>
             </section>
     </section>
+
     <ng-container *ngIf="gameOver">
         <app-game-over [gameOver]="gameOver"></app-game-over>
     </ng-container>
+
 </div>
