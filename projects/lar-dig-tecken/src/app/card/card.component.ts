@@ -44,8 +44,6 @@ constructor() {
 
   onCardClick(): void {
     this.cardClick.emit(this.content);   
-    console.log(this.audioPath);
-    
   }
   
   playAudio(): void {
