@@ -1,7 +1,8 @@
-<div class="flex flex-col m-3 max-w-5xl w-full mx-auto min-h-full">
+<!-- <div class="flex flex-col m-3 max-w-5xl w-full mx-auto min-h-full"> -->
+<div class="w-[90vw] h-screen flex flex-col justify-evenly">
     <section class="relative">
-        <h1 class="text-2xl font-bold mb-5 text-center tracking-wide">Slumpgenerator</h1>
-        <div class="flex absolute top-0 right-0 gap-2 z-0">
+        <h1 class="text-2xl font-bold text-center tracking-wide">Slumpgenerator</h1>
+        <div class="flex absolute top-0 right-5 gap-2 z-0">
             <ng-container *ngIf="numberOfRounds$ | async as numberOfRounds">
                 <ng-container *ngFor="let i of getNumberArray(numberOfRounds); let idx = index">
                     <app-rounds [round]="idx < currentRound ? idx + 1 : 0"></app-rounds>
@@ -11,7 +12,7 @@
        
     </section>
     
-    <section class="flex justify-around max-h-[75vh]">
+    <section class="flex max-h-[75vh] gap-10 place-content-center">
 
             <section class="flex gap-4 flex-col items-center justify-center max-w-[50%]">
                 <ng-container *ngIf="pairingModeFirst$ | async as pairingModeFirst">
@@ -26,13 +27,14 @@
                 </ng-container>
                 <app-start-button [startBtnActive]="startBtnActive" (click)="startGame()"></app-start-button>
             </section>
-
-            <section class="flex flex-col flex-nowrap gap-6 justify-center place-content-center  w-fit min-w-fit w-[50%] mt-14 md:flex-wrap md:mb-5 sm:flex-wrap sm:mb-5">
+            <!-- flex flex-col flex-nowrap gap-6 justify-center w-fit mt-14 md:flex-wrap md:w-fit md:mb-5 sm:flex-wrap sm:mb-5 sm:w-fit -->
+            <section class="flex flex-col flex-nowrap justify-center place-content-center w-full max-w-[500px] items-center gap-4 sm:flex-wrap ">
                 <ng-container *ngIf="pairingModeSecond$ | async as pairingModeSecond">
                     <ng-container *ngIf="category$ | async as category">
                         <ng-container *ngIf="numberOfOptions$ | async as numberOfOptions">
                             <ng-container *ngFor="let i of getNumberArray(numberOfOptions); let idx = index">
                                 <app-card
+                                class="w-fit"
                                     [ngClass]="{'cursor-pointer' : gameStarted}"
                                     [content]="getContent(pairingModeSecond, category, idx + 1)"
                                     [pairingMode]="pairingModeSecond"

@@ -11,9 +11,9 @@
 </a>
 
 <ng-container *ngIf="dynamicContent" [ngComponentOutlet]="dynamicContent"></ng-container> -->
-<section class="flex p-4 items-center justify-center flex-grow">
+<section class="flex p-4 items-center justify-center flex-grow w-full">
 
-  <div class="flex flex-wrap gap-5 max-w-screen-md w-full justify-center">
+  <div class="flex gap-5 max-w-screen-md w-full justify-center ">
     <ng-container *ngIf="isHomeVisible">
       <div *ngFor="let key of selectedGameKeys">
         <a 
@@ -30,7 +30,7 @@
       </div>
     </ng-container>
 
-    <ng-container *ngIf="dynamicContent" [ngComponentOutlet]="dynamicContent"></ng-container>
+    <ng-container class="w-full" *ngIf="dynamicContent" [ngComponentOutlet]="dynamicContent"></ng-container>
 
     </div>
  
