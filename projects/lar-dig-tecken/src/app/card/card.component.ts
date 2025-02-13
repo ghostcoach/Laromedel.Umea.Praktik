@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { CardContentComponent } from './card-content/card-content.component';
 import { CommonModule } from "@angular/common";
 
@@ -16,20 +16,36 @@ export class CardComponent implements OnChanges {
   @Input() dynamicClass: string = '';
   @Input() audioPath: string = '';
   @Output() cardClick = new EventEmitter<string>()
+  @ViewChild(CardContentComponent) cardContent!: CardContentComponent;
 
   // Variables to store extracted class names
   modeClass: string = '';
   flippedClass: string = '';
   isCorrectClass: string = '';
 
+  //Variables for image or video-format
+  imgSrc: string = this.pairingMode === 'tecken som stöd' ? `assets/layout/icons/play-video-icon.svg` : `assets/layout/icons/play-sound-icon.svg`;
+  videoOrSound: () => void = this.pairingMode === 'tecken som stöd' 
+  ? this.playVideo.bind(this) 
+  : this.playAudio.bind(this);
+  videoSrc: string = '';
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['dynamicClass']) {
       this.extractClasses();
     }
+    if (changes['pairingMode']) {
+      this.imgSrc = this.pairingMode === 'tecken som stöd' ? `assets/layout/icons/play-video-icon.svg` : `assets/layout/icons/play-sound-icon.svg`;
+      this.videoOrSound = this.pairingMode === 'tecken som stöd'
+        ? this.playVideo.bind(this)
+        : this.playAudio.bind(this);
+    }
+
   }
 
 constructor() {
-    console.log('audioPath', this.audioPath);
+    console.log('modeClass', this.modeClass);
+    console.log('imgSrcs', this.imgSrc);
     
   }
 
@@ -44,10 +60,19 @@ constructor() {
 
   onCardClick(): void {
     this.cardClick.emit(this.content);   
+    console.log('pairingMode', this.pairingMode);
+    console.log('this.content', this.content);
+    
   }
   
   playAudio(): void {
     const audio: HTMLAudioElement = new Audio(this.audioPath);
     audio.play().catch(error => console.error('Error playing audio:', error));
+  }
+
+  playVideo(): void {
+    if (this.cardContent) {
+      this.cardContent.playVideo();
+    }
   }
 }

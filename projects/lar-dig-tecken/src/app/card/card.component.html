@@ -15,16 +15,16 @@
                 <app-card-content
                     [pairingMode]="pairingMode"
                     [data]="content"
-                    class="w-full h-full border-transparent border-solid border-4 hover:border-blue-500"
+                    class="w-full h-full border-transparent border-solid border-4 rounded-sm hover:border-blue-500"
                     (click)="onCardClick()"
                     (keydown)="onCardClick()"
                 >
                 </app-card-content>
                 <button 
                     class="z-30 absolute bottom-0 right-0 rounded-md border-transparent border-solid border-4 p-1 m-2 hover:border-blue-500"
-                    (click)="playAudio()"
+                    (click)="videoOrSound()"
                     >
-                    <img src="assets/layout/icons/play-sound-icon.svg" alt="" class="w-10">
+                    <img [src]="imgSrc" alt="" >
                 </button>
             </div>
         </div>

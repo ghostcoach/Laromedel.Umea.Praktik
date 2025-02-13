@@ -20,7 +20,7 @@
     <video 
         *ngIf="pairingMode === 'tecken som stöd'" 
         [src]="data" 
-        controls 
+        #videoElement
         class="w-full h-full object-cover"></video>
   </ng-container>
 
