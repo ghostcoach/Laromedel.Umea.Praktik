@@ -2,25 +2,23 @@
 <div class="flex flex-col min-h-screen  bg-blue-200 m-0 p-0 justify-center">
 <header class="flex justify-between mb-4 absolute top-0 z-10 w-full">
      <h1 class="font-bold text-2xl p-5">Lika = Lika: Lär dig tecken</h1>
-     <app-game-settings
-     [gameSettings]="currentGameSettings"
-     class="right-0"
-     ></app-game-settings>
+     <div class="flex items-start ">
+      <button 
+        *ngIf="!isHomeVisible" 
+        class="m-2 flex items-center justify-end rounded-md border-4 border-transparent hover:border-blue-500 " 
+        [routerLink]="['/']">
+        <img src="assets/layout/icons/home-icon.svg" alt="" class="w-10">
+       
+      </button>
+      <app-game-settings
+        *ngIf="!isHomeVisible"
+        [gameSettings]="currentGameSettings"
+        class="right-0"
+      ></app-game-settings>
+     </div>
+
 </header>
 
-<!-- Conditionally show the section only when the router-outlet is not rendering a component -->
-<!-- <ng-container *ngIf="isHomeVisible">
-<section class="flex p-4 items-center justify-center flex-grow">
-  <div class="flex flex-wrap gap-5 max-w-screen-md w-full justify-center">
-    <div *ngFor="let key of selectedGameKeys">
-      <app-selected-game-link
-        [selectedGame]="selectedGameEnum[key]"
-        class="flex"
-      ></app-selected-game-link>
-    </div>
-  </div>
-</section>
-</ng-container> -->
 <ng-container>
         <app-selected-game-link
           [isHomeVisible]="isHomeVisible"

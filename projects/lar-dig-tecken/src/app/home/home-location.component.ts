@@ -4,7 +4,7 @@ import {GameSettingsComponent} from '../settings/game-settings.component'
 import {IGameSettingStateModel} from "../settings/state/api/game-settings-state-model";
 import {CardContent} from '../../../../games/src/lib/api/card-content'
 import {Category} from '../category/api/category'
-import {RouterOutlet, Router, NavigationEnd} from "@angular/router";
+import {RouterOutlet, Router, NavigationEnd, RouterLink} from "@angular/router";
 import {SelectedGameLinkComponent} from  "./selected-game-link/selected-game-link.component";
 import { SelectedGame } from "../selected-game/api/selected-game";
 import {NgForOf, NgIf} from "@angular/common";
@@ -13,7 +13,7 @@ import {filter} from "rxjs/operators";
 
 @UntilDestroy()
 @Component({
-  imports: [GameSettingsComponent, SelectedGameLinkComponent, NgForOf, RouterOutlet, NgIf],
+  imports: [GameSettingsComponent, SelectedGameLinkComponent, NgForOf, RouterOutlet, NgIf, RouterLink],
   standalone: true,
   templateUrl: "./home-location.component.html",
   styleUrl: "./home-location.component.scss",

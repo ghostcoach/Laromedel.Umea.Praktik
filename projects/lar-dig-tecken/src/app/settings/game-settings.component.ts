@@ -75,15 +75,17 @@ export class GameSettingsComponent {
   public numberOfOptions$: Observable<number> = this.store.select(GameSettingsStateQueries.numberOfOptions$);
 
   buttonImg = '';
-  
+  arrowImg = 'assets/layout/icons/arrow-down.svg';
 
-  constructor(private store: Store){
-    console.log(this.pairingModeFirstCard$);
-
-  }
+  constructor(private store: Store){}
 
   toggleDropdown() : void {
     this.isDropdownOpen = !this.isDropdownOpen;
+    if(this.isDropdownOpen){
+      this.arrowImg = 'assets/layout/icons/arrow-up.svg';
+    } else {
+      this.arrowImg = 'assets/layout/icons/arrow-down.svg';
+    }
   }
 
   toggleSettingOptionsDropdown(type: 'firstCard' | 'secondCard' | 'category' | 'rounds' | 'options') : void {
