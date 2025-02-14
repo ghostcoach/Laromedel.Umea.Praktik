@@ -1,7 +1,7 @@
 
 <div class=" border border-1 border-black gap-5 p-3 flex flex-col w-fit bg-blue-400 relative z-50 ">
 
-      <div class="flex justify-end">
+      <div class="flex justify-end mr-4">
         <button 
           (click)="toggleDropdown()"
           class="flex items-center gap-3 min-w-max"
@@ -19,15 +19,16 @@
         >
         <!-- Första kortets inställningar -->
          <section 
-          class="border border-1 border-black px-3 py-1 rounded-sm flex-1 bg-white hover:bg-orange-200"
+          class="border border-1 border-black px-2 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
           [ngClass]="{'bg-orange-200' : isFirstCardSettingsDropdownOpen}"
           >
           <button 
             (click)="toggleSettingOptionsDropdown('firstCard')"
-            class="flex items-center justify-between w-full p-1"
+            class="flex items-center justify-between w-full"
           >
-          <img src="/assets/layout/icons/first-card-icon.svg" alt="" class="h-8">
-          <p>Första kortet</p>
+            <img src="/assets/layout/icons/first-card-icon.svg" alt="" class="h-8">
+            <h2>Första kortet</h2>
+            <img [src]="isFirstCardSettingsDropdownOpen ? 'assets/layout/icons/arrow-up.svg' : 'assets/layout/icons/arrow-down.svg'" alt="">
           </button>
           <ul 
             class="flex gap-1 flex-col"
@@ -62,12 +63,16 @@
 
           <!-- Andra kortens inställningar -->
           <section 
-            class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
+            class="border border-1 border-black px-2 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isSecondCardSettingsDropdownOpen}"
           >
-            <button (click)="toggleSettingOptionsDropdown('secondCard')" class="flex items-center gap-3 justify-between w-full">
+            <button 
+              (click)="toggleSettingOptionsDropdown('secondCard')" 
+              class="flex items-center justify-between w-full"
+            >
               <img src="/assets/layout/icons/second-card-icon.svg" alt="" class="h-8">
-              <p>Resterande kort</p>
+              <h2>Resterande kort</h2>
+              <img [src]="isSecondCardSettingsDropdownOpen ? 'assets/layout/icons/arrow-up.svg' : 'assets/layout/icons/arrow-down.svg'" alt="">
             </button>
             <ul 
               class="flex gap-1 flex-col"
@@ -79,7 +84,7 @@
                 (click)="updateSecondPairingMode(option)" 
                 (keydown.enter)="updateSecondPairingMode(option)"
                 [class.selected]="option === (pairingModeSecondCard$ | async)" 
-                class="flex gap-3 py-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
+                class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
               >
               <div *ngIf="option === 'bild'" >
                 <img class="w-10"  src="/assets/layout/icons/image-icon.svg" alt="">
@@ -102,12 +107,16 @@
 
           <!-- Kategoriinställningar -->
           <section 
-            class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
+            class="border border-1 border-black px-2 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isCategorySettingsDropdownOpen}"
           >
-            <button (click)="toggleSettingOptionsDropdown('category')" class="flex items-center gap-3 justify-between w-full">
+            <button 
+              (click)="toggleSettingOptionsDropdown('category')" 
+              class="flex items-center justify-between w-full"
+            >
               <img src="/assets/layout/icons/category-icon.png" alt="" class="h-8">
-              <p>Kategori</p>
+              <h2>Kategori</h2>
+              <img [src]="isCategorySettingsDropdownOpen ? 'assets/layout/icons/arrow-up.svg' : 'assets/layout/icons/arrow-down.svg'" alt="">
             </button>
             <ul 
               class="flex gap-1 flex-col"
@@ -118,7 +127,7 @@
                 (click)="updateCategory(option)"
                 (keydown.enter)="updateCategory(option)"
                 [class.selected]="option === (category$ | async)"
-                class="py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
+                class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
               >
               {{option}}
               </li>
@@ -128,12 +137,16 @@
 
           <!-- Antal kort-inställningar -->
           <section 
-            class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
+            class="border border-1 border-black px-2 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isNumberOfOptionsSettingsDropdownOpen}"
           >
-            <button (click)="toggleSettingOptionsDropdown('options')" class="flex items-center gap-3 justify-between w-full">
+            <button 
+              (click)="toggleSettingOptionsDropdown('options')" 
+              class="flex items-center justify-between w-full"
+            >
               <img src="/assets/layout/icons/number-of-options-icon.svg" alt="" class="h-8">
-              <p>Antal kort</p>
+              <h2>Antal kort</h2>
+              <img [src]="isNumberOfOptionsSettingsDropdownOpen ? 'assets/layout/icons/arrow-up.svg' : 'assets/layout/icons/arrow-down.svg'" alt="">
             </button>
             <ul 
               class="flex gap-1 flex-col"
@@ -152,13 +165,17 @@
           </section>
 
            <!-- Antal rundor-inställningar -->
-           <section 
-           class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
-           [ngClass]="{'bg-orange-200' : isNumberOfRoundsSettingsDropdownOpen}"
-         >
-           <button (click)="toggleSettingOptionsDropdown('rounds')" class="flex items-center gap-3 justify-between w-full">
+          <section 
+            class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
+            [ngClass]="{'bg-orange-200' : isNumberOfRoundsSettingsDropdownOpen}"
+          >
+            <button 
+              (click)="toggleSettingOptionsDropdown('rounds')" 
+              class="flex items-center justify-between w-full"
+            >
               <img src="/assets/layout/icons/rounds-icon.svg" alt="" class="h-8">
-              <p>Antal omgångar</p>
+              <h2>Antal omgångar</h2>
+              <img [src]="isNumberOfRoundsSettingsDropdownOpen ? 'assets/layout/icons/arrow-up.svg' : 'assets/layout/icons/arrow-down.svg'" alt="">
             </button>
            <ul 
              class="flex gap-1 flex-col"
@@ -169,7 +186,7 @@
                (click)="updateNumberOfRounds(option)"
                (keydown.enter)="updateNumberOfRounds(option)"
                [class.selected]="option === (numberOfRounds$ | async)"
-               class="py-1 px-2 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 "
+               class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
              >
              {{option}}
              </li>
@@ -179,5 +196,3 @@
 
         </div>
 </div>
-
-<!-- <img class="w-32" src="/assets/subject-area/estetisk-verksamhet/bildbegrepp/illustration/lim.svg" -->
