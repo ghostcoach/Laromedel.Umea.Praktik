@@ -8,7 +8,6 @@ import { RoundsComponent } from '../../rounds/rounds.component';
 import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
 import { BildbegreppWords } from '../../category/api/bildbegrepp';
 import { GameOverComponent } from '../../game-over/game-over.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-slumpgenerator-location',
