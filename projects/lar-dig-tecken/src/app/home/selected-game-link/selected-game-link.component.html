@@ -1,23 +1,10 @@
-<!-- <a 
-    class="px-10 py-8 w-52 rounded-sm text-center border border-black border-1"
-    [routerLink]="['/', selectedGameDataName]"
-    [ngClass]="selectedGame ? 'selected-game-' + selectedGameDataName : '' "
->
-<span
-  class="tracking-wide font-semibold"
->
-  {{ selectedGame | capitalize }}
-</span>
-</a>
-
-<ng-container *ngIf="dynamicContent" [ngComponentOutlet]="dynamicContent"></ng-container> -->
 <section class="flex p-4 items-center justify-center flex-grow w-full">
 
   <div class="flex gap-5 max-w-screen-md w-full justify-center flex-wrap">
     <ng-container *ngIf="isHomeVisible">
       <div *ngFor="let key of selectedGameKeys">
         <a 
-        class="flex px-10 py-8 w-52 rounded-sm text-center border border-black border-1 place-content-center"
+        class="flex px-10 py-8 w-52 rounded-md text-center border border-4 border-transparent border-black  place-content-center hover:border-blue-500 hover:rotate-2"
         [routerLink]="['/', getSelectedGameDataName(key)]"
         [ngClass]="'selected-game-' + getSelectedGameDataName(key) "
         >
