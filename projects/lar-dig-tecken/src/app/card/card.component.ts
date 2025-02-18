@@ -1,7 +1,9 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { CardContentComponent } from './card-content/card-content.component';
 import { CommonModule } from "@angular/common";
-
+import { Select } from '@ngxs/store';
+import { GameSettingsStateQueries } from '../settings/state/game-settings-queries';
+import { Observable, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-card',
@@ -9,7 +11,7 @@ import { CommonModule } from "@angular/common";
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
 })
-export class CardComponent implements OnChanges {
+export class CardComponent implements OnChanges, OnInit {
   @Input() content!: string;
   @Input() pairingMode!: string;
   @Input() category!: string;
@@ -17,6 +19,15 @@ export class CardComponent implements OnChanges {
   @Input() audioPath: string = '';
   @Output() cardClick = new EventEmitter<string>()
   @ViewChild(CardContentComponent) cardContent!: CardContentComponent;
+  @Select(GameSettingsStateQueries.pairingModeFirstCard$) pairingModeFirst$!: Observable<string>;
+  @Input() mode!: string;
+
+
+  //CAN I MAKE THE CARD UNDERSTAND IF IT IS THE FIRST OR SECOND CARD IN THE PAIRING MODE?
+  
+  ngOnInit():void {
+      console.log('mode', this.mode);
+    }
 
   // Variables to store extracted class names
   modeClass: string = '';
@@ -40,13 +51,6 @@ export class CardComponent implements OnChanges {
         ? this.playVideo.bind(this)
         : this.playAudio.bind(this);
     }
-
-  }
-
-constructor() {
-    console.log('modeClass', this.modeClass);
-    console.log('imgSrcs', this.imgSrc);
-    
   }
 
   private extractClasses(): void {
@@ -62,6 +66,9 @@ constructor() {
     this.cardClick.emit(this.content);   
     console.log('pairingMode', this.pairingMode);
     console.log('this.content', this.content);
+    console.log('this.modeClass', this.modeClass);
+    console.log('mode', this.mode);
+    
     
   }
   

@@ -15,7 +15,8 @@
                 <app-card-content
                     [pairingMode]="pairingMode"
                     [data]="content"
-                    class="w-full h-full border-transparent border-solid border-4 rounded-sm hover:border-blue-500"
+                    class="w-full h-full border-transparent border-solid border-4 rounded-sm"
+                    [ngClass]="mode === 'secondCard' ? 'hover:border-blue-500' : ''"
                     (click)="onCardClick()"
                     (keydown)="onCardClick()"
                 >

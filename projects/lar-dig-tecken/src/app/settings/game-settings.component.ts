@@ -112,6 +112,8 @@ export class GameSettingsComponent {
 
   updateCategory(option: Category): void {
     this.store.dispatch(new UpdateCategory(option));
+    console.log('category', option);
+    
   }
 
   updateNumberOfOptions(option: number): void {

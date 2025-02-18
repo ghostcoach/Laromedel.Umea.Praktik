@@ -22,6 +22,7 @@
                         [content]="getContent(pairingModeFirst, category, 0)"
                         [dynamicClass]="getDynamicClass(pairingModeFirst, 0)"
                         [audioPath]="getAudioPath(category, 0)"
+                        [mode]="'firstCard'"
                         ></app-card>
                     </ng-container>
                     
@@ -42,6 +43,7 @@
                                     [pairingMode]="pairingModeSecond"
                                     (cardClick)="onCardClicked($event, idx + 1)"
                                     [dynamicClass]="getDynamicClass(pairingModeSecond, idx + 1)"
+                                    [mode]="'secondCard'"
                                     >
                                     </app-card>
                             </ng-container>
