@@ -8,6 +8,7 @@ import { RoundsComponent } from '../../rounds/rounds.component';
 import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
 import { BildbegreppWords } from '../../category/api/bildbegrepp';
 import { GameOverComponent } from '../../game-over/game-over.component';
+import { ViewChildren, ElementRef, QueryList } from '@angular/core';
 
 @Component({
   selector: 'app-slumpgenerator-location',
@@ -23,7 +24,8 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   @Select(GameSettingsStateQueries.numberOfOptions$) numberOfOptions$!:Observable<number>
   @Select(GameSettingsStateQueries.numberOfRounds$) numberOfRounds$!:Observable<number>
   @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
-  
+  @ViewChildren('cardElement') cardElements!: QueryList<ElementRef>
+
   gameStarted = false;
   currentRound = 0;
   maxRounds = 0;

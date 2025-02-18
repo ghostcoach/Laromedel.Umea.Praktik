@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, OnInit, SimpleChanges, ViewChild, QueryList } from '@angular/core';
 import { CardContentComponent } from './card-content/card-content.component';
 import { CommonModule } from "@angular/common";
 import { Select } from '@ngxs/store';
 import { GameSettingsStateQueries } from '../settings/state/game-settings-queries';
 import { Observable, combineLatest } from 'rxjs';
+import { ViewChildren, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-card',
@@ -21,12 +22,16 @@ export class CardComponent implements OnChanges, OnInit {
   @ViewChild(CardContentComponent) cardContent!: CardContentComponent;
   @Select(GameSettingsStateQueries.pairingModeFirstCard$) pairingModeFirst$!: Observable<string>;
   @Input() mode!: string;
+  @Input() gameStarted!: boolean;
+  @ViewChildren('cardElement') cardElement!: QueryList<ElementRef>;
 
 
   //CAN I MAKE THE CARD UNDERSTAND IF IT IS THE FIRST OR SECOND CARD IN THE PAIRING MODE?
   
   ngOnInit():void {
       console.log('mode', this.mode);
+      console.log('gameStarted', this.gameStarted);
+      
     }
 
   // Variables to store extracted class names
@@ -64,10 +69,6 @@ export class CardComponent implements OnChanges, OnInit {
 
   onCardClick(): void {
     this.cardClick.emit(this.content);   
-    // console.log('pairingMode', this.pairingMode);
-    // console.log('this.content', this.content);
-    // console.log('this.modeClass', this.modeClass);
-    // console.log('mode', this.mode);
   }
   
   playAudio(): void {

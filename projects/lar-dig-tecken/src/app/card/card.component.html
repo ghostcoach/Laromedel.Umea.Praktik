@@ -13,19 +13,21 @@
         <div [ngClass]="[modeClass, isCorrectClass]" class="relative card-front  flex justify-center items-center card w-44 h-60 border border-1 border-black rounded-lg">
             <div class="border border-1 border-black w-[93%] h-[95%] rounded-md bg-white flex items-center justify-center">
                 <app-card-content
+                    #cardElement
                     [pairingMode]="pairingMode"
                     [data]="content"
                     class="w-full h-full border-transparent border-solid border-4 rounded-sm"
                     [ngClass]="mode === 'secondCard' ? 'hover:border-blue-500' : ''"
                     (click)="onCardClick()"
                     (keydown)="handleKeyDown($event)"
-                    [tabindex]="mode === 'secondCard' ? 0 : '-1'"
+                    [tabindex]="mode === 'secondCard' ? '0' : '-1'"
+
                 >
                 </app-card-content>
                 <button 
                     class="z-30 absolute bottom-0 right-0 rounded-md border-transparent border-solid border-4 p-1 m-2 hover:border-blue-500"
                     (click)="videoOrSound()"
-                    tabindex="0"
+                    [tabindex]="gameStarted === true ? '0' : '-1'"
                     >
                     <img [src]="imgSrc" alt="" >
                 </button>

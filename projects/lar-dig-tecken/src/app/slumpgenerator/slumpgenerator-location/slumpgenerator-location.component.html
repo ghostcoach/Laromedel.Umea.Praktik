@@ -24,6 +24,7 @@
                         [dynamicClass]="getDynamicClass(pairingModeFirst, 0)"
                         [audioPath]="getAudioPath(category, 0)"
                         [mode]="'firstCard'"
+                        [gameStarted]="gameStarted"
                         ></app-card>
                     </li>
                     </ng-container>
@@ -32,7 +33,7 @@
                 <app-start-button 
                     [startBtnActive]="startBtnActive" 
                     (click)="startGame()"
-                    tabindex="2"
+                    [tabindex]="!gameStarted ? '2' : '-1'"
                 ></app-start-button>
             </ul>
 
@@ -51,6 +52,7 @@
                                     (cardClick)="onCardClicked($event, idx + 1)"
                                     [dynamicClass]="getDynamicClass(pairingModeSecond, idx + 1)"
                                     [mode]="'secondCard'"
+                                    [gameStarted]="gameStarted"
                                     >
                                     </app-card>
                                 </li>
