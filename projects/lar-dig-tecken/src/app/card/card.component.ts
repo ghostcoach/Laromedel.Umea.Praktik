@@ -64,12 +64,10 @@ export class CardComponent implements OnChanges, OnInit {
 
   onCardClick(): void {
     this.cardClick.emit(this.content);   
-    console.log('pairingMode', this.pairingMode);
-    console.log('this.content', this.content);
-    console.log('this.modeClass', this.modeClass);
-    console.log('mode', this.mode);
-    
-    
+    // console.log('pairingMode', this.pairingMode);
+    // console.log('this.content', this.content);
+    // console.log('this.modeClass', this.modeClass);
+    // console.log('mode', this.mode);
   }
   
   playAudio(): void {
@@ -80,6 +78,13 @@ export class CardComponent implements OnChanges, OnInit {
   playVideo(): void {
     if (this.cardContent) {
       this.cardContent.playVideo();
+    }
+  }
+
+  handleKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.onCardClick();
     }
   }
 }

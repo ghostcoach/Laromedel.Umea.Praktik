@@ -14,9 +14,10 @@
     
     <section class="flex max-h-[75vh] gap-10 place-content-center">
 
-            <section class="flex gap-4 flex-col items-center justify-center max-w-[50%]">
+            <ul class="flex gap-4 flex-col items-center justify-center max-w-[50%]">
                 <ng-container *ngIf="pairingModeFirst$ | async as pairingModeFirst">
                     <ng-container  *ngIf="category$ | async as category">
+                        <li>
                         <app-card 
                         [pairingMode]="pairingModeFirst" 
                         [content]="getContent(pairingModeFirst, category, 0)"
@@ -24,19 +25,25 @@
                         [audioPath]="getAudioPath(category, 0)"
                         [mode]="'firstCard'"
                         ></app-card>
+                    </li>
                     </ng-container>
                     
                 </ng-container>
-                <app-start-button [startBtnActive]="startBtnActive" (click)="startGame()"></app-start-button>
-            </section>
+                <app-start-button 
+                    [startBtnActive]="startBtnActive" 
+                    (click)="startGame()"
+                    tabindex="2"
+                ></app-start-button>
+            </ul>
 
-            <section class="flex flex-col flex-nowrap justify-center place-content-center w-full max-w-[500px] items-center gap-4 sm:flex-wrap ">
+            <ul class="flex flex-col flex-nowrap justify-center place-content-center w-full max-w-[500px] items-center gap-4 sm:flex-wrap ">
                 <ng-container *ngIf="pairingModeSecond$ | async as pairingModeSecond">
                     <ng-container *ngIf="category$ | async as category">
                         <ng-container *ngIf="numberOfOptions$ | async as numberOfOptions">
                             <ng-container *ngFor="let i of getNumberArray(numberOfOptions); let idx = index">
+                                <li>
                                 <app-card
-                                class="w-fit"
+                                    class="w-fit"
                                     [ngClass]="{'cursor-pointer' : gameStarted}"
                                     [content]="getContent(pairingModeSecond, category, idx + 1)"
                                     [audioPath]="getAudioPath(category, idx + 1)"
@@ -46,11 +53,12 @@
                                     [mode]="'secondCard'"
                                     >
                                     </app-card>
+                                </li>
                             </ng-container>
                         </ng-container>
                     </ng-container>
                 </ng-container>
-            </section>
+            </ul>
     </section>
 
     <ng-container *ngIf="gameOver">

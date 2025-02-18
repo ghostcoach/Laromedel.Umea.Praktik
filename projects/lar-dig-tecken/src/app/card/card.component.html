@@ -18,12 +18,14 @@
                     class="w-full h-full border-transparent border-solid border-4 rounded-sm"
                     [ngClass]="mode === 'secondCard' ? 'hover:border-blue-500' : ''"
                     (click)="onCardClick()"
-                    (keydown)="onCardClick()"
+                    (keydown)="handleKeyDown($event)"
+                    [tabindex]="mode === 'secondCard' ? 0 : '-1'"
                 >
                 </app-card-content>
                 <button 
                     class="z-30 absolute bottom-0 right-0 rounded-md border-transparent border-solid border-4 p-1 m-2 hover:border-blue-500"
                     (click)="videoOrSound()"
+                    tabindex="0"
                     >
                     <img [src]="imgSrc" alt="" >
                 </button>

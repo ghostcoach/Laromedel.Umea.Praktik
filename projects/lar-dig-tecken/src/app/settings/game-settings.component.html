@@ -1,10 +1,11 @@
 
-<div class=" border border-1 border-black gap-5 p-3 flex flex-col w-fit bg-blue-400 relative z-50 ">
+<div class=" border border-1 border-black gap-5 p-3 flex flex-col w-fit bg-blue-400 relative z-50">
 
       <div class="flex justify-end mr-4">
         <button 
           (click)="toggleDropdown()"
           class="flex items-center gap-3 min-w-max"
+ 
         >
           <img 
             class="w-10"
@@ -21,10 +22,12 @@
          <section 
           class="border border-1 border-black px-2 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
           [ngClass]="{'bg-orange-200' : isFirstCardSettingsDropdownOpen}"
+          tabindex="2"
           >
           <button 
             (click)="toggleSettingOptionsDropdown('firstCard')"
             class="flex items-center justify-between w-full"
+
           >
             <img src="/assets/layout/icons/first-card-icon.svg" alt="" class="h-8">
             <h2>Första kortet</h2>
@@ -65,10 +68,12 @@
           <section 
             class="border border-1 border-black px-2 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isSecondCardSettingsDropdownOpen}"
+            tabindex="2"
           >
             <button 
               (click)="toggleSettingOptionsDropdown('secondCard')" 
               class="flex items-center justify-between w-full"
+     
             >
               <img src="/assets/layout/icons/second-card-icon.svg" alt="" class="h-8">
               <h2>Resterande kort</h2>
@@ -80,7 +85,7 @@
               >
               <li 
                 *ngFor="let option of secondCardOptions" 
-                tabindex="1" 
+                tabindex="0" 
                 (click)="updateSecondPairingMode(option)" 
                 (keydown.enter)="updateSecondPairingMode(option)"
                 [class.selected]="option === (pairingModeSecondCard$ | async)" 
@@ -109,10 +114,12 @@
           <section 
             class="border border-1 border-black px-2 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isCategorySettingsDropdownOpen}"
+            tabindex="2"
           >
             <button 
               (click)="toggleSettingOptionsDropdown('category')" 
               class="flex items-center justify-between w-full"
+     
             >
               <img src="/assets/layout/icons/category-icon.png" alt="" class="h-8">
               <h2>Kategori</h2>
@@ -123,7 +130,7 @@
               *ngIf="isCategorySettingsDropdownOpen"
             >
               <li *ngFor="let option of categoryOptions"
-                tabindex="2"
+                tabindex="0"
                 (click)="updateCategory(option)"
                 (keydown.enter)="updateCategory(option)"
                 [class.selected]="option === (category$ | async)"
@@ -139,10 +146,12 @@
           <section 
             class="border border-1 border-black px-2 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isNumberOfOptionsSettingsDropdownOpen}"
+            tabindex="3"
           >
             <button 
               (click)="toggleSettingOptionsDropdown('options')" 
               class="flex items-center justify-between w-full"
+ 
             >
               <img src="/assets/layout/icons/number-of-options-icon.svg" alt="" class="h-8">
               <h2>Antal kort</h2>
@@ -153,7 +162,7 @@
               *ngIf="isNumberOfOptionsSettingsDropdownOpen"
             >
               <li *ngFor="let option of numberOfOptions"
-                tabindex="3"
+                tabindex="0"
                 (click)="updateNumberOfOptions(option)"
                 (keydown.enter)="updateNumberOfOptions(option)"
                 [class.selected]="option === (numberOfOptions$ | async)"
@@ -168,10 +177,12 @@
           <section 
             class="border border-1 border-black px-3 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isNumberOfRoundsSettingsDropdownOpen}"
+            tabindex="4"
           >
             <button 
               (click)="toggleSettingOptionsDropdown('rounds')" 
               class="flex items-center justify-between w-full"
+          
             >
               <img src="/assets/layout/icons/rounds-icon.svg" alt="" class="h-8">
               <h2>Antal omgångar</h2>
@@ -182,7 +193,7 @@
              *ngIf="isNumberOfRoundsSettingsDropdownOpen"
            >
              <li *ngFor="let option of numberOfRounds"
-               tabindex="4"
+               tabindex="0"
                (click)="updateNumberOfRounds(option)"
                (keydown.enter)="updateNumberOfRounds(option)"
                [class.selected]="option === (numberOfRounds$ | async)"
