@@ -31,7 +31,7 @@
                     
                 </ng-container>
                 <app-start-button 
-                    (click)="startGame()"
+                    [onClick]="startGame.bind(this)"
                     [tabindex]="!gameStarted ? '2' : '-1'"
                 ></app-start-button>
             </ul>

@@ -1,7 +1,6 @@
-import { Component, Input, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy } from '@angular/core';
-
 import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { StartButtonStateQueries } from './state/start-button-queries';
@@ -15,11 +14,11 @@ import { StartButtonStateQueries } from './state/start-button-queries';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StartButtonComponent implements OnInit {
-
+  @Input() onClick: () => void = () => {};
   @Select(StartButtonStateQueries.startBtnActive$) startBtnActive$!: Observable<boolean>;
   startBtnActive: boolean = true;
 
-  onStart(): void{}
+  // onStart(): void{}
 
   constructor(private store: Store) {}
 

@@ -55,7 +55,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
       this.numberOfOptions$, 
       this.numberOfRounds$, 
       this.category$,
-      // this.startBtnActive$,
     ])
       .subscribe(([
         numberOfOptions, 
@@ -110,10 +109,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   startGame(): void {
     this.gameStarted = true;
     this.currentRound = 0;
-    // this.startBtnActive$ = false;
     this.store.dispatch(new UpdateStartButtonState(false));
-    // console.log('startBtnActive at startGame:', this.startBtnActive$);
-    
     this.gameOver = false;
 
     setTimeout(() => {
@@ -128,8 +124,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
       ([category, numberOfOptions]) => {
         this.shuffleWordsService.initializeWords(category, numberOfOptions);
         this.gameStarted = false; // Re-enable clicks
-        // this.startBtnActive$ = true;
-        // console.log('startBtnActive at restartGame:', this.startBtnActive$);
         this.store.dispatch(new UpdateStartButtonState(true));
       }
     );
