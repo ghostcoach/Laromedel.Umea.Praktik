@@ -6,7 +6,6 @@ import { StartButtonComponent } from '../../start-button/start-button.component'
 import { CardComponent } from '../../card/card.component';
 import { RoundsComponent } from '../../rounds/rounds.component';
 import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
-import { BildbegreppWords } from '../../category/api/bildbegrepp';
 import { GameOverComponent } from '../../game-over/game-over.component';
 import { ViewChildren, ElementRef, QueryList } from '@angular/core';
 
@@ -37,8 +36,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   cardStateClasses: string[] = [];
   startBtnActive = true;
   gameOver = false;
-
-  private shuffledWords: string[] = [];
 
   constructor(
     private cdRef: ChangeDetectorRef, 
@@ -75,19 +72,20 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     });
 
     // Restart game if category or pairing mode changes
-  combineLatest([
-    this.category$, 
-    this.pairingModeFirst$, 
-    this.pairingModeSecond$,
-    this.numberOfOptions$,
-    this.numberOfRounds$,
-  ]).subscribe(([category, pairingModeFirst, pairingModeSecond, numberOfOptions, numberOfRounds]) => {
-    if (this.gameStarted) {
-      this.restartGame();
-      this.startGame();
+    combineLatest([
+      this.category$, 
+      this.pairingModeFirst$, 
+      this.pairingModeSecond$,
+      this.numberOfOptions$,
+      this.numberOfRounds$,
+    ]).subscribe(() => {
+        if (this.gameStarted) {
+          this.restartGame();
+          this.startGame();
+        }
+      });
+      
     }
-  });
-  }
 
   // HELPER FUNCTIONS
 
@@ -95,65 +93,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   getNumberArray(count: number): number[] {
     return Array.from({ length: count }, (_, index) => index + 1);
   }
-
-  // WORD SHUFFLING FUNCTIONS
-
-  // Function to shuffle an array
-  // shuffleArray<T>(array: T[]): T[] {
-  //   return array
-  //     .map(value => ({ value, sort: Math.random() }))
-  //     .sort((a, b) => a.sort - b.sort)
-  //     .map(({ value }) => value);
-  // }
-
-  // Function to shuffle words and flip back
-  // shuffleWordsAndFlipBack(category: string, numberOfOptions: number): void {
-
-  //     //MÅSTE LÄGGA TILL SÅ ATT INTE SAMMA ORD KOMMER IGEN
-  //     this.initializeWords(category, numberOfOptions);
-
-  //     setTimeout(() => {
-  //       this.cardStates = this.cardStates.map(card => ({ ...card, isFlipped: false }));
-  //       this.cdRef.detectChanges(); // Manually trigger change detection
-  //     }, 500); // Adjust the delay as needed
-  // }
-
-  // Function to initialize words from category
-  // initializeWords(category: string, numberOfOptions: number): void {
-  //   const words: string[] = Object.values(BildbegreppWords);
-    
-  //   // Step 1: Select `numberOfOptions` unique words randomly
-  //   const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
-  //   // console.log('selectedWords (before duplication):', selectedWords);
-
-  //   // Step 2: Pick one word to duplicate
-  //   const wordToDuplicate: string = selectedWords[Math.floor(Math.random() * selectedWords.length)];
-
-  //   // Step 3: Insert the duplicate at index 0
-  //   this.shuffleWordsService.shuffledWords = [wordToDuplicate, ...selectedWords];
-
-  //   // Step 4: Set all cards as flipped (hidden state)
-  //   this.shuffleWordsService.cardStates = this.shuffleWordsService.shuffledWords.map(() => ({ isFlipped: true, isSelected: false, isCorrect: false }));
-  //   this.shuffleWordsService.cardStateClasses = [];
-  // }
-
-  // Helper function to retrieve a specified number of unique random words
-  // private getRandomUniqueWords(words: string[], numberOfOptions: number): string[] {
-  //   const selectedWords: string[] = [];
-  //   const uniqueWordsSet: Set<string> = new Set<string>();
-    
-  //   // Ensure we select exactly 'numberOfOptions - 1' unique words
-  //   while (selectedWords.length < numberOfOptions) {
-  //     const randomWord: string = words[Math.floor(Math.random() * words.length)];
-  //     if (!uniqueWordsSet.has(randomWord)) {
-  //       uniqueWordsSet.add(randomWord);
-  //       selectedWords.push(randomWord);
-  //     }
-  //   }
-    
-  //   return selectedWords;
-  // }
-
 
   // GAME LOGIC
 

@@ -13,10 +13,6 @@ export const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: "valt-spel/:selected-game",
-  //   component: SelectedGameLinkComponent,
-  // },
   { path: "**", redirectTo: "" },
 ];
 

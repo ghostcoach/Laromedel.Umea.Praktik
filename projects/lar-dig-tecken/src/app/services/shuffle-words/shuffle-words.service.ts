@@ -3,7 +3,7 @@ import { BildbegreppWords } from '../../category/api/bildbegrepp';
 import { Select } from '@ngxs/store';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
-
+import { ICardStatus } from '../../card/api/card-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +58,7 @@ export class ShuffleWordsService {
        this.initializeWords(category, numberOfOptions);
 
        setTimeout(() => {
-        const updatedStates = this.cardStatesSubject.getValue().map(card => ({
+        const updatedStates: ICardStatus[] = this.cardStatesSubject.getValue().map(card => ({
           ...card,
           isFlipped: false
         }));
@@ -69,19 +69,23 @@ export class ShuffleWordsService {
  
    // Function to initialize words from category
    initializeWords(category: string, numberOfOptions: number): void {
-     const words: string[] = Object.values(BildbegreppWords);
+      const words: string[] = Object.values(BildbegreppWords);
      
-     // Step 1: Select `numberOfOptions` unique words randomly
-     const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
+      // Step 1: Select `numberOfOptions` unique words randomly
+      const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
  
-     // Step 2: Pick one word to duplicate
-     const wordToDuplicate: string = selectedWords[Math.floor(Math.random() * selectedWords.length)];
+      // Step 2: Pick one word to duplicate
+      const wordToDuplicate: string = selectedWords[Math.floor(Math.random() * selectedWords.length)];
  
-     // Step 3: Insert the duplicate at index 0
-     this.shuffledWords = [wordToDuplicate, ...selectedWords];
+      // Step 3: Insert the duplicate at index 0
+      this.shuffledWords = [wordToDuplicate, ...selectedWords];
  
-     // Step 4: Set all cards as flipped (hidden state)
-     const initialStates = this.shuffledWords.map(() => ({ isFlipped: true, isSelected: false, isCorrect: false }));
+      // Step 4: Set all cards as flipped (hidden state)
+      const initialStates: ICardStatus[] = this.shuffledWords.map(() => ({ 
+        isFlipped: true, 
+        isSelected: false, 
+        isCorrect: false 
+      }));
      this.cardStatesSubject.next(initialStates);
      
      this.cardStateClasses = [];
