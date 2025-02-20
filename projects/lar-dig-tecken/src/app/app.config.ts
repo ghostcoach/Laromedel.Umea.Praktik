@@ -6,6 +6,7 @@ import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { routes } from "./app.routes";
 import { environment } from "@shared/environments/environment";
 import {GameSettingsState} from '../app/settings/state/game-settings-state'
+import { StartButtonState } from "./start-button/state/start-button-state";
 import { provideAnimations } from "@angular/platform-browser/animations";
 
 export const appConfig: ApplicationConfig = {
@@ -14,7 +15,8 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     importProvidersFrom(
       NgxsModule.forRoot([
-        GameSettingsState
+        GameSettingsState,
+        StartButtonState
       ], {
         developmentMode: !environment.production,
       }),

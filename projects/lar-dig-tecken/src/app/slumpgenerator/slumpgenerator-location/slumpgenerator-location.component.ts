@@ -1,17 +1,19 @@
 import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
 import { CommonModule } from "@angular/common";
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Observable, combineLatest } from 'rxjs';
 import { StartButtonComponent } from '../../start-button/start-button.component'
 import { CardComponent } from '../../card/card.component';
 import { RoundsComponent } from '../../rounds/rounds.component';
 import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
 import { GameOverComponent } from '../../game-over/game-over.component';
-import { ViewChildren, ElementRef, QueryList } from '@angular/core';
 
 import { AudioService } from '../../services/audio/audio.service';
 import { ShuffleWordsService } from '../../services/shuffle-words/shuffle-words.service';
 import { NormalizeCharactersService } from '../../services/normalize-characters/normalize-characters.service';
+
+import { StartButtonStateQueries } from '../../start-button/state/start-button-queries';
+import { UpdateStartButtonState } from '../../start-button/state/start-button-actions';
 
 @Component({
   selector: 'app-slumpgenerator-location',
@@ -27,22 +29,24 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   @Select(GameSettingsStateQueries.numberOfOptions$) numberOfOptions$!:Observable<number>
   @Select(GameSettingsStateQueries.numberOfRounds$) numberOfRounds$!:Observable<number>
   @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
-  @ViewChildren('cardElement') cardElements!: QueryList<ElementRef>
+  @Select(StartButtonStateQueries.startBtnActive$) startBtnActive$!: Observable<boolean>;
 
   gameStarted = false;
   currentRound = 0;
   maxRounds = 0;
+  // startBtnActive = true;
+  gameOver = false;
+
   cardStates: { isFlipped: boolean, isSelected: boolean, isCorrect: boolean }[] = []
   cardStateClasses: string[] = [];
-  startBtnActive = true;
-  gameOver = false;
 
   constructor(
     private cdRef: ChangeDetectorRef, 
     private ngZone: NgZone, 
     public audioService: AudioService, 
     public shuffleWordsService: ShuffleWordsService,
-    private normalizeCharactersService: NormalizeCharactersService
+    private normalizeCharactersService: NormalizeCharactersService,
+    private store: Store
   ) { }
 
   ngOnInit():void {
@@ -50,8 +54,14 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     combineLatest([
       this.numberOfOptions$, 
       this.numberOfRounds$, 
-      this.category$])
-      .subscribe(([numberOfOptions, numberOfRounds, category]) => {
+      this.category$,
+      // this.startBtnActive$,
+    ])
+      .subscribe(([
+        numberOfOptions, 
+        numberOfRounds, 
+        category, 
+      ]) => {
         this.maxRounds = numberOfRounds;
         this.shuffleWordsService.initializeWords(category, numberOfOptions);
       }
@@ -85,7 +95,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
         }
       });
       
-    }
+  }
 
   // HELPER FUNCTIONS
 
@@ -100,7 +110,10 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   startGame(): void {
     this.gameStarted = true;
     this.currentRound = 0;
-    this.startBtnActive = false;
+    // this.startBtnActive$ = false;
+    this.store.dispatch(new UpdateStartButtonState(false));
+    // console.log('startBtnActive at startGame:', this.startBtnActive$);
+    
     this.gameOver = false;
 
     setTimeout(() => {
@@ -115,7 +128,9 @@ export class SlumpgeneratorLocationComponent implements OnInit{
       ([category, numberOfOptions]) => {
         this.shuffleWordsService.initializeWords(category, numberOfOptions);
         this.gameStarted = false; // Re-enable clicks
-        this.startBtnActive = true;
+        // this.startBtnActive$ = true;
+        // console.log('startBtnActive at restartGame:', this.startBtnActive$);
+        this.store.dispatch(new UpdateStartButtonState(true));
       }
     );
   }
