@@ -29,8 +29,8 @@ export class CardComponent implements OnChanges, OnInit {
   //CAN I MAKE THE CARD UNDERSTAND IF IT IS THE FIRST OR SECOND CARD IN THE PAIRING MODE?
   
   ngOnInit():void {
-      console.log('mode', this.mode);
-      console.log('gameStarted', this.gameStarted);
+      // console.log('mode', this.mode);
+      // console.log('gameStarted', this.gameStarted);
       
     }
 
@@ -69,6 +69,8 @@ export class CardComponent implements OnChanges, OnInit {
 
   onCardClick(): void {
     this.cardClick.emit(this.content);   
+    // console.log('audioPath', this.audioPath);
+    
   }
   
   playAudio(): void {

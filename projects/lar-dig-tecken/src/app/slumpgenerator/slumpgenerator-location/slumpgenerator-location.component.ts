@@ -10,6 +10,10 @@ import { BildbegreppWords } from '../../category/api/bildbegrepp';
 import { GameOverComponent } from '../../game-over/game-over.component';
 import { ViewChildren, ElementRef, QueryList } from '@angular/core';
 
+import { AudioService } from '../../services/audio/audio.service';
+import { ShuffleWordsService } from '../../services/shuffle-words/shuffle-words.service';
+import { NormalizeCharactersService } from '../../services/normalize-characters/normalize-characters.service';
+
 @Component({
   selector: 'app-slumpgenerator-location',
   imports: [CommonModule, StartButtonComponent, CardComponent, RoundsComponent, GameOverComponent],
@@ -32,19 +36,17 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   cardStates: { isFlipped: boolean, isSelected: boolean, isCorrect: boolean }[] = []
   cardStateClasses: string[] = [];
   startBtnActive = true;
-  audioFiles = [
-    '/assets/audio/try-again/try-again_1.mp3',
-    '/assets/audio/try-again/try-again_2.mp3',
-    '/assets/audio/try-again/try-again_3.mp3'
-  ];
-  audio: HTMLAudioElement | null = null;
   gameOver = false;
-
-  audioIndex = 0; // Keep track of which audio to play next
 
   private shuffledWords: string[] = [];
 
-  constructor(private cdRef: ChangeDetectorRef, private ngZone: NgZone) { }
+  constructor(
+    private cdRef: ChangeDetectorRef, 
+    private ngZone: NgZone, 
+    public audioService: AudioService, 
+    public shuffleWordsService: ShuffleWordsService,
+    private normalizeCharactersService: NormalizeCharactersService
+  ) { }
 
   ngOnInit():void {
     // Subscribe to both category$ and numberOfOptions$ at the same time
@@ -54,9 +56,23 @@ export class SlumpgeneratorLocationComponent implements OnInit{
       this.category$])
       .subscribe(([numberOfOptions, numberOfRounds, category]) => {
         this.maxRounds = numberOfRounds;
-        this.initializeWords(category, numberOfOptions);
+        this.shuffleWordsService.initializeWords(category, numberOfOptions);
       }
     );
+
+    this.shuffleWordsService.cardStates$.subscribe(states => {
+      this.ngZone.run(() => { // Ensures Angular detects changes
+        this.cardStates = states;
+        this.cdRef.detectChanges(); // Manually trigger change detection
+      });
+    });
+
+    this.shuffleWordsService.cardStateClasses$.subscribe(states => {
+      this.ngZone.run(() => { // Ensures Angular detects changes
+        this.cardStateClasses = states;
+        this.cdRef.detectChanges(); // Manually trigger change detection
+      });
+    });
 
     // Restart game if category or pairing mode changes
   combineLatest([
@@ -67,7 +83,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     this.numberOfRounds$,
   ]).subscribe(([category, pairingModeFirst, pairingModeSecond, numberOfOptions, numberOfRounds]) => {
     if (this.gameStarted) {
-      console.log('Game settings changed. Restarting game...');
       this.restartGame();
       this.startGame();
     }
@@ -81,71 +96,63 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     return Array.from({ length: count }, (_, index) => index + 1);
   }
 
-  // Utility function to normalize special characters
-  normalizeCharacters(input: string): string {
-    return input
-      .replace(/ä/g, 'a')
-      .replace(/å/g, 'a')
-      .replace(/ö/g, 'o');
-  }
-
   // WORD SHUFFLING FUNCTIONS
 
   // Function to shuffle an array
-  shuffleArray<T>(array: T[]): T[] {
-    return array
-      .map(value => ({ value, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ value }) => value);
-  }
+  // shuffleArray<T>(array: T[]): T[] {
+  //   return array
+  //     .map(value => ({ value, sort: Math.random() }))
+  //     .sort((a, b) => a.sort - b.sort)
+  //     .map(({ value }) => value);
+  // }
 
   // Function to shuffle words and flip back
-  shuffleWordsAndFlipBack(category: string, numberOfOptions: number): void {
+  // shuffleWordsAndFlipBack(category: string, numberOfOptions: number): void {
 
-      //MÅSTE LÄGGA TILL SÅ ATT INTE SAMMA ORD KOMMER IGEN
-      this.initializeWords(category, numberOfOptions);
+  //     //MÅSTE LÄGGA TILL SÅ ATT INTE SAMMA ORD KOMMER IGEN
+  //     this.initializeWords(category, numberOfOptions);
 
-      setTimeout(() => {
-        this.cardStates = this.cardStates.map(card => ({ ...card, isFlipped: false }));
-        this.cdRef.detectChanges(); // Manually trigger change detection
-      }, 500); // Adjust the delay as needed
-  }
+  //     setTimeout(() => {
+  //       this.cardStates = this.cardStates.map(card => ({ ...card, isFlipped: false }));
+  //       this.cdRef.detectChanges(); // Manually trigger change detection
+  //     }, 500); // Adjust the delay as needed
+  // }
 
   // Function to initialize words from category
-  initializeWords(category: string, numberOfOptions: number): void {
-    const words: string[] = Object.values(BildbegreppWords);
+  // initializeWords(category: string, numberOfOptions: number): void {
+  //   const words: string[] = Object.values(BildbegreppWords);
     
-    // Step 1: Select `numberOfOptions` unique words randomly
-    const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
-    // console.log('selectedWords (before duplication):', selectedWords);
+  //   // Step 1: Select `numberOfOptions` unique words randomly
+  //   const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
+  //   // console.log('selectedWords (before duplication):', selectedWords);
 
-    // Step 2: Pick one word to duplicate
-    const wordToDuplicate: string = selectedWords[Math.floor(Math.random() * selectedWords.length)];
+  //   // Step 2: Pick one word to duplicate
+  //   const wordToDuplicate: string = selectedWords[Math.floor(Math.random() * selectedWords.length)];
 
-    // Step 3: Insert the duplicate at index 0
-    this.shuffledWords = [wordToDuplicate, ...selectedWords];
+  //   // Step 3: Insert the duplicate at index 0
+  //   this.shuffleWordsService.shuffledWords = [wordToDuplicate, ...selectedWords];
 
-    // Step 4: Set all cards as flipped (hidden state)
-    this.cardStates = this.shuffledWords.map(() => ({ isFlipped: true, isSelected: false, isCorrect: false }));
-    this.cardStateClasses = [];
-  }
+  //   // Step 4: Set all cards as flipped (hidden state)
+  //   this.shuffleWordsService.cardStates = this.shuffleWordsService.shuffledWords.map(() => ({ isFlipped: true, isSelected: false, isCorrect: false }));
+  //   this.shuffleWordsService.cardStateClasses = [];
+  // }
 
   // Helper function to retrieve a specified number of unique random words
-  private getRandomUniqueWords(words: string[], numberOfOptions: number): string[] {
-    const selectedWords: string[] = [];
-    const uniqueWordsSet: Set<string> = new Set<string>();
+  // private getRandomUniqueWords(words: string[], numberOfOptions: number): string[] {
+  //   const selectedWords: string[] = [];
+  //   const uniqueWordsSet: Set<string> = new Set<string>();
     
-    // Ensure we select exactly 'numberOfOptions - 1' unique words
-    while (selectedWords.length < numberOfOptions) {
-      const randomWord: string = words[Math.floor(Math.random() * words.length)];
-      if (!uniqueWordsSet.has(randomWord)) {
-        uniqueWordsSet.add(randomWord);
-        selectedWords.push(randomWord);
-      }
-    }
+  //   // Ensure we select exactly 'numberOfOptions - 1' unique words
+  //   while (selectedWords.length < numberOfOptions) {
+  //     const randomWord: string = words[Math.floor(Math.random() * words.length)];
+  //     if (!uniqueWordsSet.has(randomWord)) {
+  //       uniqueWordsSet.add(randomWord);
+  //       selectedWords.push(randomWord);
+  //     }
+  //   }
     
-    return selectedWords;
-  }
+  //   return selectedWords;
+  // }
 
 
   // GAME LOGIC
@@ -156,7 +163,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     this.currentRound = 0;
     this.startBtnActive = false;
     this.gameOver = false;
-    console.log('game started, gameOver:', this.gameOver);
 
     setTimeout(() => {
       this.cardStates = this.cardStates.map(card => ({...card, isFlipped: false}));
@@ -168,25 +174,23 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   restartGame(): void {
     combineLatest([this.category$, this.numberOfOptions$]).subscribe(
       ([category, numberOfOptions]) => {
-        this.initializeWords(category, numberOfOptions);
+        this.shuffleWordsService.initializeWords(category, numberOfOptions);
         this.gameStarted = false; // Re-enable clicks
         this.startBtnActive = true;
       }
     );
-    
-
   }
 
   // Method to determine the card content
   getContent(pairingMode: string, category: string, index: number): string {
-    if (!this.shuffledWords.length) {
-      this.initializeWords(category, 10); // Default to 10 words if not initialized
+    if (!this.shuffleWordsService.shuffledWords.length) {
+      this.shuffleWordsService.initializeWords(category, 10); // Default to 10 words if not initialized
     }
 
-    const normalizedWord: string = this.normalizeCharacters(this.shuffledWords[index % this.shuffledWords.length]);
+    const normalizedWord: string = this.normalizeCharactersService.normalizeCharacters(this.shuffleWordsService.shuffledWords[index % this.shuffleWordsService.shuffledWords.length]);
     switch (pairingMode) {
       case 'ord': // WORD mode
-        return this.shuffledWords[index % this.shuffledWords.length]; // Cycle through words
+        return this.shuffleWordsService.shuffledWords[index % this.shuffleWordsService.shuffledWords.length]; // Cycle through words
       case 'bild': // ILLUSTRATION mode
         return `/assets/subject-area/estetisk-verksamhet/${category}/illustration/${normalizedWord}.png`; // Assume images are stored with this path
       case 'ritade tecken': // RITADE_TECKEN mode
@@ -198,23 +202,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     }
   }
 
-  getAudioPath(category: string, index: number): string {
-    const normalizedWord: string = this.normalizeCharacters(this.shuffledWords[index % this.shuffledWords.length]);
-    return `/assets/subject-area/estetisk-verksamhet/${category}/audio/${normalizedWord}.mp3`;
-  }
-
-  //AUDIO FUNCTIONS
-
-  playIncorrectAudio(): void {
-    // Get the current audio file
-    this.audio = new Audio(this.audioFiles[this.audioIndex]); 
-
-    // Play the audio
-    this.audio.play();
-
-    // Move to the next file, looping back to the start
-    this.audioIndex = (this.audioIndex + 1) % this.audioFiles.length;
-  }
 
   //CLASS LOGIC
 
@@ -233,25 +220,26 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   // Method to determine the dynamic class
   getDynamicClass(mode: string, index: number): string {
     const flipClass: string = this.cardStates[index].isFlipped ? 'flipped' : 'not-flipped';
-
+  
     return [this.getInitialClass(mode), flipClass, this.cardStateClasses[index]]
     .filter(cls => !!cls)
     .join(' ');
+
   }
 
 
   // Method to handle card clicks
   onCardClicked(content: string, index: number): void {
     if(!this.gameStarted) return;
-
-    const selectedWord: string = this.shuffledWords[index];
-    const isCorrect: boolean = selectedWord === this.shuffledWords[0];
+    
+    const selectedWord: string = this.shuffleWordsService.shuffledWords[index];
+    
+    const isCorrect: boolean = selectedWord === this.shuffleWordsService.shuffledWords[0];
     this.cardStates[index] = {
-      isFlipped: false,
+      isFlipped: false, 
       isSelected: true,
       isCorrect: isCorrect
     }
-    
     this.cdRef.detectChanges(); // Manually trigger change detection
 
      // Calculate the classes dynamically
@@ -268,13 +256,13 @@ export class SlumpgeneratorLocationComponent implements OnInit{
       this.currentRound++;
       //Disable clicks
       this.gameStarted = false;
-
       //Reset all cards after short delay
       setTimeout(()=> {
         this.cardStates = this.cardStates.map(card => ({
           ...card,
           isFlipped: true,
         }));
+        
         this.cdRef.detectChanges(); // Manually trigger change detection
         
         //Proceed to next round
@@ -283,13 +271,13 @@ export class SlumpgeneratorLocationComponent implements OnInit{
           
             combineLatest([this.category$, this.numberOfOptions$]).subscribe(
               ([category, numberOfOptions]) => {
-                this.shuffleWordsAndFlipBack(category, numberOfOptions);
+                this.shuffleWordsService.shuffleWordsAndFlipBack(category, numberOfOptions);
+                this.cdRef.detectChanges();
                 this.gameStarted = true; // Re-enable clicks
               }
             );
 
           } else {
-            console.log('You won!');
             this.restartGame();
             this.gameOver = true;
             this.cdRef.detectChanges();
@@ -299,16 +287,13 @@ export class SlumpgeneratorLocationComponent implements OnInit{
               this.gameOver = false;
               this.cdRef.detectChanges();
             }, 7900);
-            console.log('Game over, gameOver:', this.gameOver);
-             // Manually trigger change detection
           }
         }, 500)
 
       }, 1000)
 
     } else {
-      console.log('Incorrect!');
-      this.playIncorrectAudio();
+      this.audioService.playIncorrectAudio();
     }
 
   }

@@ -22,7 +22,7 @@
                         [pairingMode]="pairingModeFirst" 
                         [content]="getContent(pairingModeFirst, category, 0)"
                         [dynamicClass]="getDynamicClass(pairingModeFirst, 0)"
-                        [audioPath]="getAudioPath(category, 0)"
+                        [audioPath]="audioService.getAudioPath(category, 0)"
                         [mode]="'firstCard'"
                         [gameStarted]="gameStarted"
                         ></app-card>
@@ -47,7 +47,7 @@
                                     class="w-fit"
                                     [ngClass]="{'cursor-pointer' : gameStarted}"
                                     [content]="getContent(pairingModeSecond, category, idx + 1)"
-                                    [audioPath]="getAudioPath(category, idx + 1)"
+                                    [audioPath]="audioService.getAudioPath(category, idx + 1)"
                                     [pairingMode]="pairingModeSecond"
                                     (cardClick)="onCardClicked($event, idx + 1)"
                                     [dynamicClass]="getDynamicClass(pairingModeSecond, idx + 1)"
