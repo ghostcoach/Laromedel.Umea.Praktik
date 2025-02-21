@@ -23,7 +23,9 @@ export class CardUtilsService {
   @Select(CardStateQueries.content$) content$!: Observable<string[]>;
   @Select(CardStateQueries.mode$) mode$!: Observable<boolean[]>;
   @Select(CardStateQueries.cardStates$) cardStates$!: Observable<ICardFullStateModel[]>;
-  
+  @Select(CardStateQueries.contentMedium$) contentMedium$!: Observable<string[]>;
+
+
   shuffledWords: string[] = [];
   updatedCards: ICardFullStateModel[] = [];
   currentRound = 0;
@@ -97,7 +99,13 @@ export class CardUtilsService {
   }
 
   // Function to initialize words and set initial card states
-  initializeCardStates(category: string, numberOfOptions: number, words: string[]): ICardFullStateModel[] {
+  initializeCardStates(
+    category: string, 
+    numberOfOptions: number, 
+    words: string[], 
+    pairingModeFirst: string, 
+    pairingModeSecond: string
+  ): ICardFullStateModel[] {
      
     // Step 1: Select `numberOfOptions` unique words randomly
      const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
@@ -105,14 +113,15 @@ export class CardUtilsService {
     // Step 2: Pick one word to duplicate
     const wordToDuplicate: string = selectedWords[Math.floor(Math.random() * selectedWords.length)];
 
-    // Step 3: Insert the duplicate at index 0
-    this.shuffledWords = this.shuffleArray([wordToDuplicate, ...selectedWords]);
-    console.log('shuffledWords', this.shuffledWords);
-  
+    // Step 3: Shuffle the selected words
+    const shuffledSelectedWords = this.shuffleArray(selectedWords);
+
+    // Step 4: Insert the duplicate at index 0
+    this.shuffledWords = [wordToDuplicate, ...shuffledSelectedWords];
       
-    return this.shuffledWords.map(word => ({
-      mode: '', // example mode
-      cardCategory: '',
+    return this.shuffledWords.map((word, index) => ({
+      mode: index === 0 ? 'firstCard' : 'secondCard', // example mode
+      contentMedium: index === 0 ? pairingModeFirst : pairingModeSecond, // example category
       content: word, // word or image/video-path
       audioPath: this.getAudioPath(category, word), // optional audio path
       flippedClass: 'flipped', // flipped by default
