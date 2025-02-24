@@ -1,5 +1,5 @@
-import {Action, State, StateContext, StateToken} from '@ngxs/store'
-import {Injectable} from '@angular/core'
+import { Action, State, StateContext, StateToken, Selector } from '@ngxs/store'
+import { Injectable } from '@angular/core'
 import { IGameSettingStateModel } from './api/game-settings-state-model'
 import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory, UseAllCategories, UpdateNumberOfOptions, UpdateNumberOfRounds } from './game-settings-actions'
 import { CardContent } from '../../../../../games/src/lib/api/card-content'
@@ -22,6 +22,32 @@ const stateToken: StateToken<IGameSettingStateModel> = new StateToken<IGameSetti
 
 @Injectable()
 export class GameSettingsState {
+
+    // Selector to get the number of options
+    @Selector()
+    static getNumberOfOptions(state: IGameSettingStateModel): number {
+        return state.numberOfOptions;
+    }
+
+    // Selector to get the category
+    @Selector()
+    static getCategory(state: IGameSettingStateModel): Category {
+        return state.category;
+    }
+
+    // Selector to get the mode of the first pairing card
+    @Selector()
+    static getFirstPairingMode(state: IGameSettingStateModel): CardContent {
+        return state.pairingMode.first;
+    }
+
+    // Selector to get the mode of the second pairing card
+    @Selector()
+    static getSecondPairingMode(state: IGameSettingStateModel): CardContent {
+        return state.pairingMode.second;
+    }
+
+
     @Action(UpdateFirstPairingMode)
     updateFirstPairingMode(ctx: StateContext<IGameSettingStateModel>, action: UpdateFirstPairingMode):void {
         const state: IGameSettingStateModel = ctx.getState();

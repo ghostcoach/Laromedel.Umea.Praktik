@@ -25,13 +25,13 @@ export class CardComponent implements OnChanges, OnInit {
   @Input() gameStarted!: boolean;
   @ViewChildren('cardElement') cardElement!: QueryList<ElementRef>;
 
-
-  //CAN I MAKE THE CARD UNDERSTAND IF IT IS THE FIRST OR SECOND CARD IN THE PAIRING MODE?
-  
+    
   ngOnInit():void {
-      // console.log('mode', this.mode);
-      // console.log('gameStarted', this.gameStarted);
-      
+      // console.log('mode:', this.mode);
+      // console.log('content:', this.content);
+      // console.log('audioPath:', this.audioPath);
+      // console.log('dynamicClass:', this.dynamicClass);
+
     }
 
   // Variables to store extracted class names
@@ -56,6 +56,10 @@ export class CardComponent implements OnChanges, OnInit {
         ? this.playVideo.bind(this)
         : this.playAudio.bind(this);
     }
+    console.log('mode:', this.mode);
+    console.log('content:', this.content);
+    console.log('audioPath:', this.audioPath);
+    console.log('dynamicClass:', this.dynamicClass);
   }
 
   private extractClasses(): void {

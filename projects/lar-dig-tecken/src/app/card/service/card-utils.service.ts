@@ -7,6 +7,7 @@ import { ICardFullStateModel, IMultipleFullStateModel } from '../state/api/card-
 import { UpdateAllCards } from '../state/card.actions';
 import { BildbegreppWords } from '../../category/api/bildbegrepp';
 import { CardStateQueries } from '../state/card.queries';
+import { debounceTime } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -39,25 +40,34 @@ export class CardUtilsService {
   audioIndex = 0; // Keep track of which audio to play next
 
   constructor(private store: Store) {
-     // Subscribe to all variable at the same time
-     combineLatest([
+  //    // Subscribe to all variable at the same time
+  //    combineLatest([
+  //     this.numberOfOptions$, 
+  //     this.numberOfRounds$, 
+  //     this.category$
+  //     ])
+  //     .subscribe(([numberOfOptions, numberOfRounds, category]) => {
+  //       this.maxRounds = numberOfRounds;
+  //       this.initializeWords(category, numberOfOptions);
+  //     }
+  //   );
+    combineLatest([
       this.numberOfOptions$, 
       this.numberOfRounds$, 
       this.category$
-      ])
-      .subscribe(([numberOfOptions, numberOfRounds, category]) => {
-        this.maxRounds = numberOfRounds;
-        this.initializeWords(category, numberOfOptions);
-      }
-    );
-
-   
-    
+    ])
+    .pipe(debounceTime(100)) // ✅ Prevents rapid multiple updates
+    .subscribe(([numberOfOptions, numberOfRounds, category]) => {
+      this.maxRounds = numberOfRounds;
+      this.initializeWords(category, numberOfOptions);
+    });
    }
+
+
 
   // WORD SHUFFLING FUNCTIONS
 
-  // Function to initialize ALL OF THE WORDS from category
+  // Function to initialize ALL WORDS from category
   initializeWords(category: string, numberOfOptions: number): void {
       const words: string[] = Object.values(BildbegreppWords);
         
@@ -84,7 +94,7 @@ export class CardUtilsService {
   shuffleWordsAndFlipBack(category: string, numberOfOptions: number): void {
 
     // //1. Initialize new words
-    // const words: string[] = this.initializeWords(category, numberOfOptions);
+    // this.initializeWords(category, numberOfOptions);
 
     // // 2. First update: Set the new words
     // const currentCards = this.store.selectSnapshot(CardStateQueries.cardStates$);
@@ -118,7 +128,6 @@ export class CardUtilsService {
     pairingModeSecond: string
   ): ICardFullStateModel[] {
      
-     
     // Step 1: Select `numberOfOptions` unique words randomly
     const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
 
@@ -134,7 +143,8 @@ export class CardUtilsService {
     return this.shuffledWords.map((word, index) => ({
       mode: index === 0 ? 'firstCard' : 'secondCard', // example mode
       contentMedium: index === 0 ? pairingModeFirst : pairingModeSecond, // example category
-      content: word, // word or image/video-path
+      word: word, // word or image/video-path
+      content: index === 0 ? this.getMediaPath(category, pairingModeFirst, word) : this.getMediaPath(category, pairingModeSecond, word),
       audioPath: this.getAudioPath(category, word), // optional audio path
       flippedClass: 'flipped', // flipped by default
       correctClass: '', // default class
@@ -164,6 +174,21 @@ export class CardUtilsService {
   getAudioPath(category: string, word: string): string {
     const normalizedWord: string = this.normalizeCharacters(word);
     return `/assets/subject-area/estetisk-verksamhet/${category}/audio/${normalizedWord}.mp3`;
+  }
+
+  getMediaPath(category: string, contentMedium: string, word: string): string {
+    const normalizedWord: string = this.normalizeCharacters(word);
+    if (contentMedium === 'ord') {
+      return `${normalizedWord}`;
+    } else if (contentMedium === 'bild') {
+      return `/assets/subject-area/estetisk-verksamhet/${category}/illustration/${normalizedWord}.png`;
+    } else if (contentMedium === 'ritade tecken') {
+      return `/assets/subject-area/estetisk-verksamhet/${category}/ritade-tecken/${normalizedWord}.svg`;
+    } else if (contentMedium === 'tecken som stöd') {
+      return `/assets/subject-area/estetisk-verksamhet/${category}/video/${normalizedWord}.mp4`;
+    } else {
+      return '';
+    }
   }
 
   playIncorrectAudio(): void {

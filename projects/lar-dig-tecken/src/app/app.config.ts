@@ -5,9 +5,12 @@ import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { routes } from "./app.routes";
 import { environment } from "@shared/environments/environment";
-import {GameSettingsState} from '../app/settings/state/game-settings-state'
-import { StartButtonState } from "./start-button/state/start-button-state";
 import { provideAnimations } from "@angular/platform-browser/animations";
+
+import { GameSettingsState } from '../app/settings/state/game-settings-state'
+import { StartButtonState } from "./start-button/state/start-button-state";
+// import { CardState } from "./card/state/card-state";
+import { CardStates } from "./card/state/card.state";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,7 +19,9 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       NgxsModule.forRoot([
         GameSettingsState,
-        StartButtonState
+        StartButtonState,
+        // CardState,
+        CardStates
       ], {
         developmentMode: !environment.production,
       }),
