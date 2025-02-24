@@ -50,25 +50,27 @@ export class CardUtilsService {
         this.initializeWords(category, numberOfOptions);
       }
     );
+
+   
     
    }
 
-   // WORD SHUFFLING FUNCTIONS
+  // WORD SHUFFLING FUNCTIONS
 
-   // Function to initialize words from category
-      initializeWords(category: string, numberOfOptions: number): void {
-         const words: string[] = Object.values(BildbegreppWords);
+  // Function to initialize ALL OF THE WORDS from category
+  initializeWords(category: string, numberOfOptions: number): void {
+      const words: string[] = Object.values(BildbegreppWords);
         
-         // Step 1: Select `numberOfOptions` unique words randomly
-         const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
+      // Step 1: Select `numberOfOptions` unique words randomly
+      const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
     
-         // Step 2: Pick one word to duplicate
-         const wordToDuplicate: string = selectedWords[Math.floor(Math.random() * selectedWords.length)];
+      // Step 2: Pick one word to duplicate
+      const wordToDuplicate: string = selectedWords[Math.floor(Math.random() * selectedWords.length)];
     
-         // Step 3: Insert the duplicate at index 0
-         this.shuffledWords = [wordToDuplicate, ...selectedWords];
+      // Step 3: Insert the duplicate at index 0
+      this.shuffledWords = [wordToDuplicate, ...selectedWords];
   
-      }
+  }
  
    // Function to shuffle an array
    shuffleArray<T>(array: T[]): T[] {
@@ -81,20 +83,29 @@ export class CardUtilsService {
   // Function to shuffle words and flip back
   shuffleWordsAndFlipBack(category: string, numberOfOptions: number): void {
 
-    //1. Initialize new words
-    this.initializeWords(category, numberOfOptions);
+    // //1. Initialize new words
+    // const words: string[] = this.initializeWords(category, numberOfOptions);
 
-      // 2. Flip back all cards
-    setTimeout(() => {
-      // Create the updated cards with the new flippedClass
-      this.updatedCards = this.store.selectSnapshot(CardStateQueries.cardStates$).map(card => ({
-        ...card, 
-        flippedClass: "not-flipped"  // Update only the flippedClass here
-      }));
+    // // 2. First update: Set the new words
+    // const currentCards = this.store.selectSnapshot(CardStateQueries.cardStates$);
+    // const updatedCardsWithWords = currentCards.map((card, index) => ({
+    //   ...card,
+    //   content: words[index] || card.content, // Update content safely
+    // }));
 
-      // Dispatch action to update all cards
-      this.store.dispatch(new UpdateAllCards(this.updatedCards));
-    }, 500); // Adjust the delay as needed
+    // this.store.dispatch(new UpdateAllCards(updatedCardsWithWords));
+    
+    // // 3. Second update: Set flippedClass to "not-flipped" after a delay
+    // setTimeout(() => {
+    //   const updatedCardsWithFlippedClass = this.store
+    //     .selectSnapshot(CardStateQueries.cardStates$)
+    //     .map(card => ({
+    //       ...card,
+    //       flippedClass: "not-flipped",
+    //     }));
+
+    //   this.store.dispatch(new UpdateAllCards(updatedCardsWithFlippedClass));
+    // }, 500); // Adjust delay as needed
       
   }
 
@@ -107,8 +118,9 @@ export class CardUtilsService {
     pairingModeSecond: string
   ): ICardFullStateModel[] {
      
+     
     // Step 1: Select `numberOfOptions` unique words randomly
-     const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
+    const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
 
     // Step 2: Pick one word to duplicate
     const wordToDuplicate: string = selectedWords[Math.floor(Math.random() * selectedWords.length)];
@@ -154,7 +166,6 @@ export class CardUtilsService {
     return `/assets/subject-area/estetisk-verksamhet/${category}/audio/${normalizedWord}.mp3`;
   }
 
-
   playIncorrectAudio(): void {
     if (this.audio) {
       this.audio.pause();
@@ -168,8 +179,6 @@ export class CardUtilsService {
     this.audioIndex = (this.audioIndex + 1) % this.audioFiles.length;
   }
 
-
-
   //HELPER FUNCTIONS
   normalizeCharacters(input: string): string {
     return input
@@ -177,4 +186,5 @@ export class CardUtilsService {
       .replace(/å/g, 'a')
       .replace(/ö/g, 'o');
   }
+
 }
