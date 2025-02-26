@@ -1,5 +1,5 @@
-export interface ICardStatus {
-    isFlipped: boolean,
-    isSelected: boolean,
-    isCorrect: boolean
-}
+// export interface ICardStatus {
+//     isFlipped: boolean,
+//     isSelected: boolean,
+//     isCorrect: boolean
+// }
