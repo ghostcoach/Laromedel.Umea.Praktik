@@ -1,5 +1,5 @@
-import { Injectable, OnDestroy, Output } from '@angular/core';
-import { dispatch, Select, Store } from '@ngxs/store';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
 import { Observable, combineLatest, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
@@ -81,14 +81,14 @@ export class SlumpgeneratorService implements OnDestroy {
    // Method to initialize card states
    reinitializeCardStates(): void {
     
-    const numberOfOptions = this.store.selectSnapshot(GameSettingsState.getNumberOfOptions);
-    const category = this.store.selectSnapshot(GameSettingsState.getCategory);
-    const words = Object.values(BildbegreppWords); // Fetch words dynamically
-    const pairingModeFirst = this.store.selectSnapshot(GameSettingsState.getFirstPairingMode);
-    const pairingModeSecond = this.store.selectSnapshot(GameSettingsState.getSecondPairingMode);
+    const numberOfOptions: number = this.store.selectSnapshot(GameSettingsState.getNumberOfOptions);
+    const category: string = this.store.selectSnapshot(GameSettingsState.getCategory);
+    const words: string[] = Object.values(BildbegreppWords); // Fetch words dynamically
+    const pairingModeFirst: string = this.store.selectSnapshot(GameSettingsState.getFirstPairingMode);
+    const pairingModeSecond: string = this.store.selectSnapshot(GameSettingsState.getSecondPairingMode);
 
     // Generate initial card states using the utility service
-    const initialCards = this.cardUtils.initializeCardStates(
+    const initialCards: ICardFullStateModel[] = this.cardUtils.initializeCardStates(
       category, 
       numberOfOptions, 
       words,
@@ -123,7 +123,7 @@ export class SlumpgeneratorService implements OnDestroy {
         debounceTime(100), // Prevent rapid consecutive updates
         takeUntil(this.destroy$) // Automatically unsubscribe on service destruction
       )
-      .subscribe(([numberOfOptions, numberOfRounds, category, pairingModeFirst, pairingModeSecond]) => {
+      .subscribe(([numberOfRounds]) => {
         
         if (!this.startBtnActive) {
           this.gameStarted = false;
@@ -143,7 +143,7 @@ export class SlumpgeneratorService implements OnDestroy {
     const selectedWord: string = content;
     
     //Check if the selected word is correct by comparing it with the content in the cardStates array at index 0
-    const cardStates = this.store.selectSnapshot(CardStates.getCardStates);
+    const cardStates: ICardFullStateModel[] = this.store.selectSnapshot(CardStates.getCardStates);
     const isCorrect: boolean = selectedWord === cardStates[0]?.word;
 
     //Dispatch action to set selectedWord as correct or incorrect
