@@ -17,8 +17,14 @@ export interface ICardFullStateModel {
     audioPath: string, //audio path ---> retrieved in card.component
     flippedClass: "flipped" | "not-flipped", //flipped or not-flipped ---> retrieved in card.component
     correctClass: "correct-card" | "incorrect-card" | "", //correct-card or incorrect-card ---> retrieved in card.component
+    playVideo?: () => void, //function to play video ---> retrieved in card.component
+    playAudio?: () => void, //function to play audio ---> retrieved in card.component
 }
 
 export interface IMultipleFullStateModel {
     cardStates: ICardFullStateModel[];
+}
+
+export interface IFlippedStateModel {
+    flippedClass: "flipped" | "not-flipped"
 }

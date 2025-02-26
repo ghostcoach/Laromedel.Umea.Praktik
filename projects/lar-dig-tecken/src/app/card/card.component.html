@@ -1,26 +1,28 @@
 <div 
     [attr.aria-disabled]="true"
-    [ngClass]="flippedClass"
-    class="card-container w-44 h-60 rounded-md"
+    [ngClass]="flippedClass$ |async"
+    
+    class='card-container w-44 h-60 rounded-md'
 >
     <div class="card-inner">
         <!-- Back of the Card -->
         <div class="card-back rounded-md">
-            <div [ngClass]="modeClass" class="bg-slate-600 w-full h-full rounded-md border border-1 border-black"></div>
+            <div [ngClass]="this.contentMedium" class="bg-slate-600 w-full h-full rounded-md border border-1 border-black"></div>
         </div>
         
         <!-- Front of the Card -->
-        <div [ngClass]="[modeClass, isCorrectClass]" class="relative card-front  flex justify-center items-center card w-44 h-60 border border-1 border-black rounded-lg">
+        <div [ngClass]="[this.contentMedium, this.correctClass]" class="relative card-front  flex justify-center items-center card w-44 h-60 border border-1 border-black rounded-lg">
             <div class="border border-1 border-black w-[93%] h-[95%] rounded-md bg-white flex items-center justify-center">
                 <app-card-content
                     #cardElement
-                    [pairingMode]="pairingMode"
-                    [data]="content"
+                    [content]="this.content"
+                    [contentMedium]="this.contentMedium"
+                    [word]="this.word"
                     class="w-full h-full border-transparent border-solid border-4 rounded-sm"
-                    [ngClass]="mode === 'secondCard' ? 'hover:border-blue-500' : ''"
+                    [ngClass]="this.mode === 'secondCard' ? 'hover:border-blue-500' : ''"
                     (click)="onCardClick()"
                     (keydown)="handleKeyDown($event)"
-                    [tabindex]="mode === 'secondCard' ? '0' : '-1'"
+                    [tabindex]="this.mode === 'secondCard' ? '0' : '-1'"
 
                 >
                 </app-card-content>

@@ -5,7 +5,7 @@
         <div class="flex absolute top-0 right-5 gap-2 z-0">
             <ng-container *ngIf="numberOfRounds$ | async as numberOfRounds">
                 <ng-container *ngFor="let i of getNumberArray(numberOfRounds); let idx = index">
-                    <app-rounds [round]="idx < currentRound ? idx + 1 : 0"></app-rounds>
+                    <app-rounds [round]="idx < slumpgeneratorService.currentRound ? idx + 1 : 0"></app-rounds>
                 </ng-container>
             </ng-container>
         </div>
@@ -15,29 +15,55 @@
     <section class="flex max-h-[75vh] gap-10 place-content-center">
 
             <ul class="flex gap-4 flex-col items-center justify-center max-w-[50%]">
-                <ng-container *ngIf="pairingModeFirst$ | async as pairingModeFirst">
+                <ng-container *ngIf="firstCardState.length > 0">
+                    <ng-container *ngFor="let card of firstCardState; let idx = index">
+                        <li>
+                            <app-card
+                                class="w-fit"
+                                [ngClass]="{'cursor-pointer' : slumpgeneratorService.gameStarted}"
+                                [gameStarted]="slumpgeneratorService.gameStarted"
+                                [cardData]="card"
+                               
+                            ></app-card>
+                        </li>
+                    </ng-container>
+                </ng-container>
+                <!-- <ng-container *ngIf="pairingModeFirst$ | async as pairingModeFirst">
                     <ng-container  *ngIf="category$ | async as category">
                         <li>
                         <app-card 
                         [pairingMode]="pairingModeFirst" 
-                        [content]="getContent(pairingModeFirst, category, 0)"
                         [dynamicClass]="getDynamicClass(pairingModeFirst, 0)"
-                        [audioPath]="audioService.getAudioPath(category, 0)"
-                        [mode]="'firstCard'"
+                        
                         [gameStarted]="gameStarted"
                         ></app-card>
                     </li>
                     </ng-container>
                     
-                </ng-container>
+                </ng-container> -->
                 <app-start-button 
                     [onClick]="slumpgeneratorService.startGame.bind(this)"
-                    [tabindex]="!gameStarted ? '2' : '-1'"
+                    [tabindex]="!slumpgeneratorService.gameStarted ? '2' : '-1'"
                 ></app-start-button>
             </ul>
 
             <ul class="flex flex-col flex-nowrap justify-center place-content-center w-full max-w-[500px] items-center gap-4 sm:flex-wrap ">
-                <ng-container *ngIf="pairingModeSecond$ | async as pairingModeSecond">
+                <ng-container *ngIf="secondCardState.length > 0">
+                    <ng-container *ngFor="let card of secondCardState; let idx = index">
+                        <li>
+                            <app-card
+                                class="w-fit"
+                                [ngClass]="{'cursor-pointer' : slumpgeneratorService.gameStarted}"
+                                (cardClick)="slumpgeneratorService.onCardClicked($event, idx + 1)"
+                                [gameStarted]="slumpgeneratorService.gameStarted"
+                                [cardData]="card"
+                               
+                            ></app-card>
+                        </li>
+                    </ng-container>
+                </ng-container>
+                
+                <!-- <ng-container *ngIf="pairingModeSecond$ | async as pairingModeSecond">
                     <ng-container *ngIf="category$ | async as category">
                         <ng-container *ngIf="numberOfOptions$ | async as numberOfOptions">
                             <ng-container *ngFor="let i of getNumberArray(numberOfOptions); let idx = index">
@@ -45,12 +71,11 @@
                                 <app-card
                                     class="w-fit"
                                     [ngClass]="{'cursor-pointer' : gameStarted}"
-                                    [content]="getContent(pairingModeSecond, category, idx + 1)"
-                                    [audioPath]="audioService.getAudioPath(category, idx + 1)"
+                                    
                                     [pairingMode]="pairingModeSecond"
                                     (cardClick)="onCardClicked($event, idx + 1)"
                                     [dynamicClass]="getDynamicClass(pairingModeSecond, idx + 1)"
-                                    [mode]="'secondCard'"
+                                    
                                     [gameStarted]="gameStarted"
                                     >
                                     </app-card>
@@ -58,12 +83,12 @@
                             </ng-container>
                         </ng-container>
                     </ng-container>
-                </ng-container>
+                </ng-container> -->
             </ul>
     </section>
 
-    <ng-container *ngIf="gameOver">
-        <app-game-over [gameOver]="gameOver"></app-game-over>
+    <ng-container *ngIf="slumpgeneratorService.gameOver">
+        <app-game-over [gameOver]="slumpgeneratorService.gameOver"></app-game-over>
     </ng-container>
 
 </div>

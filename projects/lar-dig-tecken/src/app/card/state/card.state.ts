@@ -1,6 +1,6 @@
 import { Action, State, StateContext, Store, NgxsOnInit, Selector } from '@ngxs/store'
 import { IMultipleFullStateModel, ICardFullStateModel } from './api/card-interface'
-import { UpdateAllCards, UpdateCard, InitializeCardStates } from './card.actions'
+import { UpdateAllCards, UpdateCard, InitializeCardStates, UpdateFlippedClass } from './card.actions'
 import { GameSettingsState } from '../../settings/state/game-settings-state';
 import { Injectable } from '@angular/core';
 import { CardUtilsService } from '../service/card-utils.service';
@@ -100,5 +100,14 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
         currentCards[action.index] = { ...currentCards[action.index], ...action.payload };
         ctx.patchState({ cardStates: currentCards });
     }
-    
-  }
+
+    @Action(UpdateFlippedClass)
+    updateFlippedClass(ctx: StateContext<IMultipleFullStateModel>, action: UpdateFlippedClass): void {
+        const currentCards = ctx.getState().cardStates;
+        const updatedCards = currentCards.map((card) => {
+            return { ...card, flippedClass: action.payload }; // Update flippedClass for all cards
+        });
+        ctx.patchState({ cardStates: updatedCards });
+    }
+  
+    }

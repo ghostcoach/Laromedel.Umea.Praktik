@@ -14,3 +14,4 @@ export class InitializeCardStates {
     static readonly type = '[Card] Update Card';
     constructor(public index: number, public payload: Partial<ICardStateModel>) {}
   }
+

@@ -1,25 +1,28 @@
+
+
+
 <div class="card-content w-full h-full font-bold text-2xl tracking-wide flex justify-center items-center">
 
     <!-- WORD Mode -->
-    <ng-container *ngIf="pairingMode === 'ord'">
-    <p class="text-2lg font-bold">{{ data }}</p>
+    <ng-container *ngIf="contentMedium === 'ord'">
+    <p class="text-2lg font-bold">{{ word }}</p>
   </ng-container>
 
   <!-- ILLUSTRATION Mode -->
-  <ng-container *ngIf="pairingMode === 'bild'">
-    <img [src]="data" alt="Illustration" class="w-full h-full object-contain" />
+  <ng-container *ngIf="contentMedium === 'bild'">
+    <img [src]="content" alt="Illustration" class="w-full h-full object-contain" />
   </ng-container>
 
    <!-- RITADE_TECKEN Mode -->
-  <ng-container *ngIf="pairingMode === 'ritade tecken'">
-    <img [src]="data" alt="Illustration" class="w-full h-full object-contain" />
+  <ng-container *ngIf="contentMedium === 'ritade-tecken'">
+    <img [src]="content" alt="Illustration" class="w-full h-full object-contain" />
   </ng-container>
 
   <!-- TAKK Mode -->
-  <ng-container *ngIf="pairingMode === 'tecken som stöd'">
+  <ng-container *ngIf="contentMedium === 'tecken-som-stod'">
     <video 
-        *ngIf="pairingMode === 'tecken som stöd'" 
-        [src]="data" 
+        *ngIf="contentMedium === 'tecken-som-stod'" 
+        [src]="content" 
         #videoElement
         class="w-full h-full object-cover"></video>
   </ng-container>

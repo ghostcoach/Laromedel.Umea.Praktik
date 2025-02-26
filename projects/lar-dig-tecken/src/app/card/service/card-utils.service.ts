@@ -8,6 +8,7 @@ import { UpdateAllCards } from '../state/card.actions';
 import { BildbegreppWords } from '../../category/api/bildbegrepp';
 import { CardStateQueries } from '../state/card.queries';
 import { debounceTime } from 'rxjs/operators';
+import { GameSettingsState } from '../../settings/state/game-settings-state';
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +19,7 @@ export class CardUtilsService {
   @Select(GameSettingsStateQueries.numberOfOptions$) numberOfOptions$!:Observable<number>
   @Select(GameSettingsStateQueries.numberOfRounds$) numberOfRounds$!:Observable<number>
   @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
-  @Select(CardStateQueries.audioPath$) audioPath$!: Observable<string[]>;
-  @Select(CardStateQueries.flippedClass$) flippedClass$!: Observable<string[]>;
-  @Select(CardStateQueries.correctClass$) correctClass$!: Observable<string[]>;
-  @Select(CardStateQueries.content$) content$!: Observable<string[]>;
-  @Select(CardStateQueries.mode$) mode$!: Observable<boolean[]>;
   @Select(CardStateQueries.cardStates$) cardStates$!: Observable<ICardFullStateModel[]>;
-  @Select(CardStateQueries.contentMedium$) contentMedium$!: Observable<string[]>;
-
 
   shuffledWords: string[] = [];
   updatedCards: ICardFullStateModel[] = [];
@@ -40,17 +34,6 @@ export class CardUtilsService {
   audioIndex = 0; // Keep track of which audio to play next
 
   constructor(private store: Store) {
-  //    // Subscribe to all variable at the same time
-  //    combineLatest([
-  //     this.numberOfOptions$, 
-  //     this.numberOfRounds$, 
-  //     this.category$
-  //     ])
-  //     .subscribe(([numberOfOptions, numberOfRounds, category]) => {
-  //       this.maxRounds = numberOfRounds;
-  //       this.initializeWords(category, numberOfOptions);
-  //     }
-  //   );
     combineLatest([
       this.numberOfOptions$, 
       this.numberOfRounds$, 
@@ -62,8 +45,6 @@ export class CardUtilsService {
       this.initializeWords(category, numberOfOptions);
     });
    }
-
-
 
   // WORD SHUFFLING FUNCTIONS
 
@@ -139,13 +120,15 @@ export class CardUtilsService {
 
     // Step 4: Insert the duplicate at index 0
     this.shuffledWords = [wordToDuplicate, ...shuffledSelectedWords];
+
+    
       
     return this.shuffledWords.map((word, index) => ({
       mode: index === 0 ? 'firstCard' : 'secondCard', // example mode
-      contentMedium: index === 0 ? pairingModeFirst : pairingModeSecond, // example category
+      contentMedium: index === 0 ? this.formatString(pairingModeFirst) : this.formatString(pairingModeSecond), // example category
       word: word, // word or image/video-path
-      content: index === 0 ? this.getMediaPath(category, pairingModeFirst, word) : this.getMediaPath(category, pairingModeSecond, word),
-      audioPath: this.getAudioPath(category, word), // optional audio path
+      content: index === 0 ? this.getMediaPath(category, this.formatString(pairingModeFirst), word) : this.getMediaPath(category, this.formatString(pairingModeSecond), word),
+      audioPath: this.getAudioPath(category, word), // audio path
       flippedClass: 'flipped', // flipped by default
       correctClass: '', // default class
     }));
@@ -177,14 +160,15 @@ export class CardUtilsService {
   }
 
   getMediaPath(category: string, contentMedium: string, word: string): string {
+    
     const normalizedWord: string = this.normalizeCharacters(word);
     if (contentMedium === 'ord') {
-      return `${normalizedWord}`;
+      return word;
     } else if (contentMedium === 'bild') {
-      return `/assets/subject-area/estetisk-verksamhet/${category}/illustration/${normalizedWord}.png`;
-    } else if (contentMedium === 'ritade tecken') {
-      return `/assets/subject-area/estetisk-verksamhet/${category}/ritade-tecken/${normalizedWord}.svg`;
-    } else if (contentMedium === 'tecken som stöd') {
+      return `/assets/subject-area/estetisk-verksamhet/${category}/illustration/${normalizedWord}.webp`;
+    } else if (contentMedium === 'ritade-tecken') {
+      return `/assets/subject-area/estetisk-verksamhet/${category}/ritade-tecken/${normalizedWord}.webp`;
+    } else if (contentMedium === 'tecken-som-stod') {
       return `/assets/subject-area/estetisk-verksamhet/${category}/video/${normalizedWord}.mp4`;
     } else {
       return '';
@@ -209,6 +193,15 @@ export class CardUtilsService {
     return input
       .replace(/ä/g, 'a')
       .replace(/å/g, 'a')
+      .replace(/ö/g, 'o');
+  }
+
+  formatString(input: string):string {
+    return input
+      .toLowerCase()        // Convert to lowercase
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/å/g, 'a')   // Replace Swedish characters
+      .replace(/ä/g, 'a')
       .replace(/ö/g, 'o');
   }
 

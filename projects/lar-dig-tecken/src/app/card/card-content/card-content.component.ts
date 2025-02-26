@@ -1,5 +1,10 @@
 import { Component, Input, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from "@angular/common";
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { CardStates } from '../state/card.state';
+import { ICardFullStateModel } from '../state/api/card-interface';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -9,10 +14,18 @@ import { CommonModule } from "@angular/common";
   styleUrl: './card-content.component.scss'
 })
 export class CardContentComponent implements OnChanges  {
-@Input() pairingMode!: string;
-@Input() data!: string;
-@Input() category!: string;
+// @Input() pairingMode!: string;
+// @Input() data!: string;
+// @Input() category!: string;
 @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
+@Input() content!: string;
+@Input() contentMedium!: string;
+@Input() word!: string;
+
+// word: string = '';
+// content: string = '';
+// contentMedium: string = '';
+
 
 playVideo(): void {
   if (this.videoElement) {
@@ -22,7 +35,7 @@ playVideo(): void {
 }
 
 ngOnChanges(changes: SimpleChanges): void {
-  console.log('data in card-content:', this.data);
+  // console.log('data in card-content:', this.data);
 
 }
 

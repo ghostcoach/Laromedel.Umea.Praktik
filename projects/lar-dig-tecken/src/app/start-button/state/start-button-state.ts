@@ -1,4 +1,4 @@
-import { Action, State, StateContext, StateToken } from '@ngxs/store'
+import { Action, State, StateContext, StateToken, Selector } from '@ngxs/store'
 import { Injectable } from '@angular/core'
 import { IStartButtonStateModel } from './api/start-button-state-model'
 import { UpdateStartButtonState } from './start-button-actions'
@@ -11,7 +11,7 @@ const stateToken: StateToken<IStartButtonStateModel> = new StateToken<IStartButt
     name: stateToken,
     defaults: {
         startBtnActive: true
-    },
+    }
 })
 
 @Injectable()
@@ -24,4 +24,9 @@ export class StartButtonState {
                 startBtnActive: action.payload
             });
       }
+
+    @Selector()
+    static getStartButtonMode(state: IStartButtonStateModel): boolean {
+        return state.startBtnActive;
+    }
 }

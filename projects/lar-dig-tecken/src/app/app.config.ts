@@ -11,6 +11,7 @@ import { GameSettingsState } from '../app/settings/state/game-settings-state'
 import { StartButtonState } from "./start-button/state/start-button-state";
 // import { CardState } from "./card/state/card-state";
 import { CardStates } from "./card/state/card.state";
+import { FlippedState } from "./card/state/flipped.state";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,7 +22,8 @@ export const appConfig: ApplicationConfig = {
         GameSettingsState,
         StartButtonState,
         // CardState,
-        CardStates
+        CardStates,
+        FlippedState,
       ], {
         developmentMode: !environment.production,
       }),

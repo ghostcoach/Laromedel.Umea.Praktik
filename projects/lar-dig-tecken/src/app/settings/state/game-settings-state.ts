@@ -47,6 +47,11 @@ export class GameSettingsState {
         return state.pairingMode.second;
     }
 
+    @Selector()
+    static getNumberOfRounds(state: IGameSettingStateModel): number {
+        return state.numberOfRounds;
+    }
+
 
     @Action(UpdateFirstPairingMode)
     updateFirstPairingMode(ctx: StateContext<IGameSettingStateModel>, action: UpdateFirstPairingMode):void {
