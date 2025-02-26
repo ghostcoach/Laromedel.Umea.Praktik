@@ -2,27 +2,23 @@ import { Injectable, OnDestroy, Output } from '@angular/core';
 import { dispatch, Select, Store } from '@ngxs/store';
 import { Observable, combineLatest, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
-import { AudioService } from '../../services/audio/audio.service';
 
-import { StartButtonStateQueries } from '../../start-button/state/start-button-queries';
+import { BildbegreppWords } from '../../category/api/bildbegrepp';
+
+import { AudioService } from '../../services/audio/audio.service';
+import { CardUtilsService } from '../../card/service/card-utils.service';
+
+import { GameSettingsState } from '../../settings/state/game-settings-state';
+import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
 import { StartButtonState } from '../../start-button/state/start-button-state';
 import { UpdateStartButtonState } from '../../start-button/state/start-button-actions';
 
 import { CardStates } from '../../card/state/card.state';
-import { UpdateAllCards, UpdateCard, UpdateFlippedClass } from '../../card/state/card.actions';
-import { CardStateQueries } from '../../card/state/card.queries';
+import { InitializeCardStates, UpdateCard } from '../../card/state/card.actions';
 import { ICardFullStateModel } from '../../card/state/api/card-interface';
-import { CardUtilsService } from '../../card/service/card-utils.service';
-import { InitializeCardStates } from '../../card/state/card.actions';
-
-import { GameSettingsState } from '../../settings/state/game-settings-state';
-import { BildbegreppWords } from '../../category/api/bildbegrepp';
-import { BehaviorSubject } from 'rxjs';
 
 import { UpdateFlippedState} from '../../card/state/flipped.actions';
-import { FlippedState } from '../../card/state/flipped.state';
-import { set } from 'ramda';
+
 
 
 @Injectable({
@@ -128,7 +124,6 @@ export class SlumpgeneratorService implements OnDestroy {
         takeUntil(this.destroy$) // Automatically unsubscribe on service destruction
       )
       .subscribe(([numberOfOptions, numberOfRounds, category, pairingModeFirst, pairingModeSecond]) => {
-        console.log('game settings changed');
         
         if (!this.startBtnActive) {
           this.gameStarted = false;
