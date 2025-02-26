@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { Observable, combineLatest, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
-import { ICardFullStateModel, IMultipleFullStateModel } from '../state/api/card-interface';
-import { UpdateAllCards } from '../state/card.actions';
-import { BildbegreppWords } from '../../category/api/bildbegrepp';
-import { CardStateQueries } from '../state/card.queries';
+import { Observable, combineLatest } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { GameSettingsState } from '../../settings/state/game-settings-state';
+import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
+import { ICardFullStateModel } from '../state/api/card-interface';
+import { CardStateQueries } from '../state/card.queries';
+import { BildbegreppWords } from '../../category/api/bildbegrepp';
 
 @Injectable({
   providedIn: 'root'
@@ -71,35 +68,6 @@ export class CardUtilsService {
       .map(({ value }) => value);
   }
 
-  // Function to shuffle words and flip back
-  shuffleWordsAndFlipBack(category: string, numberOfOptions: number): void {
-
-    // //1. Initialize new words
-    // this.initializeWords(category, numberOfOptions);
-
-    // // 2. First update: Set the new words
-    // const currentCards = this.store.selectSnapshot(CardStateQueries.cardStates$);
-    // const updatedCardsWithWords = currentCards.map((card, index) => ({
-    //   ...card,
-    //   content: words[index] || card.content, // Update content safely
-    // }));
-
-    // this.store.dispatch(new UpdateAllCards(updatedCardsWithWords));
-    
-    // // 3. Second update: Set flippedClass to "not-flipped" after a delay
-    // setTimeout(() => {
-    //   const updatedCardsWithFlippedClass = this.store
-    //     .selectSnapshot(CardStateQueries.cardStates$)
-    //     .map(card => ({
-    //       ...card,
-    //       flippedClass: "not-flipped",
-    //     }));
-
-    //   this.store.dispatch(new UpdateAllCards(updatedCardsWithFlippedClass));
-    // }, 500); // Adjust delay as needed
-      
-  }
-
   // Function to initialize words and set initial card states
   initializeCardStates(
     category: string, 
@@ -116,7 +84,7 @@ export class CardUtilsService {
     const wordToDuplicate: string = selectedWords[Math.floor(Math.random() * selectedWords.length)];
 
     // Step 3: Shuffle the selected words
-    const shuffledSelectedWords = this.shuffleArray(selectedWords);
+    const shuffledSelectedWords: string[] = this.shuffleArray(selectedWords);
 
     // Step 4: Insert the duplicate at index 0
     this.shuffledWords = [wordToDuplicate, ...shuffledSelectedWords];

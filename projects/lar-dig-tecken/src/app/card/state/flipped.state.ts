@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IFlippedStateModel } from './api/card-interface';
-import { Action, State, StateContext, Store, NgxsOnInit, Selector, StateToken } from '@ngxs/store'
+import { Action, State, StateContext, Store, Selector, StateToken } from '@ngxs/store'
 import { UpdateFlippedState } from './flipped.actions';
 
 

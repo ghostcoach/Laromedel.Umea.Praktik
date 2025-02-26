@@ -1,13 +1,12 @@
-import { Action, State, StateContext, Store, NgxsOnInit, Selector } from '@ngxs/store'
+import { Observable } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { Action, State, StateContext, Store, NgxsOnInit, Selector, Select, Actions } from '@ngxs/store'
+import { Injectable } from '@angular/core';
 import { IMultipleFullStateModel, ICardFullStateModel } from './api/card-interface'
 import { UpdateAllCards, UpdateCard, InitializeCardStates, UpdateFlippedClass } from './card.actions'
 import { GameSettingsState } from '../../settings/state/game-settings-state';
-import { Injectable } from '@angular/core';
 import { CardUtilsService } from '../service/card-utils.service';
-import { Select, Actions, ofActionSuccessful } from '@ngxs/store';
 import { BildbegreppWords } from '../../category/api/bildbegrepp';
-import { Observable } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
 
 @Injectable()
 @State<IMultipleFullStateModel>({
@@ -27,7 +26,7 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
     @Select(GameSettingsState.getSecondPairingMode) pairingModeSecond$!: Observable<string>;
 
     // NGXS lifecycle method - runs once when state initializes
-    ngxsOnInit(ctx: StateContext<IMultipleFullStateModel>) {
+    ngxsOnInit(ctx: StateContext<IMultipleFullStateModel>):void {
         this.initializeCardStates(ctx);
 
           // **Subscribe to settings changes and reinitialize cards**
@@ -46,14 +45,14 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 
     /** Initialize card states dynamically */
     private initializeCardStates(ctx: StateContext<IMultipleFullStateModel>): void {
-        const numberOfOptions = this.store.selectSnapshot(GameSettingsState.getNumberOfOptions);
-        const category = this.store.selectSnapshot(GameSettingsState.getCategory);
-        const words = Object.values(BildbegreppWords); // Fetch words dynamically
-        const pairingModeFirst = this.store.selectSnapshot(GameSettingsState.getFirstPairingMode);
-        const pairingModeSecond = this.store.selectSnapshot(GameSettingsState.getSecondPairingMode);
+        const numberOfOptions: number = this.store.selectSnapshot(GameSettingsState.getNumberOfOptions);
+        const category: string = this.store.selectSnapshot(GameSettingsState.getCategory);
+        const words: string[] = Object.values(BildbegreppWords); // Fetch words dynamically
+        const pairingModeFirst: string = this.store.selectSnapshot(GameSettingsState.getFirstPairingMode);
+        const pairingModeSecond: string = this.store.selectSnapshot(GameSettingsState.getSecondPairingMode);
 
         // Generate initial card states using the utility service
-        const initialCards = this.cardUtils.initializeCardStates(
+        const initialCards: ICardFullStateModel[] = this.cardUtils.initializeCardStates(
             category, 
             numberOfOptions, 
             words,
@@ -93,7 +92,7 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
     /** Update a specific card by index */
     @Action(UpdateCard)
     updateCard(ctx: StateContext<IMultipleFullStateModel>, action: UpdateCard): void {
-        const currentCards = [...ctx.getState().cardStates];
+        const currentCards: ICardFullStateModel[] = [...ctx.getState().cardStates];
 
         if (action.index < 0 || action.index >= currentCards.length) return;
 
@@ -103,8 +102,8 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 
     @Action(UpdateFlippedClass)
     updateFlippedClass(ctx: StateContext<IMultipleFullStateModel>, action: UpdateFlippedClass): void {
-        const currentCards = ctx.getState().cardStates;
-        const updatedCards = currentCards.map((card) => {
+        const currentCards: ICardFullStateModel[] = ctx.getState().cardStates;
+        const updatedCards: ICardFullStateModel[] = currentCards.map((card) => {
             return { ...card, flippedClass: action.payload }; // Update flippedClass for all cards
         });
         ctx.patchState({ cardStates: updatedCards });
