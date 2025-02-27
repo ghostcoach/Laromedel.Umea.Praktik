@@ -1,4 +1,3 @@
-import { IFile } from './file'
 
 export enum BildbegreppWords {
     BLA = 'blå',
@@ -20,9 +19,3 @@ export enum BildbegreppWords {
     TEJP = 'tejp',
     VATTENFARG = 'vattenfärg'
 }
-
-export interface IBildbegrepp {
-    word: BildbegreppWords,
-    file: IFile
-}
-

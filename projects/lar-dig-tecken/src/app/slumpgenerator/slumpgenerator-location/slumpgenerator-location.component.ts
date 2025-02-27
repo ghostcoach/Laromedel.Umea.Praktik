@@ -9,7 +9,6 @@ import { CardComponent } from '../../card/card.component';
 import { RoundsComponent } from '../../rounds/rounds.component';
 import { GameOverComponent } from '../../game-over/game-over.component';
 
-import { StartButtonStateQueries } from '../../start-button/state/start-button-queries';
 import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
 import { SlumpgeneratorService } from '../services/slumpgenerator.service';
 import { ICardFullStateModel } from '../../card/state/api/card-interface';
@@ -31,7 +30,6 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   @Select(GameSettingsStateQueries.numberOfOptions$) numberOfOptions$!:Observable<number>
   @Select(GameSettingsStateQueries.numberOfRounds$) numberOfRounds$!:Observable<number>
   @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
-  @Select(StartButtonStateQueries.startBtnActive$) startBtnActive$!: Observable<boolean>;
   @Select(CardStates.getCardStates) cardStates$!: Observable<ICardFullStateModel[]>;
   @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
 

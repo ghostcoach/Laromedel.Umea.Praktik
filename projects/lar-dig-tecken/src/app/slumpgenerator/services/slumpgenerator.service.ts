@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { Observable, combineLatest, Subject } from 'rxjs';
+import { Observable, combineLatest, Subject, BehaviorSubject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { BildbegreppWords } from '../../category/api/bildbegrepp';
@@ -10,8 +10,6 @@ import { CardUtilsService } from '../../card/service/card-utils.service';
 
 import { GameSettingsState } from '../../settings/state/game-settings-state';
 import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
-import { StartButtonState } from '../../start-button/state/start-button-state';
-import { UpdateStartButtonState } from '../../start-button/state/start-button-actions';
 
 import { CardStates } from '../../card/state/card.state';
 import { InitializeCardStates, UpdateCard } from '../../card/state/card.actions';
@@ -19,6 +17,7 @@ import { ICardFullStateModel } from '../../card/state/api/card-interface';
 
 import { UpdateFlippedState} from '../../card/state/flipped.actions';
 import { UpdateGameState } from '../../game-state/state/game.actions';
+import { GameState } from '../../game-state/state/game.state';
 
 
 @Injectable({
@@ -31,10 +30,12 @@ export class SlumpgeneratorService implements OnDestroy {
   @Select(GameSettingsStateQueries.numberOfRounds$) numberOfRounds$!:Observable<number>
   @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
   @Select(CardStates.getCardStates) cardStates$!: Observable<ICardFullStateModel[]>;
-  
-  private destroy$ = new Subject<void>();
+  @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
 
-  gameStarted = false;
+  private destroy$ = new Subject<void>();
+  private gameStartedSubject = new BehaviorSubject<boolean>(false);
+  gameStarted = this.gameStartedSubject.asObservable();
+
   currentRound = 0;
   maxRounds = 0;
   gameOver = false;
@@ -47,12 +48,8 @@ export class SlumpgeneratorService implements OnDestroy {
   ) {
       this.maxRounds = this.store.selectSnapshot(GameSettingsState.getNumberOfRounds);
       this.initializeGameOnSettingsChange();
-
-       // Subscribe to startBtnActive updates
-      this.store.select(StartButtonState.getStartButtonMode).pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(value => {
-        this.startBtnActive = value;  // Keep this up-to-date
+      this.gameStarted$.subscribe((value) => {
+        this.gameStartedSubject.next(value); // Update whenever state changes
       });
       
   }
@@ -62,12 +59,8 @@ export class SlumpgeneratorService implements OnDestroy {
 
   // Function to start the game
   startGame(): void {
-    console.log('game started');
-    
-    this.gameStarted = true;
     this.store.dispatch(new UpdateGameState(true));
     this.currentRound = 0;
-    this.store.dispatch(new UpdateStartButtonState(false));
     this.gameOver = false;
 
     setTimeout(() => {
@@ -114,7 +107,7 @@ export class SlumpgeneratorService implements OnDestroy {
     setTimeout(() => {
       this.store.dispatch(new UpdateFlippedState({ flippedClass: 'not-flipped' }));
     }
-    , 1500);
+    , 1200);
 
   }
 
@@ -126,8 +119,7 @@ export class SlumpgeneratorService implements OnDestroy {
       )
       .subscribe(([numberOfRounds]) => {
         
-        if (!this.startBtnActive) {
-          this.gameStarted = false;
+        if (this.gameStartedSubject.value) {
           this.store.dispatch(new UpdateGameState(false));
           this.currentRound = 0;
           this.maxRounds = numberOfRounds;
@@ -140,7 +132,8 @@ export class SlumpgeneratorService implements OnDestroy {
 
   // Method to handle card clicks
   onCardClicked(content: string, index: number): void {
-  
+    if (!this.gameStartedSubject.value) return;
+
     // Get the selected word
     const selectedWord: string = content;
     
@@ -169,10 +162,7 @@ export class SlumpgeneratorService implements OnDestroy {
             this.gameOver = true;   
 
             setTimeout(() => {
-              // this.updateAllCardFlippedClass('flipped');
               this.store.dispatch(new UpdateFlippedState({ flippedClass: 'flipped' }));
-
-              // this.store.dispatch(new UpdateAllCards(cardsDown));
             }, 1000);
 
             setTimeout(() => {
@@ -183,7 +173,7 @@ export class SlumpgeneratorService implements OnDestroy {
             // Keep gameOver true for 8 seconds, then reset it
             setTimeout(() => {
               this.gameOver = false;
-              this.store.dispatch(new UpdateStartButtonState(true));
+              this.store.dispatch(new UpdateGameState(false));
               this.currentRound = 0;
 
             }, 7900);

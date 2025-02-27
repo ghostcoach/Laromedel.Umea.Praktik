@@ -1,0 +1,17 @@
+export enum Skolord {
+    DATOR = 'dator',
+    IDROTTSHALL = 'idrottshall',
+    LAROBOK = 'lärobok',
+    MATSAL = 'matsal',
+    PENNA = 'penna',
+    RAST = 'rast',
+    SCHEMA = 'schema',
+    SKOLBANK = 'skolbänk',
+    SKOLGARD = 'skolgård',
+    SKRIVBOK = 'skrivbok',
+    SUDDGUMMI = 'suddgummi',
+    SURFPLATTA = 'surfplatta',
+    TEXTILSLÖJD = 'textilslöjd',
+    TRASLOJD = 'traslöjd',
+    WHITEBOARD = 'whiteboard',
+}

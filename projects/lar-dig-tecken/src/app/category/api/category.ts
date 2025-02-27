@@ -21,3 +21,21 @@ export enum Category{
   ANTAL = 'antal',
   LAGESORD = 'lägesord',
 }
+
+export enum SubjectArea {
+  ESTETISK_VERKSAMHET = 'estetisk verksamhet',
+  KOMMUNIKATION = 'kommunikation',
+  MOTORIK = 'motorik',
+  VARDAGSAKTIVITET = 'vardagsaktivitet',
+  VERKLIGHETSUPPFATTNING = 'verklighetsuppfattning'
+}
+
+export interface ISubjectArea {
+  subjectArea: SubjectArea,
+  categories: ICategory[]
+}
+
+export interface ICategory {
+  category: Category,
+  words: string[]
+}
