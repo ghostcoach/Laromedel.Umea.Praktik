@@ -14,7 +14,8 @@ import { GameSettingsStateQueries } from '../../settings/state/game-settings-que
 import { SlumpgeneratorService } from '../services/slumpgenerator.service';
 import { ICardFullStateModel } from '../../card/state/api/card-interface';
 import { CardStates } from '../../card/state/card.state';
-
+import { GameState } from '../../game-state/state/game.state';
+import { IGameStateModel } from '../../game-state/state/api/game-state-model';
 
 @Component({
   selector: 'app-slumpgenerator-location',
@@ -33,6 +34,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
   @Select(StartButtonStateQueries.startBtnActive$) startBtnActive$!: Observable<boolean>;
   @Select(CardStates.getCardStates) cardStates$!: Observable<ICardFullStateModel[]>;
+  @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
 
   firstCardState: ICardFullStateModel[] = [];
   secondCardState: ICardFullStateModel[] = [];

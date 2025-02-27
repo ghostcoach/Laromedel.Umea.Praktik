@@ -21,26 +21,13 @@
                             <app-card
                                 class="w-fit"
                                 [ngClass]="{'cursor-pointer' : slumpgeneratorService.gameStarted}"
-                                [gameStarted]="slumpgeneratorService.gameStarted"
+                               
                                 [cardData]="card"
                                
                             ></app-card>
                         </li>
                     </ng-container>
                 </ng-container>
-                <!-- <ng-container *ngIf="pairingModeFirst$ | async as pairingModeFirst">
-                    <ng-container  *ngIf="category$ | async as category">
-                        <li>
-                        <app-card 
-                        [pairingMode]="pairingModeFirst" 
-                        [dynamicClass]="getDynamicClass(pairingModeFirst, 0)"
-                        
-                        [gameStarted]="gameStarted"
-                        ></app-card>
-                    </li>
-                    </ng-container>
-                    
-                </ng-container> -->
                 <app-start-button 
                     [onClick]="slumpgeneratorService.startGame.bind(this)"
                     [tabindex]="!slumpgeneratorService.gameStarted ? '2' : '-1'"
@@ -55,36 +42,14 @@
                                 class="w-fit"
                                 [ngClass]="{'cursor-pointer' : slumpgeneratorService.gameStarted}"
                                 (cardClick)="slumpgeneratorService.onCardClicked($event, idx + 1)"
-                                [gameStarted]="slumpgeneratorService.gameStarted"
+                                
                                 [cardData]="card"
-                               
                             ></app-card>
                         </li>
                     </ng-container>
                 </ng-container>
-                
-                <!-- <ng-container *ngIf="pairingModeSecond$ | async as pairingModeSecond">
-                    <ng-container *ngIf="category$ | async as category">
-                        <ng-container *ngIf="numberOfOptions$ | async as numberOfOptions">
-                            <ng-container *ngFor="let i of getNumberArray(numberOfOptions); let idx = index">
-                                <li>
-                                <app-card
-                                    class="w-fit"
-                                    [ngClass]="{'cursor-pointer' : gameStarted}"
-                                    
-                                    [pairingMode]="pairingModeSecond"
-                                    (cardClick)="onCardClicked($event, idx + 1)"
-                                    [dynamicClass]="getDynamicClass(pairingModeSecond, idx + 1)"
-                                    
-                                    [gameStarted]="gameStarted"
-                                    >
-                                    </app-card>
-                                </li>
-                            </ng-container>
-                        </ng-container>
-                    </ng-container>
-                </ng-container> -->
             </ul>
+
     </section>
 
     <ng-container *ngIf="slumpgeneratorService.gameOver">

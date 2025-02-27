@@ -9,9 +9,9 @@ import { provideAnimations } from "@angular/platform-browser/animations";
 
 import { GameSettingsState } from '../app/settings/state/game-settings-state'
 import { StartButtonState } from "./start-button/state/start-button-state";
-// import { CardState } from "./card/state/card-state";
 import { CardStates } from "./card/state/card.state";
 import { FlippedState } from "./card/state/flipped.state";
+import { GameState } from "./game-state/state/game.state";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +24,7 @@ export const appConfig: ApplicationConfig = {
         // CardState,
         CardStates,
         FlippedState,
+        GameState
       ], {
         developmentMode: !environment.production,
       }),

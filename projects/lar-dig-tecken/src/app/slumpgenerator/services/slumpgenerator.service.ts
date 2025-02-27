@@ -18,7 +18,7 @@ import { InitializeCardStates, UpdateCard } from '../../card/state/card.actions'
 import { ICardFullStateModel } from '../../card/state/api/card-interface';
 
 import { UpdateFlippedState} from '../../card/state/flipped.actions';
-
+import { UpdateGameState } from '../../game-state/state/game.actions';
 
 
 @Injectable({
@@ -65,6 +65,7 @@ export class SlumpgeneratorService implements OnDestroy {
     console.log('game started');
     
     this.gameStarted = true;
+    this.store.dispatch(new UpdateGameState(true));
     this.currentRound = 0;
     this.store.dispatch(new UpdateStartButtonState(false));
     this.gameOver = false;
@@ -127,6 +128,7 @@ export class SlumpgeneratorService implements OnDestroy {
         
         if (!this.startBtnActive) {
           this.gameStarted = false;
+          this.store.dispatch(new UpdateGameState(false));
           this.currentRound = 0;
           this.maxRounds = numberOfRounds;
           this.reinitializeAndFlipBack();

@@ -29,7 +29,7 @@
                 <button 
                     class="z-30 absolute bottom-0 right-0 rounded-md border-transparent border-solid border-4 p-1 m-2 hover:border-blue-500"
                     (click)="videoOrSound()"
-                    [tabindex]="gameStarted === true ? '0' : '-1'"
+                    [tabindex]="(gameStarted$ | async) ? '0' : '-1'"
                     >
                     <img [src]="imgSrc" alt="" >
                 </button>

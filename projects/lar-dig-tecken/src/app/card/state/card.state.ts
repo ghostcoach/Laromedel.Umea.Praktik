@@ -15,7 +15,7 @@ import { BildbegreppWords } from '../../category/api/bildbegrepp';
       cardStates: [],
     },
   })
-  export class CardStates implements NgxsOnInit {
+export class CardStates implements NgxsOnInit {
 
     constructor(private store: Store, private cardUtils: CardUtilsService, private actions$: Actions) {}
 
@@ -109,4 +109,4 @@ import { BildbegreppWords } from '../../category/api/bildbegrepp';
         ctx.patchState({ cardStates: updatedCards });
     }
   
-    }
+}

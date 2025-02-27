@@ -3,21 +3,28 @@ import { Select, Store } from '@ngxs/store';
 import { Observable, combineLatest } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
+import { GameSettingsState } from '../../settings/state/game-settings-state';
 import { ICardFullStateModel } from '../state/api/card-interface';
 import { CardStateQueries } from '../state/card.queries';
 import { BildbegreppWords } from '../../category/api/bildbegrepp';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CardUtilsService {
-  @Select(GameSettingsStateQueries.pairingModeFirstCard$) pairingModeFirst$!: Observable<string>;
-  @Select(GameSettingsStateQueries.pairingModeSecondCard$) pairingModeSecond$!: Observable<string>;
-  @Select(GameSettingsStateQueries.numberOfOptions$) numberOfOptions$!:Observable<number>
-  @Select(GameSettingsStateQueries.numberOfRounds$) numberOfRounds$!:Observable<number>
-  @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
+  // @Select(GameSettingsStateQueries.pairingModeFirstCard$) pairingModeFirst$!: Observable<string>;
+  // @Select(GameSettingsStateQueries.pairingModeSecondCard$) pairingModeSecond$!: Observable<string>;
+  // @Select(GameSettingsStateQueries.numberOfOptions$) numberOfOptions$!:Observable<number>
+  // @Select(GameSettingsStateQueries.numberOfRounds$) numberOfRounds$!:Observable<number>
+  // @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
+  @Select(GameSettingsState.getNumberOfOptions) numberOfOptions$!: Observable<number>;
+  @Select(GameSettingsState.getCategory) category$!: Observable<string>;
+  @Select(GameSettingsState.getFirstPairingMode) pairingModeFirst$!: Observable<string>;
+  @Select(GameSettingsState.getSecondPairingMode) pairingModeSecond$!: Observable<string>;
+  @Select(GameSettingsState.getNumberOfRounds) numberOfRounds$!: Observable<number>;
   @Select(CardStateQueries.cardStates$) cardStates$!: Observable<ICardFullStateModel[]>;
-
+  
   shuffledWords: string[] = [];
   updatedCards: ICardFullStateModel[] = [];
   currentRound = 0;

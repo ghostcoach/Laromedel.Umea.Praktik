@@ -6,6 +6,7 @@ import { CardContentComponent } from './card-content/card-content.component';
 import { GameSettingsStateQueries } from '../settings/state/game-settings-queries';
 import { ICardFullStateModel  } from './state/api/card-interface';
 import { FlippedState } from './state/flipped.state';
+import { GameState } from '../game-state/state/game.state';
 
 @Component({
   selector: 'app-card',
@@ -21,11 +22,13 @@ export class CardComponent implements DoCheck {
   @ViewChild(CardContentComponent) cardContent!: CardContentComponent;
   @Select(GameSettingsStateQueries.pairingModeFirstCard$) pairingModeFirst$!: Observable<string>;
 
-  @Input() gameStarted!: boolean;
+  // @Input() gameStarted!: Observable<boolean>;
   @Input() cardData!: ICardFullStateModel;
   @ViewChildren('cardElement') cardElement!: QueryList<ElementRef>;
   @ViewChildren(CardContentComponent) cardContentComponent!: QueryList<CardContentComponent>;
   @Select(FlippedState.getFlippedClass) flippedClass$!: Observable<'flipped' | 'not-flipped'>;
+  @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
+
 
   mode = '';
   audioPath = '';

@@ -81,8 +81,6 @@ export class GameSettingsState {
         {patchState}: StateContext<IGameSettingStateModel>,
         {category}: UpdateCategory
     ) : void {
-
-        //Lägg till funktionell kod här
         patchState({category: category})
     }
 
@@ -91,8 +89,6 @@ export class GameSettingsState {
         {patchState}: StateContext<IGameSettingStateModel>,
         {useAllCategories}: UseAllCategories
     ) : void {
-
-        //Lägg till funktionell kod här
         patchState({category: useAllCategories})
     }
 
@@ -101,8 +97,6 @@ export class GameSettingsState {
         {patchState}: StateContext<IGameSettingStateModel>,
         {numberOfOptions}: UpdateNumberOfOptions
     ) : void {
-
-        //Lägg till funktionell kod här
         patchState({numberOfOptions: numberOfOptions})
     }
 
@@ -111,8 +105,6 @@ export class GameSettingsState {
         {patchState}: StateContext<IGameSettingStateModel>,
         {numberOfRounds}: UpdateNumberOfRounds
     ) : void {
-
-        //Lägg till funktionell kod här
         patchState({numberOfRounds: numberOfRounds})
     }
 }
