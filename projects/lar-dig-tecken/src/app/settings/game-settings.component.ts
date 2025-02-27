@@ -20,6 +20,7 @@ import { Category, SubjectArea } from "../category/api/category"
 export class GameSettingsComponent {
   @Input() gameSettings: IGameSettingStateModel;
   @Output() settingSelected = new EventEmitter<string>();
+  SubjectArea = SubjectArea;
   
   public firstCardOptions: CardContent[] = [
     CardContent.ILLUSTRATION,
@@ -253,9 +254,11 @@ export class GameSettingsComponent {
     this.store.dispatch(new UpdateSubjectArea(option));
   }
 
-  updateCategory(option: Category): void {
+  updateCategory(option: Category, subjectArea: SubjectArea): void {
     this.store.dispatch(new UpdateCategory(option));
+    this.store.dispatch(new UpdateSubjectArea(subjectArea));
     console.log('category', option);
+    console.log('subjectArea', subjectArea);
     
   }
 

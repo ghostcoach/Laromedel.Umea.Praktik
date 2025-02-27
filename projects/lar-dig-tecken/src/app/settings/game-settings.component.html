@@ -150,8 +150,8 @@
                 >
                   <li *ngFor="let option of estetiskVerksamhetOptions"
                     tabindex="0"
-                    (click)="updateCategory(option)"
-                    (keydown.enter)="updateCategory(option)"
+                    (click)="updateCategory(option, SubjectArea.ESTETISK_VERKSAMHET)"
+                    (keydown.enter)="updateCategory(option, SubjectArea.ESTETISK_VERKSAMHET)"
                     [class.selected]="option === (category$ | async)"
                     class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
                   >
@@ -179,8 +179,8 @@
                 >
                   <li *ngFor="let option of kommunikationOptions"
                     tabindex="0"
-                    (click)="updateCategory(option)"
-                    (keydown.enter)="updateCategory(option)"
+                    (click)="updateCategory(option, SubjectArea.KOMMUNIKATION)"
+                    (keydown.enter)="updateCategory(option, SubjectArea.KOMMUNIKATION)"
                     [class.selected]="option === (category$ | async)"
                     class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
                   >
@@ -208,8 +208,8 @@
                 >
                   <li *ngFor="let option of motorikOptions"
                     tabindex="0"
-                    (click)="updateCategory(option)"
-                    (keydown.enter)="updateCategory(option)"
+                    (click)="updateCategory(option, SubjectArea.MOTORIK)"
+                    (keydown.enter)="updateCategory(option, SubjectArea.MOTORIK)"
                     [class.selected]="option === (category$ | async)"
                     class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
                   >
@@ -237,8 +237,8 @@
                  >
                    <li *ngFor="let option of vardagsaktivitetOptions"
                      tabindex="0"
-                     (click)="updateCategory(option)"
-                     (keydown.enter)="updateCategory(option)"
+                     (click)="updateCategory(option, SubjectArea.VARDAGSAKTIVITET)"
+                     (keydown.enter)="updateCategory(option, SubjectArea.VARDAGSAKTIVITET)"
                      [class.selected]="option === (category$ | async)"
                      class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
                    >
@@ -267,8 +267,8 @@
                  >
                    <li *ngFor="let option of verklighetsuppfattningOptions"
                      tabindex="0"
-                     (click)="updateCategory(option)"
-                     (keydown.enter)="updateCategory(option)"
+                     (click)="updateCategory(option, SubjectArea.VERKLIGHETSUPPFATTNING)"
+                     (keydown.enter)="updateCategory(option, SubjectArea.VERKLIGHETSUPPFATTNING)"
                      [class.selected]="option === (category$ | async)"
                      class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
                    >
@@ -301,8 +301,7 @@
             >
               <li *ngFor="let option of categoryOptions"
                 tabindex="0"
-                (click)="updateCategory(option)"
-                (keydown.enter)="updateCategory(option)"
+              
                 [class.selected]="option === (category$ | async)"
                 class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
               >
