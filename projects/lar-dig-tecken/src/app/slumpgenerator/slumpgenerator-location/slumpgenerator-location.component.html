@@ -19,18 +19,15 @@
                     <ng-container *ngFor="let card of firstCardState; let idx = index">
                         <li>
                             <app-card
-                                class="w-fit"
-                                [ngClass]="{'cursor-pointer' : slumpgeneratorService.gameStarted}"
-                               
+                                class="w-fit cursor-auto"
                                 [cardData]="card"
-                               
                             ></app-card>
                         </li>
                     </ng-container>
                 </ng-container>
                 <app-start-button 
                     [onClick]="slumpgeneratorService.startGame.bind(this)"
-                    [tabindex]="!slumpgeneratorService.gameStarted ? '2' : '-1'"
+                    [tabindex]="(gameStarted$ | async) === false ? '2' : '-1'"
                 ></app-start-button>
             </ul>
 
@@ -40,9 +37,8 @@
                         <li>
                             <app-card
                                 class="w-fit"
-                                [ngClass]="{'cursor-pointer' : slumpgeneratorService.gameStarted}"
+                                [ngClass]="{'cursor-pointer' : (gameStarted$ | async)}"
                                 (cardClick)="slumpgeneratorService.onCardClicked($event, idx + 1)"
-                                
                                 [cardData]="card"
                             ></app-card>
                         </li>

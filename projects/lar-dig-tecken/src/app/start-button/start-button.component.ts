@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { StartButtonStateQueries } from './state/start-button-queries';
+import { GameState } from '../game-state/state/game.state';
 
 
 @Component({
@@ -13,19 +14,8 @@ import { StartButtonStateQueries } from './state/start-button-queries';
   styleUrl: './start-button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartButtonComponent implements OnInit {
+export class StartButtonComponent {
   @Input() onClick: () => void = () => {};
-  @Select(StartButtonStateQueries.startBtnActive$) startBtnActive$!: Observable<boolean>;
-  startBtnActive: boolean = true;
-
-  // onStart(): void{}
-
-  constructor(private store: Store) {}
-
-  ngOnInit(): void {
-    this.startBtnActive$.subscribe(state => {
-      this.startBtnActive = state;
-    });
-  }
+  @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
 
 }

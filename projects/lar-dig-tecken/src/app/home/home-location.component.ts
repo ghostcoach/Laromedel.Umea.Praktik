@@ -7,19 +7,23 @@ import {Category} from '../category/api/category'
 import {RouterOutlet, Router, NavigationEnd, RouterLink} from "@angular/router";
 import {SelectedGameLinkComponent} from  "./selected-game-link/selected-game-link.component";
 import { SelectedGame } from "../selected-game/api/selected-game";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf, CommonModule} from "@angular/common";
 import {filter} from "rxjs/operators"; 
+import { GameState } from "../game-state/state/game.state";
+import { Select } from "@ngxs/store";
+import { Observable } from "rxjs";
 
 
 @UntilDestroy()
 @Component({
-  imports: [GameSettingsComponent, SelectedGameLinkComponent, NgForOf, RouterOutlet, NgIf, RouterLink],
+  imports: [CommonModule, GameSettingsComponent, SelectedGameLinkComponent, NgForOf, RouterOutlet, NgIf, RouterLink],
   standalone: true,
   templateUrl: "./home-location.component.html",
   styleUrl: "./home-location.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeLocationComponent implements OnInit {
+  @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
 
   public selectedGameEnum = SelectedGame;
   currentPath: string = '';

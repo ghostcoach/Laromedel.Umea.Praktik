@@ -1,10 +1,7 @@
-
-
-
 <div class="card-content w-full h-full font-bold text-2xl tracking-wide flex justify-center items-center">
 
     <!-- WORD Mode -->
-    <ng-container *ngIf="contentMedium === 'ord'">
+  <ng-container *ngIf="contentMedium === 'ord'">
     <p class="text-2lg font-bold">{{ word }}</p>
   </ng-container>
 
@@ -24,7 +21,8 @@
         *ngIf="contentMedium === 'tecken-som-stod'" 
         [src]="content" 
         #videoElement
-        class="w-full h-full object-cover"></video>
+        class="w-full h-full object-cover">
+    </video>
   </ng-container>
 
 </div>

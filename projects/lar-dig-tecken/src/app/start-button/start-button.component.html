@@ -1,12 +1,12 @@
 <button 
-    *ngIf="startBtnActive === true"
+    *ngIf="(gameStarted$ | async) === false"
     (click)="onClick()"
     class="bg-green-300 rounded-sm text-xl px-10 py-4 border border-black border-1  tracking-wide font-semibold  hover:bg-green-400 scale-100 hover:scale-95"
 >
         Starta
 </button>
 <button 
-    *ngIf="startBtnActive === false"
+    *ngIf="(gameStarted$ | async) === true"
     class="bg-green-100 scale-95 cursor-not-allowed text-gray-500 rounded-sm text-xl px-10 py-4 border border-black border-1  tracking-wide font-semibold"
 >
         Starta
