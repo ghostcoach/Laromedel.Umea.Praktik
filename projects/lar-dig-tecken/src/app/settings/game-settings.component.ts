@@ -148,6 +148,7 @@ export class GameSettingsComponent {
         this.isCategorySettingsDropdownOpen = false;
         this.isNumberOfRoundsSettingsDropdownOpen = false;
         this.isNumberOfOptionsSettingsDropdownOpen = false;
+        this.isSubjectAreaSettingsDropdownOpen = false;
       }
     } else if (type === 'secondCard') {
       this.isSecondCardSettingsDropdownOpen = !this.isSecondCardSettingsDropdownOpen;
@@ -156,6 +157,7 @@ export class GameSettingsComponent {
         this.isCategorySettingsDropdownOpen = false;
         this.isNumberOfRoundsSettingsDropdownOpen = false;
         this.isNumberOfOptionsSettingsDropdownOpen = false;
+        this.isSubjectAreaSettingsDropdownOpen = false;
       }
     } else if (type === 'category') {
       this.isCategorySettingsDropdownOpen = !this.isCategorySettingsDropdownOpen;
@@ -164,6 +166,7 @@ export class GameSettingsComponent {
         this.isSecondCardSettingsDropdownOpen = false;
         this.isNumberOfRoundsSettingsDropdownOpen = false;
         this.isNumberOfOptionsSettingsDropdownOpen = false;
+        this.isSubjectAreaSettingsDropdownOpen = false;
       }
     } else if (type === 'rounds') {
       this.isNumberOfRoundsSettingsDropdownOpen = !this.isNumberOfRoundsSettingsDropdownOpen;
@@ -172,6 +175,7 @@ export class GameSettingsComponent {
         this.isSecondCardSettingsDropdownOpen = false;
         this.isCategorySettingsDropdownOpen = false;
         this.isNumberOfOptionsSettingsDropdownOpen = false;
+        this.isSubjectAreaSettingsDropdownOpen = false;
       }
     } else if (type === 'options') {
       this.isNumberOfOptionsSettingsDropdownOpen = !this.isNumberOfOptionsSettingsDropdownOpen;
@@ -180,6 +184,7 @@ export class GameSettingsComponent {
         this.isSecondCardSettingsDropdownOpen = false;
         this.isCategorySettingsDropdownOpen = false;
         this.isNumberOfRoundsSettingsDropdownOpen = false;
+        this.isSubjectAreaSettingsDropdownOpen = false;
       }
     } else if (type === 'subjectArea') {
       this.isSubjectAreaSettingsDropdownOpen = !this.isSubjectAreaSettingsDropdownOpen;
@@ -196,14 +201,44 @@ export class GameSettingsComponent {
   toggleSubjectAreaDropdown(type: 'estetisk verksamhet' | 'kommunikation' | 'motorik' | 'vardagsaktivitet' | 'verklighetsuppfattning') : void {
     if (type === 'estetisk verksamhet')
      this.isEstetiskVerksamhetDropdownOpen = !this.isEstetiskVerksamhetDropdownOpen;
+      if(this.isEstetiskVerksamhetDropdownOpen){
+        this.isKommunikationDropdownOpen = false;
+        this.isMotorikDropdownOpen = false;
+        this.isVardagsaktivitetDropdownOpen = false;
+        this.isVerklighetsuppfattningDropdownOpen = false;
+      }
     else if (type === 'kommunikation')
      this.isKommunikationDropdownOpen = !this.isKommunikationDropdownOpen;
+      if(this.isKommunikationDropdownOpen){
+        this.isEstetiskVerksamhetDropdownOpen = false;
+        this.isMotorikDropdownOpen = false;
+        this.isVardagsaktivitetDropdownOpen = false;
+        this.isVerklighetsuppfattningDropdownOpen = false;
+      }
     else if (type === 'motorik')
      this.isMotorikDropdownOpen = !this.isMotorikDropdownOpen;
+      if(this.isMotorikDropdownOpen){
+        this.isEstetiskVerksamhetDropdownOpen = false;
+        this.isKommunikationDropdownOpen = false;
+        this.isVardagsaktivitetDropdownOpen = false;
+        this.isVerklighetsuppfattningDropdownOpen = false;
+      }
     else if (type === 'vardagsaktivitet')
      this.isVardagsaktivitetDropdownOpen = !this.isVardagsaktivitetDropdownOpen;
+      if(this.isVardagsaktivitetDropdownOpen){
+        this.isEstetiskVerksamhetDropdownOpen = false;
+        this.isKommunikationDropdownOpen = false;
+        this.isMotorikDropdownOpen = false;
+        this.isVerklighetsuppfattningDropdownOpen = false;
+      }
     else if (type === 'verklighetsuppfattning')
      this.isVerklighetsuppfattningDropdownOpen = !this.isVerklighetsuppfattningDropdownOpen;
+      if(this.isVerklighetsuppfattningDropdownOpen){
+        this.isEstetiskVerksamhetDropdownOpen = false;
+        this.isKommunikationDropdownOpen = false;
+        this.isMotorikDropdownOpen = false;
+        this.isVardagsaktivitetDropdownOpen = false;
+      }
   }
 
   updateFirstPairingMode(option: CardContent): void {
