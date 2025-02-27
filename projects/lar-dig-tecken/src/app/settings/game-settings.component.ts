@@ -7,7 +7,7 @@ import { Store } from '@ngxs/store';
 import { GameSettingsStateQueries } from '../settings/state/game-settings-queries'
 import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory, UpdateNumberOfOptions, UpdateNumberOfRounds } from '../settings/state/game-settings-actions';
 import { CardContent } from '../../../../games/src/lib/api/card-content'
-import { Category } from "../category/api/category"
+import { Category, SubjectArea } from "../category/api/category"
 
 @UntilDestroy()
 @Component({
@@ -35,6 +35,14 @@ export class GameSettingsComponent {
     CardContent.WORD
   ];
 
+  public subjectAreaOptions: SubjectArea[] = [
+    SubjectArea.ESTETISK_VERKSAMHET,
+    SubjectArea.KOMMUNIKATION,
+    SubjectArea.MOTORIK,
+    SubjectArea.VARDAGSAKTIVITET,
+    SubjectArea.VERKLIGHETSUPPFATTNING
+  ];
+
   public categoryOptions: Category[] = [
     Category.ALLA,
     Category.BILDBEGREPP,
@@ -57,6 +65,8 @@ export class GameSettingsComponent {
     Category.ANTAL,
     Category.LAGESORD
   ];
+
+
 
   public numberOfOptions: number[] = [2, 3, 4];
   public numberOfRounds: number[] = [1, 2, 3, 4, 5];
@@ -91,14 +101,44 @@ export class GameSettingsComponent {
   toggleSettingOptionsDropdown(type: 'firstCard' | 'secondCard' | 'category' | 'rounds' | 'options') : void {
     if (type === 'firstCard'){
       this.isFirstCardSettingsDropdownOpen = !this.isFirstCardSettingsDropdownOpen;
+      if(this.isFirstCardSettingsDropdownOpen){
+        this.isSecondCardSettingsDropdownOpen = false;
+        this.isCategorySettingsDropdownOpen = false;
+        this.isNumberOfRoundsSettingsDropdownOpen = false;
+        this.isNumberOfOptionsSettingsDropdownOpen = false;
+      }
     } else if (type === 'secondCard') {
       this.isSecondCardSettingsDropdownOpen = !this.isSecondCardSettingsDropdownOpen;
+      if(this.isSecondCardSettingsDropdownOpen){
+        this.isFirstCardSettingsDropdownOpen = false;
+        this.isCategorySettingsDropdownOpen = false;
+        this.isNumberOfRoundsSettingsDropdownOpen = false;
+        this.isNumberOfOptionsSettingsDropdownOpen = false;
+      }
     } else if (type === 'category') {
       this.isCategorySettingsDropdownOpen = !this.isCategorySettingsDropdownOpen;
+      if(this.isCategorySettingsDropdownOpen){
+        this.isFirstCardSettingsDropdownOpen = false;
+        this.isSecondCardSettingsDropdownOpen = false;
+        this.isNumberOfRoundsSettingsDropdownOpen = false;
+        this.isNumberOfOptionsSettingsDropdownOpen = false;
+      }
     } else if (type === 'rounds') {
       this.isNumberOfRoundsSettingsDropdownOpen = !this.isNumberOfRoundsSettingsDropdownOpen;
+      if(this.isNumberOfRoundsSettingsDropdownOpen){
+        this.isFirstCardSettingsDropdownOpen = false;
+        this.isSecondCardSettingsDropdownOpen = false;
+        this.isCategorySettingsDropdownOpen = false;
+        this.isNumberOfOptionsSettingsDropdownOpen = false;
+      }
     } else if (type === 'options') {
       this.isNumberOfOptionsSettingsDropdownOpen = !this.isNumberOfOptionsSettingsDropdownOpen;
+      if(this.isNumberOfOptionsSettingsDropdownOpen){
+        this.isFirstCardSettingsDropdownOpen = false;
+        this.isSecondCardSettingsDropdownOpen = false;
+        this.isCategorySettingsDropdownOpen = false;
+        this.isNumberOfRoundsSettingsDropdownOpen = false;
+      }
     }
   }
 
