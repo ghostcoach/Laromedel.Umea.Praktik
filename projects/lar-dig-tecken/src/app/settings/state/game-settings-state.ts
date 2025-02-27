@@ -1,9 +1,9 @@
 import { Action, State, StateContext, StateToken, Selector } from '@ngxs/store'
 import { Injectable } from '@angular/core'
 import { IGameSettingStateModel } from './api/game-settings-state-model'
-import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory, UseAllCategories, UpdateNumberOfOptions, UpdateNumberOfRounds } from './game-settings-actions'
+import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory, UpdateSubjectArea, UseAllCategories, UpdateNumberOfOptions, UpdateNumberOfRounds } from './game-settings-actions'
 import { CardContent } from '../../../../../games/src/lib/api/card-content'
-import { Category } from '../../category/api/category'
+import { Category, SubjectArea } from '../../category/api/category'
 
 const stateToken: StateToken<IGameSettingStateModel> = new StateToken<IGameSettingStateModel>("gameSettingsState")
 
@@ -15,6 +15,7 @@ const stateToken: StateToken<IGameSettingStateModel> = new StateToken<IGameSetti
             first: CardContent.WORD,
             second: CardContent.WORD,
         },
+        subjectArea: SubjectArea.ALLA,
         category: Category.BILDBEGREPP,
         numberOfRounds: 5,
     },
@@ -27,6 +28,11 @@ export class GameSettingsState {
     @Selector()
     static getNumberOfOptions(state: IGameSettingStateModel): number {
         return state.numberOfOptions;
+    }
+
+    @Selector()
+    static getSubjectArea(state: IGameSettingStateModel): SubjectArea {
+        return state.subjectArea;
     }
 
     // Selector to get the category
@@ -75,6 +81,14 @@ export class GameSettingsState {
           }
         });
       }
+
+    @Action(UpdateSubjectArea)
+    public updateSubjectArea(
+        {patchState}: StateContext<IGameSettingStateModel>,
+        {subjectArea}: UpdateSubjectArea
+    ) : void {
+        patchState({subjectArea: subjectArea})
+    }
 
     @Action(UpdateCategory)
     public updateCategory(

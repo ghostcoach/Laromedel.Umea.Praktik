@@ -1,9 +1,10 @@
 import { IPairingMode } from "@games/*"
-import { Category } from "../../../category/api/category"
+import { Category, SubjectArea } from "../../../category/api/category"
 
 export interface IGameSettingStateModel {
     numberOfOptions: number,
     pairingMode: IPairingMode,
+    subjectArea: SubjectArea,
     category: Category,
     numberOfRounds: number
 }

@@ -108,11 +108,181 @@
               </li>
             </ul>
           </section>
-         
+
+          <!-- Ämnesområdeinställningar -->
+          <section 
+          class="border border-1 border-black px-2 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
+          [ngClass]="{'bg-orange-200' : isSubjectAreaSettingsDropdownOpen}"
+          tabindex="2"
+        >
+          <button 
+            (click)="toggleSettingOptionsDropdown('subjectArea')" 
+            class="flex items-center justify-between w-full"
+   
+          >
+            <img src="/assets/layout/icons/category-icon.png" alt="" class="h-8">
+            <h2>Ämnesområde</h2>
+            <img [src]="isSubjectAreaSettingsDropdownOpen ? 'assets/layout/icons/arrow-up.svg' : 'assets/layout/icons/arrow-down.svg'" alt="">
+          </button>
+          <ul 
+            class="flex gap-1 flex-col"
+            *ngIf="isSubjectAreaSettingsDropdownOpen"
+          >
+
+              <!-- Kategoriinställningar -->
+
+              <!-- Estetisk verksamhet -->
+              <section 
+              class="border border-2 border-transparent px-2 py-1 rounded-sm hover:border-orange-400 flex-1 bg-transparent"
+              [ngClass]="{'bg-orange-200' : isEstetiskVerksamhetDropdownOpen}"
+              tabindex="2"
+              >
+                <button 
+                  (click)="toggleSubjectAreaDropdown('estetisk verksamhet')" 
+                  class="flex items-center justify-between w-full"
+                >
+                  <h2>Estetisk verksamhet</h2>
+                  <img [src]="isEstetiskVerksamhetDropdownOpen ? 'assets/layout/icons/arrow-up.svg' : 'assets/layout/icons/arrow-down.svg'" alt="">
+                </button>
+                <ul 
+                  class="flex gap-1 flex-col"
+                  *ngIf="isEstetiskVerksamhetDropdownOpen"
+                >
+                  <li *ngFor="let option of estetiskVerksamhetOptions"
+                    tabindex="0"
+                    (click)="updateCategory(option)"
+                    (keydown.enter)="updateCategory(option)"
+                    [class.selected]="option === (category$ | async)"
+                    class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
+                  >
+                    {{option}}
+                  </li>
+                </ul>
+              </section>
+
+              <!-- Kommunikation -->
+              <section 
+              class="border border-2 border-transparent px-2 py-1 rounded-sm hover:border-orange-400 flex-1 bg-transparent"
+              [ngClass]="{'bg-orange-200' : isKommunikationDropdownOpen}"
+              tabindex="2"
+              >
+                <button 
+                  (click)="toggleSubjectAreaDropdown('kommunikation')" 
+                  class="flex items-center justify-between w-full"
+                >
+                  <h2>Kommunikation</h2>
+                  <img [src]="isKommunikationDropdownOpen ? 'assets/layout/icons/arrow-up.svg' : 'assets/layout/icons/arrow-down.svg'" alt="">
+                </button>
+                <ul 
+                  class="flex gap-1 flex-col"
+                  *ngIf="isKommunikationDropdownOpen"
+                >
+                  <li *ngFor="let option of kommunikationOptions"
+                    tabindex="0"
+                    (click)="updateCategory(option)"
+                    (keydown.enter)="updateCategory(option)"
+                    [class.selected]="option === (category$ | async)"
+                    class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
+                  >
+                    {{option}}
+                  </li>
+                </ul>
+              </section>
+
+              <!-- Motorik -->
+              <section 
+              class="border border-2 border-transparent px-2 py-1 rounded-sm hover:border-orange-400 flex-1 bg-transparent"
+              [ngClass]="{'bg-orange-200' : isMotorikDropdownOpen}"
+              tabindex="2"
+              >
+                <button 
+                  (click)="toggleSubjectAreaDropdown('motorik')" 
+                  class="flex items-center justify-between w-full"
+                >
+                  <h2>Motorik</h2>
+                  <img [src]="isMotorikDropdownOpen ? 'assets/layout/icons/arrow-up.svg' : 'assets/layout/icons/arrow-down.svg'" alt="">
+                </button>
+                <ul 
+                  class="flex gap-1 flex-col"
+                  *ngIf="isMotorikDropdownOpen"
+                >
+                  <li *ngFor="let option of motorikOptions"
+                    tabindex="0"
+                    (click)="updateCategory(option)"
+                    (keydown.enter)="updateCategory(option)"
+                    [class.selected]="option === (category$ | async)"
+                    class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
+                  >
+                    {{option}}
+                  </li>
+                </ul>
+              </section>
+
+               <!-- Vardagsaktivitet -->
+               <section 
+               class="border border-2 border-transparent px-2 py-1 rounded-sm hover:border-orange-400 flex-1 bg-transparent"
+               [ngClass]="{'bg-orange-200' : isVardagsaktivitetDropdownOpen}"
+               tabindex="2"
+               >
+                 <button 
+                   (click)="toggleSubjectAreaDropdown('vardagsaktivitet')" 
+                   class="flex items-center justify-between w-full"
+                 >
+                   <h2>Vardagsaktivitet</h2>
+                   <img [src]="isVardagsaktivitetDropdownOpen ? 'assets/layout/icons/arrow-up.svg' : 'assets/layout/icons/arrow-down.svg'" alt="">
+                 </button>
+                 <ul 
+                   class="flex gap-1 flex-col"
+                   *ngIf="isVardagsaktivitetDropdownOpen"
+                 >
+                   <li *ngFor="let option of vardagsaktivitetOptions"
+                     tabindex="0"
+                     (click)="updateCategory(option)"
+                     (keydown.enter)="updateCategory(option)"
+                     [class.selected]="option === (category$ | async)"
+                     class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
+                   >
+                     {{option}}
+                   </li>
+                 </ul>
+               </section>
+
+  
+              <!-- Verklighetsuppfattning -->
+               <section 
+               class="border border-2 border-transparent px-2 py-1 rounded-sm hover:border-orange-400 flex-1 bg-transparent"
+               [ngClass]="{'bg-orange-200' : isVerklighetsuppfattningDropdownOpen}"
+               tabindex="2"
+               >
+                 <button 
+                   (click)="toggleSubjectAreaDropdown('verklighetsuppfattning')" 
+                   class="flex items-center justify-between w-full"
+                 >
+                   <h2>Verklighetsuppfattning</h2>
+                   <img [src]="isVerklighetsuppfattningDropdownOpen ? 'assets/layout/icons/arrow-up.svg' : 'assets/layout/icons/arrow-down.svg'" alt="">
+                 </button>
+                 <ul 
+                   class="flex gap-1 flex-col"
+                   *ngIf="isVerklighetsuppfattningDropdownOpen"
+                 >
+                   <li *ngFor="let option of verklighetsuppfattningOptions"
+                     tabindex="0"
+                     (click)="updateCategory(option)"
+                     (keydown.enter)="updateCategory(option)"
+                     [class.selected]="option === (category$ | async)"
+                     class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
+                   >
+                     {{option}}
+                   </li>
+                 </ul>
+               </section>
+
+          </ul>
+        </section>
 
           <!-- Kategoriinställningar -->
           <section 
-            class="border border-1 border-black px-2 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
+            class="border border-1  border-black px-2 py-1 rounded-sm hover:bg-orange-200 flex-1 bg-white"
             [ngClass]="{'bg-orange-200' : isCategorySettingsDropdownOpen}"
             tabindex="2"
           >

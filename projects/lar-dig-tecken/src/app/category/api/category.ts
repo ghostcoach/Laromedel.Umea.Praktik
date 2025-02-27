@@ -23,6 +23,7 @@ export enum Category{
 }
 
 export enum SubjectArea {
+  ALLA = 'alla',
   ESTETISK_VERKSAMHET = 'estetisk verksamhet',
   KOMMUNIKATION = 'kommunikation',
   MOTORIK = 'motorik',

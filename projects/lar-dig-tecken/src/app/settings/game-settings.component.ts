@@ -5,7 +5,7 @@ import { IGameSettingStateModel } from '../settings/state/api/game-settings-stat
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { GameSettingsStateQueries } from '../settings/state/game-settings-queries'
-import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory, UpdateNumberOfOptions, UpdateNumberOfRounds } from '../settings/state/game-settings-actions';
+import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory, UpdateSubjectArea, UpdateNumberOfOptions, UpdateNumberOfRounds } from '../settings/state/game-settings-actions';
 import { CardContent } from '../../../../games/src/lib/api/card-content'
 import { Category, SubjectArea } from "../category/api/category"
 
@@ -36,11 +36,47 @@ export class GameSettingsComponent {
   ];
 
   public subjectAreaOptions: SubjectArea[] = [
+    SubjectArea.ALLA,
     SubjectArea.ESTETISK_VERKSAMHET,
     SubjectArea.KOMMUNIKATION,
     SubjectArea.MOTORIK,
     SubjectArea.VARDAGSAKTIVITET,
     SubjectArea.VERKLIGHETSUPPFATTNING
+  ];
+
+  public estetiskVerksamhetOptions: Category[] = [
+    Category.BILDBEGREPP,
+    Category.SYSLOJD,
+    Category.TRASLOJD,
+    Category.INSTRUMENT
+  ];
+
+  public kommunikationOptions: Category[] = [
+    Category.ALFABETET,
+    Category.ENKLA_ORD,
+    Category.KANSLOR,
+    Category.SKOLORD
+  ];
+
+  public motorikOptions: Category[] = [
+    Category.SPORT,
+    Category.VATTENSAKERHET,
+    Category.RORELSE,
+    Category.IDROTTSHALL
+  ];
+
+  public vardagsaktivitetOptions: Category[] = [
+    Category.KOKSREDSKAP,
+    Category.FRUKT,
+    Category.GRONSAKER_OCH_ROTFRUKTER,
+    Category.LIVSMEDEL
+  ];
+
+  public verklighetsuppfattningOptions: Category[] = [
+    Category.DJUR,
+    Category.VAXTER,
+    Category.ANTAL,
+    Category.LAGESORD
   ];
 
   public categoryOptions: Category[] = [
@@ -66,20 +102,26 @@ export class GameSettingsComponent {
     Category.LAGESORD
   ];
 
-
-
   public numberOfOptions: number[] = [2, 3, 4];
   public numberOfRounds: number[] = [1, 2, 3, 4, 5];
 
   public isDropdownOpen = false;
   public isFirstCardSettingsDropdownOpen = false;
   public isSecondCardSettingsDropdownOpen = false;
+  public isSubjectAreaSettingsDropdownOpen = false;
   public isCategorySettingsDropdownOpen = false;
   public isNumberOfOptionsSettingsDropdownOpen = false;
   public isNumberOfRoundsSettingsDropdownOpen = false;
 
+  public isEstetiskVerksamhetDropdownOpen = false;
+  public isKommunikationDropdownOpen = false;
+  public isMotorikDropdownOpen = false;
+  public isVardagsaktivitetDropdownOpen = false;
+  public isVerklighetsuppfattningDropdownOpen = false;
+
   public pairingModeFirstCard$: Observable<string> = this.store.select(GameSettingsStateQueries.pairingModeFirstCard$);
   public pairingModeSecondCard$: Observable<string> = this.store.select(GameSettingsStateQueries.pairingModeSecondCard$);
+  public subjectArea$: Observable<string> = this.store.select(GameSettingsStateQueries.subjectArea$);
   public category$: Observable<string> = this.store.select(GameSettingsStateQueries.category$);
   public numberOfRounds$: Observable<number> = this.store.select(GameSettingsStateQueries.numberOfRounds$);
   public numberOfOptions$: Observable<number> = this.store.select(GameSettingsStateQueries.numberOfOptions$);
@@ -98,7 +140,7 @@ export class GameSettingsComponent {
     }
   }
 
-  toggleSettingOptionsDropdown(type: 'firstCard' | 'secondCard' | 'category' | 'rounds' | 'options') : void {
+  toggleSettingOptionsDropdown(type: 'firstCard' | 'secondCard' | 'subjectArea' | 'category' | 'rounds' | 'options') : void {
     if (type === 'firstCard'){
       this.isFirstCardSettingsDropdownOpen = !this.isFirstCardSettingsDropdownOpen;
       if(this.isFirstCardSettingsDropdownOpen){
@@ -139,7 +181,29 @@ export class GameSettingsComponent {
         this.isCategorySettingsDropdownOpen = false;
         this.isNumberOfRoundsSettingsDropdownOpen = false;
       }
+    } else if (type === 'subjectArea') {
+      this.isSubjectAreaSettingsDropdownOpen = !this.isSubjectAreaSettingsDropdownOpen;
+      if(this.isSubjectAreaSettingsDropdownOpen){
+        this.isFirstCardSettingsDropdownOpen = false;
+        this.isSecondCardSettingsDropdownOpen = false;
+        this.isCategorySettingsDropdownOpen = false;
+        this.isNumberOfRoundsSettingsDropdownOpen = false;
+        this.isNumberOfOptionsSettingsDropdownOpen = false;
+      }
     }
+  }
+
+  toggleSubjectAreaDropdown(type: 'estetisk verksamhet' | 'kommunikation' | 'motorik' | 'vardagsaktivitet' | 'verklighetsuppfattning') : void {
+    if (type === 'estetisk verksamhet')
+     this.isEstetiskVerksamhetDropdownOpen = !this.isEstetiskVerksamhetDropdownOpen;
+    else if (type === 'kommunikation')
+     this.isKommunikationDropdownOpen = !this.isKommunikationDropdownOpen;
+    else if (type === 'motorik')
+     this.isMotorikDropdownOpen = !this.isMotorikDropdownOpen;
+    else if (type === 'vardagsaktivitet')
+     this.isVardagsaktivitetDropdownOpen = !this.isVardagsaktivitetDropdownOpen;
+    else if (type === 'verklighetsuppfattning')
+     this.isVerklighetsuppfattningDropdownOpen = !this.isVerklighetsuppfattningDropdownOpen;
   }
 
   updateFirstPairingMode(option: CardContent): void {
@@ -148,6 +212,10 @@ export class GameSettingsComponent {
 
   updateSecondPairingMode(option: CardContent): void {
     this.store.dispatch(new UpdateSecondPairingMode(option));
+  }
+
+  updateSubjectArea(option: SubjectArea): void {
+    this.store.dispatch(new UpdateSubjectArea(option));
   }
 
   updateCategory(option: Category): void {

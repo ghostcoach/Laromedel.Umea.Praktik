@@ -3,7 +3,7 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {GameSettingsComponent} from '../settings/game-settings.component'
 import {IGameSettingStateModel} from "../settings/state/api/game-settings-state-model";
 import {CardContent} from '../../../../games/src/lib/api/card-content'
-import {Category} from '../category/api/category'
+import {Category, SubjectArea} from '../category/api/category'
 import {RouterOutlet, Router, NavigationEnd, RouterLink} from "@angular/router";
 import {SelectedGameLinkComponent} from  "./selected-game-link/selected-game-link.component";
 import { SelectedGame } from "../selected-game/api/selected-game";
@@ -59,6 +59,7 @@ export class HomeLocationComponent implements OnInit {
       first: CardContent.ILLUSTRATION,
       second: CardContent.RITADE_TECKEN
     },
+    subjectArea: SubjectArea.ALLA,
     category: Category.ALLA,
     numberOfRounds: 5
   }

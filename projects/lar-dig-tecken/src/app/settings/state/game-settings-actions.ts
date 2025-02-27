@@ -18,6 +18,12 @@ export class UpdateCategory {
     constructor(public category: IGameSettingStateModel["category"]) {}
 }
 
+export class UpdateSubjectArea {
+    static readonly type: string = '[Pairing] Update Subject Area';
+
+    constructor(public subjectArea: IGameSettingStateModel["subjectArea"]) {}
+}
+
 export class UseAllCategories {
     static readonly type: string = '[Pairing] Use All Categories';
 

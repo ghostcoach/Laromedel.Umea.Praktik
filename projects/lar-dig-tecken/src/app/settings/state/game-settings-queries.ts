@@ -16,6 +16,11 @@ export class GameSettingsStateQueries {
     }
 
     @Selector([GameSettingsState])
+    public static subjectArea$(state: IGameSettingStateModel) : string {
+        return state.subjectArea
+    }
+
+    @Selector([GameSettingsState])
     public static category$(state: IGameSettingStateModel) : string {
         return state.category
     }
