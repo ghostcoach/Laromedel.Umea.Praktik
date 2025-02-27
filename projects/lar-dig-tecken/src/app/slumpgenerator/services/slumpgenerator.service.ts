@@ -4,6 +4,10 @@ import { Observable, combineLatest, Subject, BehaviorSubject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { BildbegreppWords } from '../../category/api/bildbegrepp';
+import { Alfabetet } from '../../category/api/alfabetet';
+import { EnklaOrd } from '../../category/api/enkla-ord';
+import { Kanslor } from '../../category/api/kanslor';
+import { Skolord } from '../../category/api/skolord';
 
 import { AudioService } from '../../services/audio/audio.service';
 import { CardUtilsService } from '../../card/service/card-utils.service';
@@ -18,6 +22,8 @@ import { ICardFullStateModel } from '../../card/state/api/card-interface';
 import { UpdateFlippedState} from '../../card/state/flipped.actions';
 import { UpdateGameState } from '../../game-state/state/game.actions';
 import { GameState } from '../../game-state/state/game.state';
+import { Category } from '../../category/api/category';
+import { IGameSettingStateModel } from '../../settings/state/api/game-settings-state-model';
 
 
 @Injectable({
@@ -29,6 +35,7 @@ export class SlumpgeneratorService implements OnDestroy {
   @Select(GameSettingsStateQueries.numberOfOptions$) numberOfOptions$!:Observable<number>
   @Select(GameSettingsStateQueries.numberOfRounds$) numberOfRounds$!:Observable<number>
   @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
+  @Select(GameSettingsStateQueries.subjectArea$) subjectArea$!:Observable<string>
   @Select(CardStates.getCardStates) cardStates$!: Observable<ICardFullStateModel[]>;
   @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
 
@@ -74,15 +81,40 @@ export class SlumpgeneratorService implements OnDestroy {
 
    // Method to initialize card states
    reinitializeCardStates(): void {
+
+    let selectedCategoryWords: string[] = [];
+    switch (this.store.selectSnapshot(GameSettingsState.getCategory)) {
+        case 'bildbegrepp':
+            selectedCategoryWords = Object.values(BildbegreppWords);
+            break;
+        case 'alfabetet':
+            selectedCategoryWords = Object.values(Alfabetet);
+            break;
+        case 'enkla ord':
+            selectedCategoryWords = Object.values(EnklaOrd);
+            break;
+        case 'känslor':
+            selectedCategoryWords = Object.values(Kanslor);
+            break;
+        case 'skolord':
+            selectedCategoryWords = Object.values(Skolord);
+            break;
+        default:
+            selectedCategoryWords = Object.values(BildbegreppWords);
+            break;
+    }
     
     const numberOfOptions: number = this.store.selectSnapshot(GameSettingsState.getNumberOfOptions);
+    const subjectArea: string = this.store.selectSnapshot(GameSettingsState.getSubjectArea);
     const category: string = this.store.selectSnapshot(GameSettingsState.getCategory);
-    const words: string[] = Object.values(BildbegreppWords); // Fetch words dynamically
+    // const words: string[] = Object.values(BildbegreppWords); // Fetch words dynamically
+    const words: string[] = selectedCategoryWords; // Fetch words dynamically
     const pairingModeFirst: string = this.store.selectSnapshot(GameSettingsState.getFirstPairingMode);
     const pairingModeSecond: string = this.store.selectSnapshot(GameSettingsState.getSecondPairingMode);
-
+        
     // Generate initial card states using the utility service
     const initialCards: ICardFullStateModel[] = this.cardUtils.initializeCardStates(
+      subjectArea,
       category, 
       numberOfOptions, 
       words,

@@ -7,6 +7,10 @@ import { GameSettingsState } from '../../settings/state/game-settings-state';
 import { ICardFullStateModel } from '../state/api/card-interface';
 import { CardStateQueries } from '../state/card.queries';
 import { BildbegreppWords } from '../../category/api/bildbegrepp';
+import { Alfabetet } from '../../category/api/alfabetet';
+import { EnklaOrd } from '../../category/api/enkla-ord';
+import { Kanslor } from '../../category/api/kanslor';
+import { Skolord } from '../../category/api/skolord';
 import { filter } from 'rxjs/operators';
 
 @Injectable({
@@ -23,6 +27,7 @@ export class CardUtilsService {
   @Select(GameSettingsState.getFirstPairingMode) pairingModeFirst$!: Observable<string>;
   @Select(GameSettingsState.getSecondPairingMode) pairingModeSecond$!: Observable<string>;
   @Select(GameSettingsState.getNumberOfRounds) numberOfRounds$!: Observable<number>;
+  @Select(GameSettingsState.getSubjectArea) subjectArea$!: Observable<string>;
   @Select(CardStateQueries.cardStates$) cardStates$!: Observable<ICardFullStateModel[]>;
   
   shuffledWords: string[] = [];
@@ -41,7 +46,7 @@ export class CardUtilsService {
     combineLatest([
       this.numberOfOptions$, 
       this.numberOfRounds$, 
-      this.category$
+      this.category$,
     ])
     .pipe(debounceTime(100)) // ✅ Prevents rapid multiple updates
     .subscribe(([numberOfOptions, numberOfRounds, category]) => {
@@ -54,7 +59,30 @@ export class CardUtilsService {
 
   // Function to initialize ALL WORDS from category
   initializeWords(category: string, numberOfOptions: number): void {
-      const words: string[] = Object.values(BildbegreppWords);
+    
+    let words: string[] = [];
+    
+    switch(category) {
+      case 'alfabetet':
+        words = Object.values(Alfabetet);
+        break
+      case 'bildbegrepp':
+        words = Object.values(BildbegreppWords);
+        break
+      case 'enkla-ord':
+        words = Object.values(EnklaOrd);
+        break
+      case 'kanslor':
+        words = Object.values(Kanslor);
+        break
+      case 'skolord':
+        words = Object.values(Skolord);
+        break
+      default:
+        words = Object.values(BildbegreppWords);
+        break
+    }
+      // const words: string[] = Object.values(BildbegreppWords);
         
       // Step 1: Select `numberOfOptions` unique words randomly
       const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
@@ -77,6 +105,7 @@ export class CardUtilsService {
 
   // Function to initialize words and set initial card states
   initializeCardStates(
+    subjectArea: string,
     category: string, 
     numberOfOptions: number, 
     words: string[], 
@@ -102,8 +131,8 @@ export class CardUtilsService {
       mode: index === 0 ? 'firstCard' : 'secondCard', // example mode
       contentMedium: index === 0 ? this.formatString(pairingModeFirst) : this.formatString(pairingModeSecond), // example category
       word: word, // word or image/video-path
-      content: index === 0 ? this.getMediaPath(category, this.formatString(pairingModeFirst), word) : this.getMediaPath(category, this.formatString(pairingModeSecond), word),
-      audioPath: this.getAudioPath(category, word), // audio path
+      content: index === 0 ? this.getMediaPath(subjectArea, category, this.formatString(pairingModeFirst), word) : this.getMediaPath(subjectArea, category, this.formatString(pairingModeSecond), word),
+      audioPath: this.getAudioPath(subjectArea, category, word), // audio path
       flippedClass: 'flipped', // flipped by default
       correctClass: '', // default class
     }));
@@ -129,22 +158,28 @@ export class CardUtilsService {
 
   //AUDIO FUNCTIONS
 
-  getAudioPath(category: string, word: string): string {
+  getAudioPath(subjectArea: string, category: string, word: string): string {
     const normalizedWord: string = this.normalizeCharacters(word);
-    return `/assets/subject-area/estetisk-verksamhet/${category}/audio/${normalizedWord}.mp3`;
+    const formattedSubjectArea: string = this.formatString(subjectArea);
+    // return `/assets/subject-area/estetisk-verksamhet/${category}/audio/${normalizedWord}.mp3`;
+    return `/assets/${formattedSubjectArea}/${category}/audio/${normalizedWord}.mp3`;
   }
 
-  getMediaPath(category: string, contentMedium: string, word: string): string {
+  getMediaPath(subjectArea: string, category: string, contentMedium: string, word: string): string {
     
     const normalizedWord: string = this.normalizeCharacters(word);
+    const formattedSubjectArea: string = this.formatString(subjectArea);
     if (contentMedium === 'ord') {
       return word;
     } else if (contentMedium === 'bild') {
-      return `/assets/subject-area/estetisk-verksamhet/${category}/illustration/${normalizedWord}.webp`;
+      // return `/assets/subject-area/estetisk-verksamhet/${category}/illustration/${normalizedWord}.webp`;
+      return `/assets/subject-area/${formattedSubjectArea}/${category}/illustration/${normalizedWord}.webp`;
     } else if (contentMedium === 'ritade-tecken') {
-      return `/assets/subject-area/estetisk-verksamhet/${category}/ritade-tecken/${normalizedWord}.webp`;
+      // return `/assets/subject-area/estetisk-verksamhet/${category}/ritade-tecken/${normalizedWord}.webp`;
+      return `/assets/subject-area/${formattedSubjectArea}/${category}/ritade-tecken/${normalizedWord}.webp`;
     } else if (contentMedium === 'tecken-som-stod') {
-      return `/assets/subject-area/estetisk-verksamhet/${category}/video/${normalizedWord}.mp4`;
+      // return `/assets/subject-area/estetisk-verksamhet/${category}/video/${normalizedWord}.mp4`;
+      return `/assets/subject-area/${formattedSubjectArea}/${category}/video/${normalizedWord}.mp4`;
     } else {
       return '';
     }

@@ -30,6 +30,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   @Select(GameSettingsStateQueries.numberOfOptions$) numberOfOptions$!:Observable<number>
   @Select(GameSettingsStateQueries.numberOfRounds$) numberOfRounds$!:Observable<number>
   @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
+  @Select(GameSettingsStateQueries.subjectArea$) subjectArea$!:Observable<string>
   @Select(CardStates.getCardStates) cardStates$!: Observable<ICardFullStateModel[]>;
   @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
 

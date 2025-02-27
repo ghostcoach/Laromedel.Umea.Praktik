@@ -7,6 +7,11 @@ import { UpdateAllCards, UpdateCard, InitializeCardStates, UpdateFlippedClass } 
 import { GameSettingsState } from '../../settings/state/game-settings-state';
 import { CardUtilsService } from '../service/card-utils.service';
 import { BildbegreppWords } from '../../category/api/bildbegrepp';
+import { Alfabetet } from '../../category/api/alfabetet';
+import { EnklaOrd } from '../../category/api/enkla-ord';
+import { Kanslor } from '../../category/api/kanslor';
+import { Skolord } from '../../category/api/skolord';
+
 
 @Injectable()
 @State<IMultipleFullStateModel>({
@@ -24,6 +29,7 @@ export class CardStates implements NgxsOnInit {
     @Select(GameSettingsState.getCategory) category$!: Observable<string>;
     @Select(GameSettingsState.getFirstPairingMode) pairingModeFirst$!: Observable<string>;
     @Select(GameSettingsState.getSecondPairingMode) pairingModeSecond$!: Observable<string>;
+    @Select(GameSettingsState.getSubjectArea) subjectArea$!: Observable<string>;
 
     // NGXS lifecycle method - runs once when state initializes
     ngxsOnInit(ctx: StateContext<IMultipleFullStateModel>):void {
@@ -31,6 +37,7 @@ export class CardStates implements NgxsOnInit {
 
           // **Subscribe to settings changes and reinitialize cards**
           this.numberOfOptions$.pipe(distinctUntilChanged()).subscribe(() => this.initializeCardStates(ctx));
+          this.subjectArea$.pipe(distinctUntilChanged()).subscribe(() => this.initializeCardStates(ctx));
           this.category$.pipe(distinctUntilChanged()).subscribe(() => this.initializeCardStates(ctx));
           this.pairingModeFirst$.pipe(distinctUntilChanged()).subscribe(() => this.initializeCardStates(ctx));
           this.pairingModeSecond$.pipe(distinctUntilChanged()).subscribe(() => this.initializeCardStates(ctx));
@@ -45,14 +52,39 @@ export class CardStates implements NgxsOnInit {
 
     /** Initialize card states dynamically */
     private initializeCardStates(ctx: StateContext<IMultipleFullStateModel>): void {
+        let selectedCategoryWords: string[] = [];
+        switch (this.store.selectSnapshot(GameSettingsState.getCategory)) {
+            case 'bildbegrepp':
+                selectedCategoryWords = Object.values(BildbegreppWords);
+                break;
+            case 'alfabetet':
+                selectedCategoryWords = Object.values(Alfabetet);
+                break;
+            case 'enkla ord':
+                selectedCategoryWords = Object.values(EnklaOrd);
+                break;
+            case 'känslor':
+                selectedCategoryWords = Object.values(Kanslor);
+                break;
+            case 'skolord':
+                selectedCategoryWords = Object.values(Skolord);
+                break;
+            default:
+                selectedCategoryWords = Object.values(BildbegreppWords);
+                break;
+        }
+        
         const numberOfOptions: number = this.store.selectSnapshot(GameSettingsState.getNumberOfOptions);
+        const subjectArea: string = this.store.selectSnapshot(GameSettingsState.getSubjectArea);
         const category: string = this.store.selectSnapshot(GameSettingsState.getCategory);
-        const words: string[] = Object.values(BildbegreppWords); // Fetch words dynamically
+        // const words: string[] = Object.values(BildbegreppWords); // Fetch words dynamically
+        const words: string[] = selectedCategoryWords // Fetch words dynamically
         const pairingModeFirst: string = this.store.selectSnapshot(GameSettingsState.getFirstPairingMode);
         const pairingModeSecond: string = this.store.selectSnapshot(GameSettingsState.getSecondPairingMode);
 
         // Generate initial card states using the utility service
         const initialCards: ICardFullStateModel[] = this.cardUtils.initializeCardStates(
+            subjectArea,
             category, 
             numberOfOptions, 
             words,

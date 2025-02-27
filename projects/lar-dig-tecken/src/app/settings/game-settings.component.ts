@@ -256,10 +256,7 @@ export class GameSettingsComponent {
 
   updateCategory(option: Category, subjectArea: SubjectArea): void {
     this.store.dispatch(new UpdateCategory(option));
-    this.store.dispatch(new UpdateSubjectArea(subjectArea));
-    console.log('category', option);
-    console.log('subjectArea', subjectArea);
-    
+    this.store.dispatch(new UpdateSubjectArea(subjectArea));    
   }
 
   updateNumberOfOptions(option: number): void {
