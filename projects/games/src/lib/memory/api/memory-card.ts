@@ -26,6 +26,7 @@ export class MemoryCard {
     public word: string,
     public baseHref: string,
     public cardContent: CardContent = CardContent.WORD,
+    public wordIsAlsoIllustration: boolean = false,
   ) {
     this._id = generateId();
     this._name = parseName(word);
@@ -44,8 +45,8 @@ export class MemoryCard {
     return `${this.videoBaseSrc}${VideoExtension.MP4}`;
   }
 
-  public get illustrationSvg(): string {
-    return `${this.illustrationBaseSrc}${ImageExtension.SVG}`;
+  public get illustrationPng(): string {
+    return `${this.illustrationBaseSrc}${ImageExtension.PNG}`;
   }
 
   public get illustrationWebp(): string {
@@ -67,7 +68,23 @@ export class MemoryCard {
     };
   }
 
+  public get isWordContent(): boolean {
+    return this.cardContent === CardContent.WORD;
+  }
+
+  public get isIllustrationContent(): boolean {
+    return this.cardContent === CardContent.ILLUSTRATION;
+  }
+
+  public get isRitadeTeckenContent(): boolean {
+    return this.cardContent === CardContent.RITADE_TECKEN;
+  }
+
+  public get isTakkContent(): boolean {
+    return this.cardContent === CardContent.TAKK;
+  }
+
   public copy(cardContent: CardContent = this.cardContent): MemoryCard {
-    return new MemoryCard(this.pairId, this.word, this.baseHref, cardContent);
+    return new MemoryCard(this.pairId, this.word, this.baseHref, cardContent, this.wordIsAlsoIllustration);
   }
 }

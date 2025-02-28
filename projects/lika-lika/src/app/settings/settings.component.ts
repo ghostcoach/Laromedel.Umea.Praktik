@@ -7,9 +7,9 @@ import {PlayModeSettingComponent} from "./play-mode-setting/play-mode-setting.co
 import {UntilDestroy} from "@ngneat/until-destroy";
 import {ReplayButtonComponent} from "./replay-button/replay-button.component";
 import {LockButtonComponent} from "./lock-button/lock-button.component";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, NgIf} from "@angular/common";
 import {Store} from "@ngxs/store";
-import {SettingsStateQueries} from "./state/settings-state-queries";
+import {MemorySettingsStateQueries} from "@games/memory-settings-state-queries";
 import {Observable} from "rxjs";
 import {FullscreenButtonComponent} from "./fullscreen-button/fullscreen-button.component";
 import {InfoButtonComponent} from "./info-button/info-button.component";
@@ -31,6 +31,7 @@ import {HomeButtonComponent} from "./home-button/home-button.component";
     FullscreenButtonComponent,
     InfoButtonComponent,
     HomeButtonComponent,
+    NgIf,
   ],
   templateUrl: "./settings.component.html",
   styleUrl: "./settings.component.scss",
@@ -39,5 +40,6 @@ import {HomeButtonComponent} from "./home-button/home-button.component";
 export class SettingsComponent {
   private store: Store = inject(Store);
 
-  public isSettingsLocked$: Observable<boolean> = this.store.select(SettingsStateQueries.isSettingsLocked$);
+  public isSettingsLocked$: Observable<boolean> = this.store.select(MemorySettingsStateQueries.isSettingsLocked$);
+  public isCategory: boolean = window.location.href.includes("kategori");
 }

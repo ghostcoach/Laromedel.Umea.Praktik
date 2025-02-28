@@ -3,10 +3,10 @@ import {FormsModule} from "@angular/forms";
 import {AsyncPipe, NgClass, NgForOf} from "@angular/common";
 import {UntilDestroy} from "@ngneat/until-destroy";
 import {Store} from "@ngxs/store";
-import {UpdateNumberOfCards} from "../state/settings-state-actions";
+import {UpdateNumberOfCards} from "@games/memory-settings-state-actions";
 import {CardCount} from "@games/card-count";
 import {Observable} from "rxjs";
-import {SettingsStateQueries} from "../state/settings-state-queries";
+import {MemorySettingsStateQueries} from "@games/memory-settings-state-queries";
 
 @UntilDestroy()
 @Component({
@@ -19,7 +19,7 @@ import {SettingsStateQueries} from "../state/settings-state-queries";
 })
 export class CardCountSettingComponent {
   public cardNumbers: number[] = Object.values(CardCount).filter((value): boolean => typeof value === "number") as number[];
-  public numberOfCards$: Observable<CardCount> = this.store.select(SettingsStateQueries.numberOfCards$);
+  public numberOfCards$: Observable<CardCount> = this.store.select(MemorySettingsStateQueries.numberOfCards$);
 
   constructor(private store: Store) {}
 

@@ -16,26 +16,54 @@ import {
 } from "./subtitle-actions";
 import {SubtitleDisplayMode} from "../api/subtitle-display-mode";
 import {ISubtitleText} from "../api/subtitle-text";
+import {LocalStorageService} from "ngx-localstorage";
 
 const stateToken: StateToken<ISubtitleStateModel> = new StateToken<ISubtitleStateModel>("subtitleState");
+
+const defaultState: ISubtitleStateModel = {
+  isSubtitleEnabled: false,
+  subtitleText: {
+    row1: "",
+    row2: "",
+  },
+  isSubtitleHidden: true,
+  subtitleDisplayMode: SubtitleDisplayMode.ONE_ROW,
+};
 
 @UntilDestroy()
 @State({
   name: stateToken,
-  defaults: {
-    isSubtitleEnabled: false,
-    subtitleText: {
-      row1: "",
-      row2: "",
-    },
-    isSubtitleHidden: true,
-    subtitleDisplayMode: SubtitleDisplayMode.ONE_ROW,
-  },
+  defaults: defaultState,
 })
 @Injectable()
 export class SubtitleState {
   private readonly SUBTITLE_SPLIT_LIMIT: number = 50;
   private subtitleTimeout: ReturnType<typeof setTimeout>;
+
+  private readonly localStorageKey: string = "subtitleState";
+
+  constructor(private localStorageService: LocalStorageService) {
+    this.hydrateState();
+  }
+
+  private hydrateState(): void {
+    const storedState: ISubtitleStateModel | null = this.localStorageService.get<ISubtitleStateModel>(this.localStorageKey);
+    if (!storedState) return;
+
+    Object.assign(defaultState, storedState);
+  }
+
+  @Action(ToggleSubtitles)
+  @Action(EnableSubtitle)
+  @Action(DisableSubtitle)
+  public saveToLocalStorage({getState}: StateContext<ISubtitleStateModel>): void {
+    setTimeout((): void => {
+      const newState: ISubtitleStateModel = defaultState;
+      newState.isSubtitleEnabled = getState().isSubtitleEnabled;
+      
+      this.localStorageService.set<ISubtitleStateModel>(this.localStorageKey, newState);
+    }, 500);
+  }
 
   @Action(UpdateSubtitleText)
   public updateSubtitleText({patchState}: StateContext<ISubtitleStateModel>, {subtitleText}: UpdateSubtitleText): void {

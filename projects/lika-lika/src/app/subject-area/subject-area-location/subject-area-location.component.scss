@@ -1,16 +1,5 @@
 @import "../../../variables.scss";
 
-span {
-  color: white;
-}
-
-li span {
-  font-size: clamp(1rem, 0.8148rem + 0.9877vw, 2rem);
-}
-
-ul li:first-child {
-  padding-top: 0;
-}
 
 .subject-area-estetisk-verksamhet {
   h2 {
@@ -19,7 +8,6 @@ ul li:first-child {
 }
 
 .subject-area-kommunikation {
-  background-color: $communication-color;
 
   h2 {
     color: $communication-color;

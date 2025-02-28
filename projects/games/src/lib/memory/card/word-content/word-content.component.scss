@@ -1,0 +1,23 @@
+
+.cards-2 {
+  .word-text {
+    @apply text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl;
+  }
+
+  .word-text.uppercase {
+    @apply text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl;
+  }
+
+  .word-text.long-word {
+    @apply text-lg md:text-xl lg:text-3xl xl:text-4xl xl2:text-5xl;
+  }
+
+  .word-text.long-word.uppercase {
+    @apply text-base md:text-lg lg:text-xl xl:text-2xl xl2:text-3xl;
+  }
+
+  .single-word-text {
+    @apply text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl;
+  }
+
+}

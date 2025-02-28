@@ -2,10 +2,7 @@ $primary-focus-color: #0c5674;
 $secondary-focus-color: #00aef2;
 
 footer {
-  margin-top: 4rem;
-  background-color: #fff;
-
-
+  margin-top: 30rem;
 }
 
 .logo__image-btn:focus, .logo__image:focus-visible {
@@ -29,7 +26,7 @@ footer {
 }
 
 .footer__wrapper--full-width {
-  max-width: 95%;
+  max-width: 90% !important;
 }
 
 .logo__container {
@@ -81,6 +78,22 @@ mat-icon {
   a {
     text-decoration: underline;
   }
+}
+
+
+.footer--spsm-red {
+  background-color: #801431;
+  color: white;
+
+  .footer--underline-links {
+    a {
+      text-decoration: underline;
+    }
+  }
+}
+
+.footer--top-border {
+  border-top: 1px solid #ccc;
 }
 
 @media screen and (min-width: 2200px) {

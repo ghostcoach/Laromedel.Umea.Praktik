@@ -23,29 +23,54 @@ import {AudioService} from "../audio.service";
 import {BackgroundAudioService} from "../background-audio.service";
 import {IPlaylistAudio} from "../api/playlist";
 import {PlaylistPlaybackMode} from "../api/playlist-playback-mode";
+import {LocalStorageService} from "ngx-localstorage";
 
 const stateToken: StateToken<IAudioStateModel> = new StateToken<IAudioStateModel>("audioState");
+
+const defaultState: IAudioStateModel = {
+  isSoundEnabled: true,
+  isLoopPlaying: false,
+  isSoundPlaying: false,
+  playlist: [],
+  currentPlaylistIndex: 0,
+  currentPlayingKey: "",
+  currentAudioLength: 0,
+  playListPlaybackMode: PlaylistPlaybackMode.PLAY_ENTIRE_PLAYLIST,
+};
 
 @UntilDestroy()
 @State({
   name: stateToken,
-  defaults: {
-    isSoundEnabled: true,
-    isLoopPlaying: false,
-    isSoundPlaying: false,
-    playlist: [],
-    currentPlaylistIndex: 0,
-    currentPlayingKey: "",
-    currentAudioLength: 0,
-    playListPlaybackMode: PlaylistPlaybackMode.PLAY_ENTIRE_PLAYLIST,
-  },
+  defaults: defaultState,
 })
 @Injectable()
 export class AudioState {
+  private readonly localStorageKey: string = "audioState";
+
   constructor(
     private audioService: AudioService,
     private backgroundAudioService: BackgroundAudioService,
-  ) {}
+    private localStorageService: LocalStorageService,
+  ) {
+    this.hydrateState();
+  }
+
+  private hydrateState(): void {
+    const storedState: IAudioStateModel | null = this.localStorageService.get<IAudioStateModel>(this.localStorageKey);
+    if (!storedState) return;
+
+    Object.assign(defaultState, storedState);
+  }
+
+  @Action(UpdateIsSoundEnabled)
+  @Action(ToggleSound)
+  public saveToLocalStorage({getState}: StateContext<IAudioStateModel>): void {
+    setTimeout((): void => {
+      const newState: IAudioStateModel = defaultState;
+      newState.isSoundEnabled = getState().isSoundEnabled;
+      this.localStorageService.set<IAudioStateModel>(this.localStorageKey, newState);
+    }, 500);
+  }
 
   @Action(UpdateIsSoundEnabled)
   public updateIsSoundEnabled({patchState}: StateContext<IAudioStateModel>, {isSoundEnabled}: UpdateIsSoundEnabled): void {
@@ -73,8 +98,15 @@ export class AudioState {
       this.audioService.loadSound(audio.name, audio.src);
     }
 
-    this.audioService.playSound(audio.name, getState().isSoundEnabled);
-    patchState({currentPlayingKey: audio.name});
+    console.log("Queuing audio: ", audio.name);
+    this.audioService.queueSound(audio.name);
+
+    patchState({currentPlayingKey: audio.name, isSoundPlaying: true});
+
+    // If no audio is currently playing, start playing immediately
+    if (!this.audioService.isAudioPlaying()) {
+      this.audioService.playNextSoundInQueue(getState().isSoundEnabled);
+    }
   }
 
   @Action(StopAudio)
@@ -144,7 +176,7 @@ export class AudioState {
 
   @Action(ResetCurrentlyPlayingKey)
   public resetCurrentlyPlayingKey({patchState}: StateContext<IAudioStateModel>): void {
-    patchState({currentPlayingKey: ""});
+    patchState({currentPlayingKey: "", isSoundPlaying: false});
   }
 
   @Action(UpdateIsSoundPlaying)

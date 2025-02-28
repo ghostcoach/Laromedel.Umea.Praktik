@@ -1,13 +1,11 @@
 import {ICategory} from "../api/category";
-import {ICategoryContentStorageData} from "../api/category-content-storage-data";
-import {IMemoryCard} from "@games/memory-card";
 
 export class AddCardToPlayWithAction {
   static readonly type = "[CategoryContent] Add card to play with";
 
   constructor(
     public category: ICategory,
-    public card: IMemoryCard, //TODO: Interface is not used, replace with word-reference
+    public cardWord: string,
   ) {}
 }
 
@@ -16,7 +14,7 @@ export class RemoveCardToPlayWithAction {
 
   constructor(
     public category: ICategory,
-    public card: IMemoryCard,
+    public cardWord: string,
   ) {}
 }
 
@@ -29,8 +27,10 @@ export class UpdateCategoryContentAction {
   ) {}
 }
 
-export class LoadCategoryContentFromLocalStorage {
-  static readonly type = "[CategoryContent] Load category content from local storage";
+export class LoadCategoryContent {
+  static readonly type: string = "[CategoryContent] Load category content";
+}
 
-  constructor(public categoryContentStorageData: ICategoryContentStorageData) {}
+export class UpdateLocalStorageCategoryContent {
+  static readonly type: string = "[CategoryContent] Update local storage category content";
 }

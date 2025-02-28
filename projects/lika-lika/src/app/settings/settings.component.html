@@ -15,13 +15,13 @@
     <li class="hidden lg:block">
       <app-settings-menu></app-settings-menu>
     </li>
-    <li class="hidden lg:block 2xl:mr-12">
+    <li class="hidden lg:block ">
       <app-card-settings-menu></app-card-settings-menu>
     </li>
-    <li class="hidden lg:block">
+    <li class="hidden lg:block" *ngIf="isCategory">
       <app-play-mode-setting></app-play-mode-setting>
     </li>
-    <li class="hidden lg:block 2xl:mr-24">
+    <li class="hidden lg:block " *ngIf="isCategory">
       <app-replay-button></app-replay-button>
     </li>
     <li class="hidden lg:block pointer-events-auto">

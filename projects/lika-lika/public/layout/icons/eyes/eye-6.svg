@@ -1,33 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 73.68 46.38">
-  <defs>
-    <style>
-      .cls-1 {
-        stroke-linecap: round;
-        stroke-width: 2.45px;
-      }
-
-      .cls-1, .cls-2 {
-        fill: none;
-        stroke: #1d1d1b;
-        stroke-miterlimit: 10;
-      }
-
-      .cls-2 {
-        stroke-width: 2.47px;
-      }
-    </style>
-  </defs>
-  <g id="icon-settings">
-    <path class="cls-2" d="M71.94,17.03s-15.72,15.8-35.1,15.8S1.74,17.03,1.74,17.03c0,0,15.72-15.8,35.1-15.8s35.1,15.8,35.1,15.8Z"/>
-    <g>
-      <line class="cls-1" x1="36.84" y1="38.66" x2="36.84" y2="45.15"/>
-      <line class="cls-1" x1="46.17" y1="37.37" x2="47.53" y2="43.72"/>
-      <line class="cls-1" x1="54.34" y1="34.28" x2="56.8" y2="40.29"/>
-      <line class="cls-1" x1="61.91" y1="30.01" x2="65.39" y2="35.51"/>
-      <line class="cls-1" x1="27.3" y1="37.37" x2="25.94" y2="43.72"/>
-      <line class="cls-1" x1="19.14" y1="34.28" x2="16.68" y2="40.29"/>
-      <line class="cls-1" x1="11.56" y1="30.01" x2="8.08" y2="35.51"/>
-    </g>
-  </g>
-</svg>
+version https://git-lfs.github.com/spec/v1
+oid sha256:8d2ec72ad9082d7a51afa6d709def7871efa67a6da7b4a6bee1889da6fe9864b
+size 1098

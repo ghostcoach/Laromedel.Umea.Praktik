@@ -24,4 +24,9 @@ export class SubjectAreaStateQueries {
   public static categories$(state: ISubjectAreaStateModel): ICategoryViewModel[] {
     return state.categories;
   }
+
+  @Selector([SubjectAreaState])
+  public static categoryNamePlaying$(state: ISubjectAreaStateModel): string {
+    return state.categoryNamePlaying;
+  }
 }

@@ -2,11 +2,11 @@ import {ChangeDetectionStrategy, Component, inject} from "@angular/core";
 import {UntilDestroy} from "@ngneat/until-destroy";
 import {Store} from "@ngxs/store";
 import {Observable} from "rxjs";
-import {SettingsStateQueries} from "../state/settings-state-queries";
+import {MemorySettingsStateQueries} from "@games/memory-settings-state-queries";
 import {AsyncPipe} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 import {LockedDialogComponent} from "./locked-dialog/locked-dialog.component";
-import {UpdateIsSettingsLocked} from "../state/settings-state-actions";
+import {UpdateIsSettingsLocked} from "@games/memory-settings-state-actions";
 
 @UntilDestroy()
 @Component({
@@ -19,11 +19,11 @@ import {UpdateIsSettingsLocked} from "../state/settings-state-actions";
 })
 export class LockButtonComponent {
   private store: Store = inject(Store);
-  public isSettingsLocked$: Observable<boolean> = this.store.select(SettingsStateQueries.isSettingsLocked$);
+  public isSettingsLocked$: Observable<boolean> = this.store.select(MemorySettingsStateQueries.isSettingsLocked$);
   public readonly lockedDialog: MatDialog = inject(MatDialog);
 
   public handleLocking(): void {
-    const currentIsSettingsLocked: boolean = this.store.selectSnapshot(SettingsStateQueries.isSettingsLocked$);
+    const currentIsSettingsLocked: boolean = this.store.selectSnapshot(MemorySettingsStateQueries.isSettingsLocked$);
 
     if (currentIsSettingsLocked) {
       this.openLockedDialog();

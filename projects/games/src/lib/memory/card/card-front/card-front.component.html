@@ -1,0 +1,34 @@
+<div class="absolute bg-contain bg-no-repeat bg-center card-size w-52"
+     [style.backface-visibility]="'hidden'"
+     [style.backgroundImage]="'url(' + cardFrontImage + ')'">
+  <div class="card-content absolute grid place-items-center card-size">
+    <lib-word-content
+      *ngIf="memoryCard.isWordContent && (!memoryCard.wordIsAlsoIllustration)"
+      [word]="memoryCard.word">
+    </lib-word-content>
+    <lib-word-content
+      *ngIf="(memoryCard.isWordContent || memoryCard.isIllustrationContent) && memoryCard.wordIsAlsoIllustration"
+      [word]="memoryCard.word" [isSingleLetter]="memoryCard.wordIsAlsoIllustration">
+    </lib-word-content>
+    <lib-image-content
+      [fallbackSrc]="memoryCard.illustrationPng"
+      [webpSrc]="memoryCard.illustrationWebp"
+      [fallbackSourceType]="imageSourceTypeEnum.PNG"
+      [alt]="'Illustration av ' + memoryCard.word"
+      *ngIf="memoryCard.isIllustrationContent && (!memoryCard.wordIsAlsoIllustration)">
+    </lib-image-content>
+    <lib-image-content
+      [fallbackSrc]="memoryCard.ritadeteckenSvg"
+      [webpSrc]="memoryCard.ritadeteckenWebp"
+      [fallbackSourceType]="imageSourceTypeEnum.SVG"
+      [alt]="'Ritade tecken av ' + memoryCard.word"
+      *ngIf="memoryCard.isRitadeTeckenContent">
+    </lib-image-content>
+    <lib-video-content
+      #videoContent
+      *ngIf="memoryCard.isTakkContent"
+      [videoMP4]="memoryCard.videoMp4"
+    >
+    </lib-video-content>
+  </div>
+</div>

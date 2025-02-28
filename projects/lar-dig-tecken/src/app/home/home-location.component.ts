@@ -2,13 +2,13 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from "@an
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {GameSettingsComponent} from '../settings/game-settings.component'
 import {IGameSettingStateModel} from "../settings/state/api/game-settings-state-model";
-import {CardContent} from '../../../../games/src/lib/api/card-content'
+import {CardContent} from '@games/card-content'
 import {Category, SubjectArea} from '../category/api/category'
 import {RouterOutlet, Router, NavigationEnd, RouterLink} from "@angular/router";
 import {SelectedGameLinkComponent} from  "./selected-game-link/selected-game-link.component";
 import { SelectedGame } from "../selected-game/api/selected-game";
 import {NgForOf, NgIf, CommonModule} from "@angular/common";
-import {filter} from "rxjs/operators"; 
+import {filter} from "rxjs/operators";
 import { GameState } from "../game-state/state/game.state";
 import { Select } from "@ngxs/store";
 import { Observable } from "rxjs";
@@ -68,7 +68,7 @@ export class HomeLocationComponent implements OnInit {
     // Determine if the current path is the home page
     this.isHomeVisible = this.currentPath === '/';
     console.log('isHomeVisible:', this.isHomeVisible);
-    
+
 
     // Trigger Angular's change detection
     this.cdr.detectChanges();

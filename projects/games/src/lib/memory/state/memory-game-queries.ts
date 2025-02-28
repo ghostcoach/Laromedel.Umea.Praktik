@@ -53,8 +53,15 @@ export class MemoryGameQueries {
   public static cardVisualState$(state: IMemoryGameStateModel): (id: string) => string {
     return (id: string) => {
       if (state.matchedCards.some((c) => c.id === id)) return "matched";
-      if (state.indicateError && state.selectedCards.some((c) => c.id === id)) return "mismatched";
-      if (state.selectedCards.some((c) => c.id === id)) return "selected";
+
+      if (state.indicateError && (state.selectedCards.some((c) => c.id === id) || state.queuedSelections.some((c) => c.id === id))) {
+        return "mismatched";
+      }
+
+      if (state.selectedCards.some((c) => c.id === id) || state.queuedSelections.some((c) => c.id === id)) {
+        return "selected";
+      }
+
       return "default";
     };
   }

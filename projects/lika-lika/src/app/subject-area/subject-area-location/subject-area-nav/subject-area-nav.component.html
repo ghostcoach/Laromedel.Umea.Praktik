@@ -1,0 +1,15 @@
+<nav>
+  <ul
+    class="mx-auto flex flex-col md:flex-row md:flex-wrap md:justify-center md:w-4/5 lg:w-3/5 xl:w-full xl:gap-x-5 3xl:max-w-8xl 3xxl:max-w-9xl 3xl:gap-x-12">
+    <li
+      *ngFor="let category of (categories$ | async)"
+    >
+      <app-card-link [routerLink]="['/kategori', category.name]"
+                     [cardAlt]="category.menuImageAlt"
+                     [cardImageSrc]="category.menuImage"
+                     [title]="category.displayName"
+                     [isCategoryCard]="true"
+      ></app-card-link>
+    </li>
+  </ul>
+</nav>

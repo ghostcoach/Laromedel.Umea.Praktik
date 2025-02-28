@@ -14,4 +14,14 @@ export class CategoryContentStateQueries {
   public static categoryContentStorageData$(categoryContents: ICategoryContent[]): ICategoryContentStorageData {
     return {categoryContents};
   }
+
+  @Selector([CategoryContentState])
+  public static selectedCardWordsByCategory$(state: ICategoryContentStateModel): (categoryName: string) => string[] {
+    return (categoryName: string): string[] => {
+      const categoryContent: ICategoryContent | undefined = state.categoryContents.find(
+        (c: ICategoryContent): boolean => c.categoryName === categoryName,
+      );
+      return categoryContent ? categoryContent.cardWordsToPlayWith : [];
+    };
+  }
 }

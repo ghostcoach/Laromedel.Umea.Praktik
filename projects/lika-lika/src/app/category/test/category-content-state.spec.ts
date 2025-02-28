@@ -2,14 +2,8 @@ import {TestBed} from "@angular/core/testing";
 import {NgxsModule, Store} from "@ngxs/store";
 import {CategoryContentState} from "../state/category-content-state";
 import {ICategoryContent} from "../api/category-content";
-import {
-  AddCardToPlayWithAction,
-  LoadCategoryContentFromLocalStorage,
-  RemoveCardToPlayWithAction,
-  UpdateCategoryContentAction,
-} from "../state/category-content-state-actions";
+import {AddCardToPlayWithAction, RemoveCardToPlayWithAction, UpdateCategoryContentAction} from "../state/category-content-state-actions";
 import {SubjectArea} from "../../subject-area/api/subject-area";
-import {ICategoryContentStorageData} from "../api/category-content-storage-data";
 
 describe("CategoryContentState", (): void => {
   let store: Store;
@@ -42,7 +36,6 @@ describe("CategoryContentState", (): void => {
         {
           name: "bildbegrepp",
           displayName: "",
-          logoImage: "",
           menuImage: "",
           menuImageAlt: "",
           cardFrontImage: "",
@@ -53,10 +46,7 @@ describe("CategoryContentState", (): void => {
           cards: [],
           wordsNotInSameDeck: [],
         },
-        {
-          word: "pensel",
-          pairId: "1",
-        },
+        "pensel",
       ),
     );
 
@@ -79,7 +69,6 @@ describe("CategoryContentState", (): void => {
           name: "bildbegrepp",
           subjectArea: SubjectArea.ESTETISK_VERKSAMHET,
           cards: [],
-          logoImage: "",
           menuImage: "",
           menuImageAlt: "",
           cardFrontImage: "",
@@ -89,10 +78,7 @@ describe("CategoryContentState", (): void => {
           wordsNotInSameDeck: [],
           displayName: "Bildbegrepp",
         },
-        {
-          word: "pensel",
-          pairId: "1",
-        },
+        "pensel",
       ),
     );
 
@@ -108,23 +94,5 @@ describe("CategoryContentState", (): void => {
     expect(
       newState.find((category: {categoryName: string}): boolean => category.categoryName === "bildbegrepp")?.cardWordsToPlayWith.length,
     ).toBe(3);
-  });
-
-  it("should load category content from local storage", (): void => {
-    const mockLocalStorageContent: ICategoryContentStorageData = {
-      categoryContents: [
-        {
-          categoryName: "bildbegrepp",
-          cardWordsToPlayWith: ["färgpenna", "palett"],
-        },
-      ],
-    };
-
-    store.dispatch(new LoadCategoryContentFromLocalStorage(mockLocalStorageContent));
-
-    const newState: ICategoryContent[] = store.selectSnapshot((state) => state.categoryContentState.categoryContents);
-    expect(newState.length).toBe(1);
-    expect(newState[0].categoryName).toBe("bildbegrepp");
-    expect(newState[0].cardWordsToPlayWith).toContain("färgpenna");
   });
 });

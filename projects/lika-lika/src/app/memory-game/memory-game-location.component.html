@@ -4,7 +4,7 @@
     <app-score [category]="category"></app-score>
     <app-game-over class="w-full place-items-center" *ngIf="isGameOver$ | async"></app-game-over>
     <div class="w-full h-full grid place-items-center" *ngIf="(isGameOver$ | async) === false">
-      <app-board [category]="category"></app-board>
+      <lib-board [cardFrontImage]="category.cardFrontImage" [cardBackImage]="category.cardBackImage"></lib-board>
     </div>
     <app-score [category]="category" *ngIf="isTwoPlayers$ | async" [isFirstPlayer]="false"></app-score>
   </div>
@@ -16,7 +16,8 @@
     <app-go-to-settings></app-go-to-settings>
   </div>
   <div class="w-full h-full grid place-items-center">
-    <app-board [category]="category" *ngIf="(isGameOver$ | async) === false"></app-board>
+    <lib-board [cardFrontImage]="category.cardFrontImage" [cardBackImage]="category.cardBackImage"
+               *ngIf="(isGameOver$ | async) === false"></lib-board>
     <app-game-over class="w-full" *ngIf="isGameOver$ | async"></app-game-over>
   </div>
 </div>

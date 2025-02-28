@@ -1,0 +1,34 @@
+<button #cardButton
+        class="w-36"
+        [ngClass]="getCardSizeClasses(numberOfCards$ | async)"
+        [disabled]="(isReadyToPlay$ | async) === false"
+        [class.card-ready]="(isReadyToPlay$ | async)"
+        [class.card-not-ready]="(isReadyToPlay$ | async) === false"
+        (click)="handleCardSelect()"
+        [class.selected]="(visualState$ | async) === 'selected'"
+        [class.selected-open]="(visualState$ | async) === 'selected' && (isOpenCardsPlayMode$ | async)"
+        [class.matched]="(visualState$ | async) === 'matched'"
+        [class.animate-hide]="(visualState$ | async) === 'matched'"
+        [class.mismatched]="(visualState$ | async) === 'mismatched'"
+        [class.disappear]="shouldDisappear">
+  <div class="card-container w-full h-full">
+    <div class="card w-full h-full"
+         [ngClass]="{'is-face-down': (visualState$ | async) === 'default' &&
+                 (isOpenCardsPlayMode$ | async) === false}">
+      <lib-card-front
+        #cardFront
+        [memoryCard]="memoryCard"
+        [cardFrontImage]="cardFrontImage">
+      </lib-card-front>
+      <div class="card-back card-size">
+        <img class="object-cover w-full h-full" [src]="cardBackImage" alt="Baksidan av spelkortet" role="presentation">
+      </div>
+    </div>
+  </div>
+</button>
+<lib-deal-animated-card
+  *ngIf="isLoaded && ((isReadyToPlay$ | async) === false)"
+  [cardButton]="cardButton"
+  [cardBackImage]="cardBackImage"
+  [cardIndex]="cardIndex">
+</lib-deal-animated-card>

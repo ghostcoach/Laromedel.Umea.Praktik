@@ -1,8 +1,6 @@
-import {inject, Injectable} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {Howl, Howler} from "howler";
 import {IPlaylistAudio} from "./api/playlist";
-import {ResetCurrentlyPlayingKey, UpdateCurrentAudioLength} from "./state/audio-state-actions";
-import {Store} from "@ngxs/store";
 
 @Injectable({
   providedIn: "root",
@@ -10,7 +8,11 @@ import {Store} from "@ngxs/store";
 export class AudioService {
   private sounds: {[key: string]: Howl} = {};
   private currentAudio: Howl;
-  private store: Store = inject(Store);
+  private audioQueue: string[] = [];
+
+  public queueSound(key: string): void {
+    this.audioQueue.push(key);
+  }
 
   /**
    * Loads an audio file.
@@ -50,24 +52,36 @@ export class AudioService {
    * @param isSoundEnabled
    */
   public playSound(key: string, isSoundEnabled: boolean): void {
-    const sound: Howl = this.sounds[key];
+    if (!isSoundEnabled) {
+      console.warn(`Sound ${key} is disabled.`);
+      return;
+    }
 
-    if (sound) {
-      if (!sound.playing()) {
-        sound.mute(!isSoundEnabled);
-        this.store.dispatch(new UpdateCurrentAudioLength(sound.duration()));
+    if (!this.isSoundLoaded(key)) {
+      console.warn(`Sound ${key} is not loaded.`);
+      return;
+    }
 
-        sound.play();
-        this.currentAudio = sound;
+    this.currentAudio = this.sounds[key];
+    this.currentAudio.play();
 
-        sound.on("end", (): void => {
-          this.store.dispatch(new ResetCurrentlyPlayingKey());
-        });
-      } else {
-        console.warn(`Sound with key ${key} is already playing.`);
+    this.currentAudio.once("end", () => {
+      setTimeout(() => {
+        this.playNextSoundInQueue(isSoundEnabled);
+      }, 500);
+    });
+  }
+
+  public isAudioPlaying(): boolean {
+    return this.currentAudio && this.currentAudio.playing();
+  }
+
+  public playNextSoundInQueue(isSoundEnabled: boolean): void {
+    if (this.audioQueue.length > 0) {
+      const nextSound: string | undefined = this.audioQueue.shift();
+      if (nextSound) {
+        this.playSound(nextSound, isSoundEnabled);
       }
-    } else {
-      console.error(`Sound with key ${key} not found.`);
     }
   }
 

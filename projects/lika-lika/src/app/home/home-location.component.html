@@ -1,20 +1,38 @@
-<header class="grid place-items-center border-b border-amber-50 p-1 xs:p-10">
-  <img
-    class="w-full sm:w-2/3 md:w-1/2 lg:w-2/5 2xl:w-2/5 3xl:w-2/5 max-w-2xl"
-    src="/assets/layout/home-title.svg"
-    alt="Logotyp som visar texten Lika=Lika Memory"
-    role="presentation">
-</header>
-<main class="p-8 flex flex-col gap-y-5">
-  <h2 class="font-semibold text-center">Välj ämnesområde</h2>
-  <nav>
-    <ul class="grid portrait:grid-cols-1 grid-cols-2 gap-4">
-      <li *ngFor="let key of subjectAreaKeys">
-        <app-subject-area-link
-          [subjectArea]="subjectAreaEnum[key]"
-          class="w-full block"
-        ></app-subject-area-link>
+<div class="grid page-layout_header-main-footer home-container">
+  <header class="grid place-items-center">
+    <img
+      class="pt-20 pb-8 w-full sm:w-2/3 md:w-1/2 lg:w-2/5 2xl:w-2/5 3xl:w-2/5 max-w-2xl"
+      src="/assets/layout/home-title.svg"
+      alt="Logotyp som visar texten Lika=Lika Memory"
+      role="presentation">
+  </header>
+  <main
+    class="h-full p-0 flex flex-col gap-5 lg:gap-8 xl:gap-10 2xl:gap-12 3xl:gap-14">
+    <h2 class="leading-title">Ämnesområde.<span>Välj det du vill arbeta med.</span></h2>
+    <nav class="3xl:w-3/5 mx-auto">
+      <ul
+        class="home-list flex flex-wrap justify-center gap-2 sm:gap-4 md:gap-6 lg:gap-6 xl:gap-8 2xl:gap-10 xl2:gap-12 3xl:gap-14"
+      >
+        <li
+          *ngFor="let key of subjectAreaKeys"
+          class="card-link w-2/3 lg:w-[15%] 3xl:w-[30%] flex justify-center"
+        >
+          <app-subject-area-link
+            [subjectArea]="subjectAreaEnum[key]"
+            class="w-full block"
+          ></app-subject-area-link>
+        </li>
+      </ul>
+
+    </nav>
+  </main>
+  <lib-spsm-footer [bgColor]="'#153658'" [isWhiteText]="true" [isFullWidth]="false" [topBorder]="true">
+    <h4 class="font-semibold">Lika = Lika</h4>
+    <ul>
+      <li>
+        <a class="spsm-footer__link" href="/lararhandledning"
+           rel="noopener" target="_blank" aria-label="Gå till lärarhandledningen">Lärarhandledning</a>
       </li>
     </ul>
-  </nav>
-</main>
+  </lib-spsm-footer>
+</div>

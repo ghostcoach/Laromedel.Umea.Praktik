@@ -1,15 +1,14 @@
 import {Component, inject} from "@angular/core";
-import {RouterLink} from "@angular/router";
 import {EyeAnimationComponent} from "./eye-animation.component";
 import {UntilDestroy} from "@ngneat/until-destroy";
 import {Store} from "@ngxs/store";
-import {TogglePlayMode} from "../state/settings-state-actions";
+import {TogglePlayMode} from "@games/memory-settings-state-actions";
 
 @UntilDestroy()
 @Component({
   selector: "app-play-mode-setting",
   standalone: true,
-  imports: [RouterLink, EyeAnimationComponent],
+  imports: [EyeAnimationComponent],
   templateUrl: "./play-mode-setting.component.html",
   styleUrl: "./play-mode-setting.component.scss",
 })

@@ -6,8 +6,8 @@ import {SubtitleSettingComponent} from "../subtitle-setting/subtitle-setting.com
 import {TextTransformSettingComponent} from "../text-transform-setting/text-transform-setting.component";
 import {Observable} from "rxjs";
 import {Store} from "@ngxs/store";
-import {SettingsStateQueries} from "../state/settings-state-queries";
-import {TogglePlayMode} from "../state/settings-state-actions";
+import {MemorySettingsStateQueries} from "@games/memory-settings-state-queries";
+import {TogglePlayMode} from "@games/memory-settings-state-actions";
 import {CardCountSettingComponent} from "../card-count-setting/card-count-setting.component";
 import {PairModeSettingComponent} from "../pair-mode-setting/pair-mode-setting.component";
 
@@ -27,7 +27,7 @@ import {PairModeSettingComponent} from "../pair-mode-setting/pair-mode-setting.c
   styleUrl: "./settings-location.component.scss",
 })
 export class SettingsLocationComponent {
-  public isOpenCardsPlayMode$: Observable<boolean> = this.store.select(SettingsStateQueries.isOpenCardsPlayMode$);
+  public isOpenCardsPlayMode$: Observable<boolean> = this.store.select(MemorySettingsStateQueries.isOpenCardsPlayMode$);
 
   constructor(
     private location: Location,

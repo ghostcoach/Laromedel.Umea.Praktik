@@ -1,0 +1,17 @@
+<div
+  class="animated-card"
+  [ngClass]="getCardSizeClasses(numberOfCards$ | async)"
+  [style.left.px]="positionX"
+  [style.top.px]="positionY"
+  [class.card-even]="shouldTilt && isEvenCardTilt"
+  [class.card-odd]="shouldTilt && !isEvenCardTilt"
+>
+  <div class="card-container w-full h-full">
+    <div class="card w-full h-full">
+      <div class="card-back card-size">
+        <img class="object-cover w-full h-full" [src]="cardBackImage" alt="Baksidan av det utdelade spelkortet"
+             role="presentation">
+      </div>
+    </div>
+  </div>
+</div>

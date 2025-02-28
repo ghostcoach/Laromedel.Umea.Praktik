@@ -4,4 +4,5 @@ import {SubjectArea} from "./subject-area";
 export interface ISubjectAreaStateModel {
   subjectArea: SubjectArea;
   categories: ICategoryViewModel[];
+  categoryNamePlaying: string;
 }

@@ -1,21 +1,30 @@
 @import "../../../variables.scss";
 
 .subject-area-estetisk-verksamhet {
-  background-color: $arts-color;
+  color: $arts-color;
 }
 
 .subject-area-kommunikation {
-  background-color: $communication-color;
+  color: $communication-color;
 }
 
 .subject-area-motorik {
-  background-color: $motor-color;
+  color: $motor-color;
 }
 
 .subject-area-vardagsaktiviteter {
-  background-color: $everyday-color;
+  color: $everyday-color;
 }
 
 .subject-area-verklighetsuppfattning {
-  background-color: $reality-color;
+  color: $reality-color;
+}
+
+span {
+  text-wrap: balance;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  font-weight: 600;
+
 }

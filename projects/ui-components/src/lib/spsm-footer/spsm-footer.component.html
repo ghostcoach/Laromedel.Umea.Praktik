@@ -1,7 +1,12 @@
 <footer
   [class.footer--spsm-blue]="isSpsmBlue"
+  [class.footer--spsm-red]="isSpsmRed"
   [class.footer--underline-links]="isUnderline"
-  class="spsm__footer">
+  [class.footer--top-border]="topBorder"
+  [class.text-white]="isWhiteText"
+  class="spsm__footer"
+  #footer
+>
   <div class="footer__wrapper" [class.footer__wrapper--full-width]="isFullWidth">
     <div class="logo__container">
       <button (click)="openSpsmWebpage()" (keydown.enter)="openSpsmWebpage()" class="logo__image-btn">

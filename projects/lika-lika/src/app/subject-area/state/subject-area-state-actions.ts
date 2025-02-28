@@ -12,3 +12,9 @@ export class UpdateSubjectAreaCategories {
 
   constructor(public categories: ICategoryViewModel[]) {}
 }
+
+export class UpdateCategoryNamePlaying {
+  static readonly type: string = "[SubjectArea] Update Category Name Playing";
+
+  constructor(public categoryNamePlaying: string) {}
+}

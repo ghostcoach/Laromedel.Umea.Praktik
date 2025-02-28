@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, inject} from "@angular/core";
 import {UntilDestroy} from "@ngneat/until-destroy";
 import {Store} from "@ngxs/store";
 import {Observable} from "rxjs";
-import {SettingsStateQueries} from "../../settings/state/settings-state-queries";
+import {MemorySettingsStateQueries} from "@games/memory-settings-state-queries";
 import {IImage} from "@media/image";
 import {GameStateQueries} from "@games/game-state-queries";
 import {Player} from "@games/src/lib/api/player";
@@ -14,7 +14,6 @@ import {ConfettiCanonComponent} from "@ui-components/confetti-canon.component";
   standalone: true,
   imports: [ConfettiCanonComponent],
   templateUrl: "./game-over.component.html",
-  styleUrl: "./game-over.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameOverComponent {
@@ -23,7 +22,7 @@ export class GameOverComponent {
 
   public get gameOverImage(): IImage {
     const winner: string = this.store.selectSnapshot(GameStateQueries.winner$);
-    const isSinglePlayerGame: boolean = this.store.selectSnapshot(SettingsStateQueries.isOnePlayer$);
+    const isSinglePlayerGame: boolean = this.store.selectSnapshot(MemorySettingsStateQueries.isOnePlayer$);
     const gameOverImageFolder: string = "/assets/layout/game-over";
 
     if (isSinglePlayerGame) {

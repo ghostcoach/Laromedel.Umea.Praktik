@@ -11,6 +11,9 @@ trigger:
 pool:
   name: "Server2022"
 
+variables:
+  - group: OctopusDeployVariables
+
 steps:
   - task: CopyFiles@2
     inputs:
@@ -26,18 +29,32 @@ steps:
       TargetFolder: "$(Build.SourcesDirectory)/dist/lika-lika/assets"
     displayName: "Copy ui-components assets to dist folder"
 
-  - task: OctopusPack@4
+  - task: OctopusPackNuGet@6
+    name: pkg
+    displayName: 'Package NuPkg For Octopus Deploy'
     inputs:
       PackageId: "Laromedel.LikaLika.Assets"
-      PackageFormat: "NuPkg"
-      PackageVersion: "$(Build.BuildNumber)"
+      PackageVersion: '$(Build.BuildNumber)'
+      NuGetDescription: 'Lika Lika Frontend'
+      NuGetAuthors: 'SPSM'
       SourcePath: "$(Build.SourcesDirectory)/dist/lika-lika/assets"
       OutputPath: "$(Build.ArtifactStagingDirectory)"
-    displayName: "Create OctopusPackage artifact"
 
-  - task: PublishBuildArtifacts@1
+  - task: OctopusPush@6
+    displayName: 'Push package to Octopus'
     inputs:
-      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
-      ArtifactName: "OctopusPackage"
-      publishLocation: "Container"
-    displayName: "Publish OctopusPackage artifact"
+      OctoConnectedServiceName: $(connectionName)
+      Space: $(spaceName)
+      Packages: '$(Build.ArtifactStagingDirectory)/Laromedel.LikaLika.Assets.$(Build.BuildNumber).nupkg'
+      Replace: true
+
+  - task: OctopusCreateRelease@6
+    name: create_release
+    displayName: 'Create Octopus Release'
+    inputs:
+      OctoConnectedServiceName: $(connectionName)
+      Space: $(spaceName)
+      ReleaseNumber: '$(Build.BuildNumber)'
+      Project: Lika-Lika
+      Packages: 'Laromedel.LikaLika.Assets:$(Build.BuildNumber)'
+      Channel: Assets

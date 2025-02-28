@@ -9,6 +9,7 @@ export function initializeDefaultState(): IMemoryGameStateModel {
     playingDeck: [],
     isSinglePlayerMode: true,
     selectedCards: [],
+    queuedSelections: [],
     matchedCards: [],
     indicateError: false,
     readyToPlay: false,
@@ -40,7 +41,7 @@ export function createDeck(memoryCards: MemoryCard[], numberOfPlayingCards: numb
 }
 
 export function createMemoryCardPair(memoryCard: MemoryCard, secondCardContent: CardContent): MemoryCard {
-  return new MemoryCard(memoryCard.pairId, memoryCard.word, memoryCard.baseHref, secondCardContent);
+  return new MemoryCard(memoryCard.pairId, memoryCard.word, memoryCard.baseHref, secondCardContent, memoryCard.wordIsAlsoIllustration);
 }
 
 export const {MEDIA_TIMEOUT, MATCH_TIMEOUT} = {

@@ -1,0 +1,13 @@
+<div class="grid place-items-center gap-12 grid auto-rows-[fit-content(100%)]"
+     [ngClass]="getStyleClassesForAllCardSizes((numberOfCards$ | async), styles)">
+  @for (memoryCard of playingDeck$ | async; track memoryCard.id; let index = $index) {
+    <lib-card
+      [memoryCard]="memoryCard"
+      [cardBackImage]="cardBackImage"
+      [cardFrontImage]="cardFrontImage"
+      [cardIndex]="index"
+      [class.landscape:col-start-2]="(index === 8 && (numberOfCards$ | async) === 10) || (index === 12 && (numberOfCards$ | async) === 14)"
+      [class.landscrape:col-start-3]="(index === 9 && (numberOfCards$ | async) === 10) || (index === 13 && (numberOfCards$ | async) === 14)">
+    </lib-card>
+  }
+</div>

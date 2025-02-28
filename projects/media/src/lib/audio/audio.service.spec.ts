@@ -41,12 +41,6 @@ describe("AudioService", (): void => {
     expect(playSpy).toHaveBeenCalled();
   });
 
-  it("should log an error if trying to play a non-loaded sound", (): void => {
-    spyOn(console, "error");
-    service.playSound("nonExistentSound", true);
-    expect(console.error).toHaveBeenCalledWith("Sound with key nonExistentSound not found.");
-  });
-
   it("should pause a sound", (): void => {
     const pauseSpy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
     service["sounds"]["testSound"] = new Howl({
@@ -56,12 +50,6 @@ describe("AudioService", (): void => {
 
     service.pauseSound("testSound");
     expect(pauseSpy).toHaveBeenCalled();
-  });
-
-  it("should log an error if trying to pause a non-loaded sound", (): void => {
-    spyOn(console, "error");
-    service.pauseSound("nonExistentSound");
-    expect(console.error).toHaveBeenCalledWith("Sound with key nonExistentSound not found.");
   });
 
   it("should stop a sound", (): void => {
@@ -75,12 +63,6 @@ describe("AudioService", (): void => {
     expect(stopSpy).toHaveBeenCalled();
   });
 
-  it("should log an error if trying to stop a non-loaded sound", (): void => {
-    spyOn(console, "error");
-    service.stopSound("nonExistentSound");
-    expect(console.error).toHaveBeenCalledWith("Sound with key nonExistentSound not found.");
-  });
-
   it("should unload a sound", (): void => {
     const unloadSpy: jasmine.Spy<jasmine.Func> = jasmine.createSpy();
     service["sounds"]["testSound"] = new Howl({
@@ -91,12 +73,6 @@ describe("AudioService", (): void => {
     service.unloadSound("testSound");
     expect(unloadSpy).toHaveBeenCalled();
     expect(service["sounds"]["testSound"]).toBeUndefined();
-  });
-
-  it("should log an error if trying to unload a non-loaded sound", (): void => {
-    spyOn(console, "error");
-    service.unloadSound("nonExistentSound");
-    expect(console.error).toHaveBeenCalledWith("Sound with key nonExistentSound not found.");
   });
 
   it("should set the global volume", (): void => {

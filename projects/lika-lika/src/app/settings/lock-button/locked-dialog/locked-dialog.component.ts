@@ -1,29 +1,19 @@
 import {Component, inject, OnInit} from "@angular/core";
 import {UntilDestroy} from "@ngneat/until-destroy";
-import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle} from "@angular/material/dialog";
+import {MatDialogRef, MatDialogTitle} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {Store} from "@ngxs/store";
-import {UpdateIsSettingsLocked} from "../../state/settings-state-actions";
+import {UpdateIsSettingsLocked} from "@games/memory-settings-state-actions";
 
 @UntilDestroy()
 @Component({
   selector: "app-locked-dialog",
   standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatButtonModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose,
-    NgIf,
-  ],
+  imports: [MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatDialogTitle, NgIf],
   templateUrl: "./locked-dialog.component.html",
   styleUrl: "./locked-dialog.component.scss",
 })

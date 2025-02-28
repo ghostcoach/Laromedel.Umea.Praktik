@@ -4,7 +4,6 @@ import {MemoryCard} from "@games/memory-card";
 export interface ICategory {
   name: string;
   displayName: string;
-  logoImage: string;
   menuImage: string;
   menuImageAlt: string;
   cardFrontImage: string;

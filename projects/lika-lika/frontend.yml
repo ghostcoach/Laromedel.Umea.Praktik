@@ -1,4 +1,4 @@
-name: 3.0.1-frontend-ci-$(Rev:rr)
+name: 3.0.2-frontend-ci-$(Rev:rr)
 
 trigger:
   branches:
@@ -20,6 +20,8 @@ trigger:
 pool:
   name: "Server2022"
 
+variables:
+  - group: OctopusDeployVariables
 steps:
   - checkout: self
     clean: false
@@ -135,18 +137,32 @@ steps:
       customCommand: "run build lika-lika"
     displayName: "Build lika-lika project"
 
-  - task: OctopusPack@4
+  - task: OctopusPackNuGet@6
+    name: pkg
+    displayName: 'Package NuPkg For Octopus Deploy'
     inputs:
       PackageId: "Laromedel.LikaLika.Frontend"
-      PackageFormat: "NuPkg"
-      PackageVersion: "$(Build.BuildNumber)"
+      PackageVersion: '$(Build.BuildNumber)'
+      NuGetDescription: 'Lika Lika Frontend'
+      NuGetAuthors: 'SPSM'
       SourcePath: "$(Build.SourcesDirectory)/dist/lika-lika/browser"
       OutputPath: "$(Build.ArtifactStagingDirectory)"
-    displayName: "Create OctopusPackage artifact"
 
-  - task: PublishBuildArtifacts@1
+  - task: OctopusPush@6
+    displayName: 'Push Packages to Octopus'
     inputs:
-      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
-      ArtifactName: 'OctopusPackage'
-      publishLocation: 'Container'
-    displayName: "Publish build artifacts"
+      OctoConnectedServiceName: $(connectionName)
+      Space: $(spaceName)
+      Packages: '$(Build.ArtifactStagingDirectory)/Laromedel.LikaLika.Frontend.$(Build.BuildNumber).nupkg'
+      Replace: true
+
+  - task: OctopusCreateRelease@6
+    name: create_release
+    displayName: 'Create Octopus Release'
+    inputs:
+      OctoConnectedServiceName: $(connectionName)
+      Space: $(spaceName)
+      ReleaseNumber: '$(Build.BuildNumber)'
+      Project: Lika-Lika
+      Packages: 'Laromedel.LikaLika.Frontend:$(Build.BuildNumber)'
+      Channel: Frontend

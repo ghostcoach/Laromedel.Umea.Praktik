@@ -8,7 +8,7 @@ import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
 import {AudioState} from "@media/audio-state";
 import {SubtitleState} from "@media/subtitle-state";
 import {SubjectAreaState} from "./subject-area/state/subject-area-state";
-import {SettingsState} from "./settings/state/settings-state";
+import {MemorySettingsState} from "../../../games/src/lib/memory/state/memory-settings-state";
 import {CategoryContentState} from "./category/state/category-content-state";
 import {provideAnimations} from "@angular/platform-browser/animations";
 import {ApplicationState} from "@utility/application-state";
@@ -22,7 +22,16 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     importProvidersFrom(
       NgxsModule.forRoot(
-        [SettingsState, SubjectAreaState, ApplicationState, CategoryContentState, AudioState, SubtitleState, MemoryGameState, GameState],
+        [
+          MemorySettingsState,
+          SubjectAreaState,
+          ApplicationState,
+          CategoryContentState,
+          AudioState,
+          SubtitleState,
+          MemoryGameState,
+          GameState,
+        ],
         {
           developmentMode: !environment.production,
         },

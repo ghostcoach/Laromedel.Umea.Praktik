@@ -10,5 +10,8 @@
 <mat-menu #menu="matMenu" class="settings-menu">
   <app-pair-mode-setting></app-pair-mode-setting>
   <hr class="menu-separator">
-  <a class="text-black underline text-center" [routerLink]="'/kortinstallningar'">Visa och hantera kortens innehåll</a>
+  <a class="text-black underline text-center"
+     [routerLink]="['/kort', subjectAreaDataName$ | async]">
+    Förhandsgranska och exkludera kort
+  </a>
 </mat-menu>

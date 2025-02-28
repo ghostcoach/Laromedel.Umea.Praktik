@@ -3,8 +3,8 @@ import {Observable} from "rxjs";
 import {Store} from "@ngxs/store";
 import {AsyncPipe} from "@angular/common";
 import {UntilDestroy} from "@ngneat/until-destroy";
-import {SettingsStateQueries} from "../state/settings-state-queries";
-import {ToggleTextTransform} from "../state/settings-state-actions";
+import {MemorySettingsStateQueries} from "@games/memory-settings-state-queries";
+import {ToggleTextTransform} from "@games/memory-state-actions";
 
 @UntilDestroy()
 @Component({
@@ -16,7 +16,7 @@ import {ToggleTextTransform} from "../state/settings-state-actions";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TextTransformSettingComponent {
-  public isUppercaseTextTransform$: Observable<boolean> = this.store.select(SettingsStateQueries.isUpperCaseTextTransform$);
+  public isUppercaseTextTransform$: Observable<boolean> = this.store.select(MemorySettingsStateQueries.isUpperCaseTextTransform$);
 
   constructor(private store: Store) {}
 

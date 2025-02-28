@@ -31,4 +31,20 @@ export class CategoryRepository {
 
     return category;
   }
+
+  public getCategoryWordsByCategoryName(name: string): string[] {
+    const category: ICategory = this.getCategoryByName(name);
+
+    return category.cards.map((card): string => card.word);
+  }
+
+  private getDefaultCategory(subjectArea: SubjectArea): ICategory {
+    return this.categories.find((category: ICategory): boolean => category.subjectArea === subjectArea) as ICategory;
+  }
+
+  public getCategoryCardBackImage(subjectArea: SubjectArea): string {
+    const category: ICategory = this.getDefaultCategory(subjectArea);
+
+    return category.cardBackImage;
+  }
 }

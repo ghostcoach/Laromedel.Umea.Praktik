@@ -62,9 +62,13 @@ export function replaceSpecialCharacters(str: string): string {
     .toLowerCase()
     .replace(/[åä]/g, "a")
     .replace(/[ö]/g, "o")
-    .replace(/[^a-z0-9]/g, "");
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
 }
 
 export function parseName(name: string): string {
-  return replaceSpecialCharacters(name).replace(/ /g, "-").toLowerCase();
+  if (/^[åäö]$/i.test(name)) {
+    return name;
+  }
+  return replaceSpecialCharacters(name);
 }

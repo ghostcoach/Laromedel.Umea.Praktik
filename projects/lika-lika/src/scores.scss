@@ -7,6 +7,14 @@
   transform-style: preserve-3d;
 }
 
+.leading-title {
+  @apply font-semibold tracking-wide text-center p-5 pb-0 flex flex-col lg:flex-row lg:items-baseline lg:mx-auto lg:w-fit;
+
+  span {
+    @apply font-light lg:ml-2;
+  }
+}
+
 .score-front,
 .score-back {
   position: absolute;

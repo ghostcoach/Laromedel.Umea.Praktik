@@ -8,7 +8,6 @@ import {
   IndicateError,
   IndicateReadyToPlay,
   NewMemoryGame,
-  ProcessSelectedMemoryCards,
   RegisterDealtCard,
   ResetIndicateError,
   ResetMemoryGame,
@@ -22,7 +21,6 @@ import {
   ToggleCurrentPlayer,
 } from "../../state/game-state-actions";
 import {GameStateQueries} from "../../state/game-state-queries";
-import {AudioService} from "@media/audio.service";
 import {MemoryGameConfig} from "../api/memory-game-config";
 import {createDeck, initializeDefaultState, isMemoryCardMatched, isMemoryCardSelected} from "./memory-game-util";
 import {TimeoutService} from "@utility/timeout.service";
@@ -36,9 +34,10 @@ const stateToken: StateToken<IMemoryGameStateModel> = new StateToken<IMemoryGame
 })
 @Injectable()
 export class MemoryGameState {
+  private readonly numberOfCardsToMatch: number = 2;
+
   constructor(
     private store: Store,
-    private audioService: AudioService,
     private timeoutService: TimeoutService,
   ) {}
 
@@ -68,7 +67,6 @@ export class MemoryGameState {
   @Action(SelectMemoryCard)
   public selectCard(ctx: StateContext<IMemoryGameStateModel>, {selectedMemoryCard}: SelectMemoryCard): void {
     const state: IMemoryGameStateModel = ctx.getState();
-    const numberOfCardsToMatch: number = 2;
 
     if (state.indicateError) {
       this.handleIndicateError(ctx, selectedMemoryCard);
@@ -79,10 +77,14 @@ export class MemoryGameState {
       return;
     }
 
-    const updatedSelectedCards: MemoryCard[] = [...state.selectedCards, selectedMemoryCard];
-    ctx.patchState({selectedCards: updatedSelectedCards});
+    const numberOfCardsSelected: number = state.selectedCards.length + 1;
 
-    if (updatedSelectedCards.length === numberOfCardsToMatch) {
+    if (numberOfCardsSelected > this.numberOfCardsToMatch) {
+      ctx.patchState({queuedSelections: [...state.queuedSelections, selectedMemoryCard]});
+    } else {
+      ctx.patchState({selectedCards: [...state.selectedCards, selectedMemoryCard]});
+
+      if (numberOfCardsSelected !== this.numberOfCardsToMatch) return;
       this.scheduleCardProcessing(ctx);
     }
   }
@@ -94,12 +96,7 @@ export class MemoryGameState {
   }
 
   private isValidSelection(card: MemoryCard, state: IMemoryGameStateModel): boolean {
-    return (
-      card &&
-      !isMemoryCardSelected(card, state.selectedCards) &&
-      !isMemoryCardMatched(card, state.matchedCards) &&
-      state.selectedCards.length < 2
-    );
+    return card && !isMemoryCardSelected(card, state.selectedCards) && !isMemoryCardMatched(card, state.matchedCards);
   }
 
   private scheduleCardProcessing(ctx: StateContext<IMemoryGameStateModel>): void {
@@ -118,13 +115,14 @@ export class MemoryGameState {
     );
   }
 
-  @Action(ProcessSelectedMemoryCards)
-  public processSelectedMemoryCards(ctx: StateContext<IMemoryGameStateModel>): void {
+  private processSelectedMemoryCards(ctx: StateContext<IMemoryGameStateModel>): void {
     if (this.isGameOver()) return;
 
-    const selectedCards: MemoryCard[] = ctx.getState().selectedCards;
+    const state: IMemoryGameStateModel = ctx.getState();
+    const selectedCards: MemoryCard[] = state.selectedCards;
+    const queuedSelectedCards: MemoryCard[] = state.queuedSelections;
 
-    if (this.isSelectedCardSamePair(selectedCards)) {
+    if (this.isSelectedCardSamePair(selectedCards) && queuedSelectedCards.length === 0) {
       this.handleSuccessfulMatch(ctx, selectedCards);
     } else {
       this.handleMismatch(ctx);
@@ -190,6 +188,7 @@ export class MemoryGameState {
   private resetSelectedCards(ctx: StateContext<IMemoryGameStateModel>): void {
     ctx.patchState({
       selectedCards: [],
+      queuedSelections: [],
     });
   }
 

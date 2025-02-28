@@ -5,22 +5,29 @@
 
 body {
   background-color: $primary-bg-color;
-  font-family: Open Sans, sans-serif;
+  font-family: "chivo", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
+.memory-word {
+  font-family: 'Open Sans', sans-serif;
+}
 
 h1, h2, h3, a {
   color: White;
 }
 
-h2 {
-  letter-spacing: 0.075em;
-  font-size: clamp(1rem, 0.7083rem + 1.5556vw, 3.625rem);
-
-  span {
-    font-size: clamp(1rem, 0.7083rem + 1.5556vw, 3.625rem);
-  }
-}
+//h2 {
+//  letter-spacing: 0.075em;
+//  font-size: clamp(1.1rem, 0.675rem + 1.4vw, 3.3rem);
+//
+//
+//  span {
+//    font-size: clamp(0.9rem, 0.675rem + 1.4vw, 3.3rem);
+//
+//  }
+//}
 
 h3 {
   font-size: clamp(1rem, 0.8333rem + 0.8889vw, 2.5rem);
@@ -104,4 +111,49 @@ input[type="number"] {
 
 .card-size {
   @apply aspect-[63/50] w-full
+}
+
+
+.card-link {
+  font-size: clamp(0.875rem, 0.75rem + 0.9vw, 1.75rem);
+  font-weight: 600;
+}
+
+.leading-title {
+  color: #f1851c;
+
+  span {
+    color: white;
+  }
+}
+
+.home-list {
+  .li:nth-child(4) {
+    grid-column: 2 / 3; /* Move item 4 to the center column */
+  }
+
+  .li:nth-child(5) {
+    grid-column: 3 / 4; /* Move item 5 to the right column */
+  }
+}
+
+
+.subject-area-estetisk-verksamhet {
+  color: $arts-color;
+}
+
+.subject-area-kommunikation {
+  color: $communication-color;
+}
+
+.subject-area-motorik {
+  color: $motor-color;
+}
+
+.subject-area-vardagsaktiviteter {
+  color: $everyday-color;
+}
+
+.subject-area-verklighetsuppfattning {
+  color: $reality-color;
 }

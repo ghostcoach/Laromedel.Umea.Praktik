@@ -4,12 +4,14 @@ import {clone} from "ramda";
 import {Injectable} from "@angular/core";
 import {
   AddCardToPlayWithAction,
-  LoadCategoryContentFromLocalStorage,
+  LoadCategoryContent,
   RemoveCardToPlayWithAction,
   UpdateCategoryContentAction,
+  UpdateLocalStorageCategoryContent,
 } from "./category-content-state-actions";
 import {ICategoryContentStateModel} from "../api/category-content-state-model";
 import {ICategoryContent} from "../api/category-content";
+import {CategoryService} from "../service/category.service";
 
 const stateToken: StateToken<ICategoryContentStateModel> = new StateToken<ICategoryContentStateModel>("categoryContentState");
 
@@ -22,10 +24,12 @@ const stateToken: StateToken<ICategoryContentStateModel> = new StateToken<ICateg
 })
 @Injectable()
 export class CategoryContentState {
+  constructor(private categoryService: CategoryService) {}
+
   @Action(AddCardToPlayWithAction)
   public addCardToPlayWith(
-    {getState, patchState}: StateContext<ICategoryContentStateModel>,
-    {category, card}: AddCardToPlayWithAction,
+    {getState, patchState, dispatch}: StateContext<ICategoryContentStateModel>,
+    {category, cardWord}: AddCardToPlayWithAction,
   ): void {
     const categoryContentsClone: ICategoryContent[] = clone(getState().categoryContents);
     const categoryIndex: number = categoryContentsClone.findIndex((c: ICategoryContent): boolean => c.categoryName === category.name);
@@ -33,17 +37,18 @@ export class CategoryContentState {
     if (categoryIndex === -1) return;
     const categoryToUpdate: ICategoryContent = clone(categoryContentsClone[categoryIndex]);
 
-    categoryToUpdate.cardWordsToPlayWith = [...categoryToUpdate.cardWordsToPlayWith, card.word];
+    categoryToUpdate.cardWordsToPlayWith = [...categoryToUpdate.cardWordsToPlayWith, cardWord];
 
     categoryContentsClone[categoryIndex] = categoryToUpdate;
 
     patchState({categoryContents: categoryContentsClone});
+    dispatch(new UpdateLocalStorageCategoryContent());
   }
 
   @Action(RemoveCardToPlayWithAction)
   public removeCardToPlayWith(
-    {getState, patchState}: StateContext<ICategoryContentStateModel>,
-    {category, card}: RemoveCardToPlayWithAction,
+    {getState, patchState, dispatch}: StateContext<ICategoryContentStateModel>,
+    {category, cardWord}: RemoveCardToPlayWithAction,
   ): void {
     const categoryContentsClone: ICategoryContent[] = clone(getState().categoryContents);
     const categoryIndex: number = categoryContentsClone.findIndex((c: ICategoryContent): boolean => c.categoryName === category.name);
@@ -51,11 +56,12 @@ export class CategoryContentState {
     if (categoryIndex === -1) return;
     const categoryToUpdate: ICategoryContent = clone(categoryContentsClone[categoryIndex]);
 
-    categoryToUpdate.cardWordsToPlayWith = categoryToUpdate.cardWordsToPlayWith.filter((c: string): boolean => c !== card.word);
+    categoryToUpdate.cardWordsToPlayWith = categoryToUpdate.cardWordsToPlayWith.filter((c: string): boolean => c !== cardWord);
 
     categoryContentsClone[categoryIndex] = categoryToUpdate;
 
     patchState({categoryContents: categoryContentsClone});
+    dispatch(new UpdateLocalStorageCategoryContent());
   }
 
   @Action(UpdateCategoryContentAction)
@@ -84,13 +90,15 @@ export class CategoryContentState {
     patchState({categoryContents: categoryContentsClone});
   }
 
-  @Action(LoadCategoryContentFromLocalStorage)
-  public loadCategoryContentFromLocalStorage(
-    {patchState}: StateContext<ICategoryContentStateModel>,
-    {categoryContentStorageData}: LoadCategoryContentFromLocalStorage,
-  ): void {
-    patchState({
-      categoryContents: categoryContentStorageData.categoryContents,
-    });
+  @Action(LoadCategoryContent)
+  public loadCategoryContent({patchState}: StateContext<ICategoryContentStateModel>): void {
+    const categoryContents: ICategoryContent[] = this.categoryService.getCategoryContent();
+
+    patchState({categoryContents: categoryContents});
+  }
+
+  @Action(UpdateLocalStorageCategoryContent)
+  public updateLocalStorageCategoryContent({getState}: StateContext<ICategoryContentStateModel>): void {
+    this.categoryService.setLocalStorageCategoryContent(getState().categoryContents);
   }
 }

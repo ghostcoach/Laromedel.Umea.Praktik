@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { GameSettingsStateQueries } from '../settings/state/game-settings-queries'
 import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory, UpdateSubjectArea, UpdateNumberOfOptions, UpdateNumberOfRounds } from '../settings/state/game-settings-actions';
-import { CardContent } from '../../../../games/src/lib/api/card-content'
+import { CardContent } from '@games/card-content'
 import { Category, SubjectArea } from "../category/api/category"
 
 @UntilDestroy()
@@ -21,7 +21,7 @@ export class GameSettingsComponent {
   @Input() gameSettings: IGameSettingStateModel;
   @Output() settingSelected = new EventEmitter<string>();
   SubjectArea = SubjectArea;
-  
+
   public firstCardOptions: CardContent[] = [
     CardContent.ILLUSTRATION,
     CardContent.RITADE_TECKEN,
@@ -256,7 +256,7 @@ export class GameSettingsComponent {
 
   updateCategory(option: Category, subjectArea: SubjectArea): void {
     this.store.dispatch(new UpdateCategory(option));
-    this.store.dispatch(new UpdateSubjectArea(subjectArea));    
+    this.store.dispatch(new UpdateSubjectArea(subjectArea));
   }
 
   updateNumberOfOptions(option: number): void {
@@ -266,6 +266,6 @@ export class GameSettingsComponent {
   updateNumberOfRounds(option: number): void {
     this.store.dispatch(new UpdateNumberOfRounds(option));
   }
-  
+
 
 }

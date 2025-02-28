@@ -2,9 +2,9 @@ import {ChangeDetectionStrategy, Component} from "@angular/core";
 import {UntilDestroy} from "@ngneat/until-destroy";
 import {Store} from "@ngxs/store";
 import {Observable} from "rxjs";
-import {SettingsStateQueries} from "../state/settings-state-queries";
+import {MemorySettingsStateQueries} from "@games/memory-settings-state-queries";
 import {PlayerCount} from "../../../../../games/src/lib/api/player-count";
-import {UpdateNumberOfPlayers} from "../state/settings-state-actions";
+import {UpdateNumberOfPlayers} from "@games/memory-settings-state-actions";
 import {AsyncPipe} from "@angular/common";
 
 @UntilDestroy()
@@ -17,8 +17,8 @@ import {AsyncPipe} from "@angular/common";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NumberOfPlayersSettingComponent {
-  public isOnePlayer$: Observable<boolean> = this.store.select(SettingsStateQueries.isOnePlayer$);
-  public isTwoPlayers$: Observable<boolean> = this.store.select(SettingsStateQueries.isTwoPlayers$);
+  public isOnePlayer$: Observable<boolean> = this.store.select(MemorySettingsStateQueries.isOnePlayer$);
+  public isTwoPlayers$: Observable<boolean> = this.store.select(MemorySettingsStateQueries.isTwoPlayers$);
 
   constructor(private store: Store) {}
 

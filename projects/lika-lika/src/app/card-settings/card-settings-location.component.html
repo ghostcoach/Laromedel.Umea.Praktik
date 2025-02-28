@@ -1,0 +1,39 @@
+<div class="grid page-layout_header-main">
+  <app-settings></app-settings>
+  <main class="w-full grid place-items-center gap-10  mx-auto bg-[#f7f7f7]">
+
+    <section class="w-[90%]  p-10 flex flex-col gap-5 rounded-lg max-w-screen-2xl">
+      <h1 class="text-black font-semibold text-2xl 2xl:text-3xl 3xl:text-4xl">
+        Kort {{ currentCategoryName }}</h1>
+      <p class="text-lg 2xl:text-xl">Kryssa i de kort du vill spela med. Dina val sparas
+        automatiskt.</p>
+
+      <div class="w-4/5 flex gap-4 2xl:w-3/5">
+        <div class="selector-container">
+          <label for="subjectArea">Ämnesområde:</label>
+          <select
+            id="subjectArea"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:text-black focus:ring-blue-700 focus:border-blue-950 sm:text-sm"
+            [ngModel]="subjectArea" (ngModelChange)="handleSubjectAreaChange($event)"
+            (click)="$event.stopImmediatePropagation()">
+            <option *ngFor="let subjectArea of subjectAreas" [value]="subjectArea">{{ subjectArea | capitalize }}
+            </option>
+          </select>
+        </div>
+
+        <div class="selector-container">
+          <label for="category">Kategori:</label>
+          <select
+            id="category"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-black focus:ring-blue-700 focus:border-blue-950 sm:text-sm"
+            [ngModel]="currentCategoryName" (ngModelChange)="handleCategoryChange($event)"
+            (click)="$event.stopImmediatePropagation()">
+            <option *ngFor="let category of categories" [value]="category.name">{{ category.displayName | capitalize }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <app-memory-card-table [category]="categoryData()"></app-memory-card-table>
+    </section>
+  </main>
+</div>

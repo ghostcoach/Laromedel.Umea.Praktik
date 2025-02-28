@@ -1,0 +1,21 @@
+<div class="grid grid-rows-[1fr_auto] h-full">
+  <main class="p-10 mt-5">
+    <div class="flex flex-col items-center gap-y-10 lg:gap-y-16 2xl:gap-y-20">
+      <app-lika-lika-logo></app-lika-lika-logo>
+      <app-page-title [title]="'Ämnesområde'" [instructionText]="'Välj det du vill arbeta med'"></app-page-title>
+      <app-start-nav class="relative bottom-10 lg:bottom-13"></app-start-nav>
+    </div>
+  </main>
+  <footer>
+    <lib-spsm-footer class="hidden lg:block" [bgColor]="'#153658'" [isWhiteText]="true" [isFullWidth]="false"
+                     [topBorder]="true">
+      <h4 class="font-semibold">Lika = Lika</h4>
+      <ul>
+        <li>
+          <a class="spsm-footer__link" href="/lararhandledning"
+             rel="noopener" target="_blank" aria-label="Gå till lärarhandledningen">Lärarhandledning</a>
+        </li>
+      </ul>
+    </lib-spsm-footer>
+  </footer>
+</div>

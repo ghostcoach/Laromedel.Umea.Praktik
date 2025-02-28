@@ -1,0 +1,10 @@
+@if (isSingleLetter) {
+  <lib-single-letter [letter]="word"></lib-single-letter>
+} @else if (isMediumLongWord()) {
+  <lib-medium-long-word [word]="word"></lib-medium-long-word>
+} @else if (isLongWord()) {
+  <lib-long-word [word]="word"></lib-long-word>
+} @else {
+  <lib-word [word]="word"></lib-word>
+}
+

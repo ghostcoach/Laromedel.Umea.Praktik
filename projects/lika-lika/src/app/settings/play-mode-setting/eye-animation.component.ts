@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {PlayMode} from "@games/play-mode";
 import {Store} from "@ngxs/store";
-import {SettingsStateQueries} from "../state/settings-state-queries";
+import {MemorySettingsStateQueries} from "@games/memory-settings-state-queries";
 import {Observable} from "rxjs";
 
 @UntilDestroy()
@@ -29,7 +29,7 @@ export class EyeAnimationComponent implements OnInit {
   private firstLoad: boolean = true;
   private isAnimating: boolean = false;
 
-  public playMode$: Observable<PlayMode> = this.store.select(SettingsStateQueries.playMode$);
+  public playMode$: Observable<PlayMode> = this.store.select(MemorySettingsStateQueries.playMode$);
 
   constructor(
     private store: Store,
@@ -66,7 +66,6 @@ export class EyeAnimationComponent implements OnInit {
       this.iconSrc = this.images[this.index];
       this.changeDetectorRef.detectChanges();
       this.index = this.index + value;
-      console.debug("index", this.index, this.iconSrc);
 
       await new Promise((r) => setTimeout(r, 100));
     }

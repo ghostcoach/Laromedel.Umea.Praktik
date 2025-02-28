@@ -18,10 +18,6 @@ export class SelectMemoryCard {
   constructor(public selectedMemoryCard: MemoryCard) {}
 }
 
-export class ProcessSelectedMemoryCards {
-  static readonly type: string = "[MemoryGame] Process Selected Cards";
-}
-
 export class ResetMemoryGame {
   static readonly type: string = "[MemoryGame] Reset Game";
 }

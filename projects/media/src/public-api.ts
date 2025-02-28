@@ -27,3 +27,5 @@ export * from "./lib/audio/api/playlist";
 export * from "./lib/audio/api/playlist-playback-mode";
 export * from "./lib/image/api/image-extension";
 export * from "./lib/image/api/image";
+export * from "./lib/image/api/image-source-type";
+export * from "./lib/text/api/text-transform";

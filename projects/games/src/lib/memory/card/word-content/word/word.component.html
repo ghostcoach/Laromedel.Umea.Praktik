@@ -1,0 +1,10 @@
+<span
+  class="memory-word"
+  [ngClass]="getTextClasses((numberOfCards$ | async), (isUppercaseTextTransform$ | async), styles)">
+  @if (isUppercaseTextTransform$ | async) {
+    {{ word | uppercase }}
+
+  } @else {
+    {{ word }}
+  }
+</span>

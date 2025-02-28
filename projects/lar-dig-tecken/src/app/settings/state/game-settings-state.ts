@@ -2,7 +2,7 @@ import { Action, State, StateContext, StateToken, Selector } from '@ngxs/store'
 import { Injectable } from '@angular/core'
 import { IGameSettingStateModel } from './api/game-settings-state-model'
 import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory, UpdateSubjectArea, UseAllCategories, UpdateNumberOfOptions, UpdateNumberOfRounds } from './game-settings-actions'
-import { CardContent } from '../../../../../games/src/lib/api/card-content'
+import { CardContent } from '@games/card-content'
 import { Category, SubjectArea } from '../../category/api/category'
 
 const stateToken: StateToken<IGameSettingStateModel> = new StateToken<IGameSettingStateModel>("gameSettingsState")
@@ -11,7 +11,7 @@ const stateToken: StateToken<IGameSettingStateModel> = new StateToken<IGameSetti
     name: stateToken,
     defaults: {
         numberOfOptions: 3,
-        pairingMode: { 
+        pairingMode: {
             first: CardContent.WORD,
             second: CardContent.WORD,
         },
@@ -62,7 +62,7 @@ export class GameSettingsState {
     @Action(UpdateFirstPairingMode)
     updateFirstPairingMode(ctx: StateContext<IGameSettingStateModel>, action: UpdateFirstPairingMode):void {
         const state: IGameSettingStateModel = ctx.getState();
-        
+
         ctx.patchState({
           pairingMode: {
             ...state.pairingMode,

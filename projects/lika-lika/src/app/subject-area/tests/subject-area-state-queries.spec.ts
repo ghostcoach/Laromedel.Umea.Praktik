@@ -12,7 +12,6 @@ describe("SubjectAreaStateQueries Selectors", () => {
     {
       name: "Category1",
       displayName: "Category 1 Display",
-      logoImage: "category1-logo.png",
       menuImage: "category1-menu.png",
       subjectArea: SubjectArea.ESTETISK_VERKSAMHET,
       menuImageAlt: "Category 1 Menu",
@@ -20,7 +19,6 @@ describe("SubjectAreaStateQueries Selectors", () => {
     {
       name: "Category2",
       displayName: "Category 2 Display",
-      logoImage: "category2-logo.png",
       menuImage: "category2-menu.png",
       menuImageAlt: "Category 2 Menu",
       subjectArea: SubjectArea.KOMMUNIKATION,

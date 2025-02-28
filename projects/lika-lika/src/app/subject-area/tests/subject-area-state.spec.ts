@@ -15,7 +15,6 @@ describe("SubjectAreaState", (): void => {
     {
       name: "painting",
       displayName: "Painting",
-      logoImage: "painting-logo.png",
       menuImage: "painting-menu.png",
       menuImageAlt: "Painting Menu",
       subjectArea: SubjectArea.ESTETISK_VERKSAMHET,
@@ -23,7 +22,6 @@ describe("SubjectAreaState", (): void => {
     {
       name: "sculpture",
       displayName: "Sculpture",
-      logoImage: "sculpture-logo.png",
       menuImage: "sculpture-menu.png",
       menuImageAlt: "Sculpture Menu",
       subjectArea: SubjectArea.ESTETISK_VERKSAMHET,

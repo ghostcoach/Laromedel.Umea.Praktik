@@ -1,0 +1,55 @@
+
+th, td {
+  @apply w-[10%];
+}
+
+th {
+  @apply font-semibold text-xl 3xl:text-2xl text-center;
+}
+
+tr {
+  margin-bottom: 50px;
+}
+
+
+table th:first-child, table td:first-child {
+  @apply w-[5%];
+}
+
+
+picture {
+  display: grid;
+  place-items: center;
+}
+
+img, video {
+  @apply w-4/5;
+}
+
+
+span {
+  @apply text-3xl 3xl:text-4xl font-semibold absolute;
+}
+
+.alfabet-word {
+  @apply text-center font-semibold text-6xl;
+}
+
+mat-checkbox {
+  @apply transform scale-125;
+}
+
+.preview-container {
+  @apply relative aspect-[63/50] grid place-items-center bg-white border border-gray-400 rounded-md;
+}
+
+
+.mat-mdc-table {
+  border-collapse: separate !important;
+  border-spacing: 0 20px !important;
+}
+
+.mat-mdc-cell {
+  border: none;
+}
+

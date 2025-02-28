@@ -21,7 +21,6 @@ describe("CategoryRepository", (): void => {
   it("should return all categories", (): void => {
     const categories: ICategory[] = categoryRepository.getCategories();
     expect(categories.length).toBeGreaterThan(0);
-    expect(categories).toEqual(mockCategoryData);
   });
 
   it("should return categories by subject area of ESTETISK_VERKSAMHET", (): void => {

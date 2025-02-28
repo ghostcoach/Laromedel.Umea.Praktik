@@ -1,0 +1,80 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full table-fixed">
+
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef class="w-[5%]">
+      <mat-checkbox
+        (change)="$event ? toggleAllRows() : null"
+        [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()"
+        [aria-label]="checkboxLabel()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row" class="w-[5%]">
+      <div class="flex justify-center">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="handleCheckboxChange($event, row)"
+                      [checked]="selection.isSelected(row)"
+                      [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </div>
+    </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="ord">
+    <th mat-header-cell *matHeaderCellDef>Ord</th>
+    <td mat-cell *matCellDef="let element">
+      <div class="preview-container">
+        <span class="font-semibold" [class.alfabet-word]="isAlfabetCategory">{{ element.word }}</span>
+      </div>
+    </td>
+  </ng-container>
+
+  <div class="card-media-cols">
+    <ng-container matColumnDef="bild">
+      <th mat-header-cell *matHeaderCellDef>Bild</th>
+      <td mat-cell *matCellDef="let element">
+        @if (!isAlfabetCategory) {
+          <div class="preview-container">
+            <picture>
+              <source [srcset]="element.illustrationWebp" type="image/webp">
+              <source [srcset]="element.illustrationPng" type="image/png">
+              <img [src]="element.illustrationPng" [alt]="'Illustration av ' + element.word">
+            </picture>
+          </div>
+        } @else {
+          <div class="preview-container">
+            <span class="font-semibold" [class.alfabet-word]="isAlfabetCategory">{{ element.word }}</span>
+          </div>
+        }
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="ritade-tecken">
+      <th mat-header-cell *matHeaderCellDef class="w-[5%]">Ritade tecken</th>
+      <td mat-cell *matCellDef="let element">
+        <div class="preview-container">
+          <picture>
+            <source [srcset]="element.ritadeteckenWebp" type="image/webp">
+            <source [srcset]="element.ritadeteckenSvg" type="image/svg+xml">
+            <img [src]="element.ritadeteckenSvg" [alt]="'Ritade tecken av ' + element.word">
+          </picture>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="takk">
+      <th mat-header-cell *matHeaderCellDef>TAKK</th>
+      <td mat-cell *matCellDef="let element">
+        <div class="preview-container">
+          <video [src]="element.videoMp4" controls class="border-gray-400 rounded-md"></video>
+        </div>
+      </td>
+    </ng-container>
+  </div>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      (click)="selection.toggle(row)">
+  </tr>
+</table>

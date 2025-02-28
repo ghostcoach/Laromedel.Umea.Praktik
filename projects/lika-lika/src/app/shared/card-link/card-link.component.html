@@ -1,0 +1,16 @@
+<a
+  [routerLink]="this.routerLink ? this.routerLink : ['/amnesomrade', subjectAreaDataName]"
+  class="grid place-items-center  text-balance hyphens-auto break-words"
+  [ngClass]="subjectArea ? 'subject-area-' + subjectAreaDataName : ''">
+  <img
+    [src]="cardImage.src"
+    [alt]="cardImage.alt"
+    [ngClass]="getCardImageStyle()"
+
+  />
+
+  <span
+    class="relative bottom-5 text-2xl text-center font-medium">
+    {{ title | capitalize }}
+  </span>
+</a>
