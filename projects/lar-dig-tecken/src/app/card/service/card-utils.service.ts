@@ -6,14 +6,20 @@ import { GameSettingsStateQueries } from '../../settings/state/game-settings-que
 import { GameSettingsState } from '../../settings/state/game-settings-state';
 import { ICardFullStateModel } from '../state/api/card-interface';
 import { CardStateQueries } from '../state/card.queries';
-import { BildbegreppWords } from '../../category/api/bildbegrepp';
-import { Alfabetet } from '../../category/api/alfabetet';
-import { EnklaOrd } from '../../category/api/enkla-ord';
-import { Kanslor } from '../../category/api/kanslor';
-import { Skolord } from '../../category/api/skolord';
-import { Sport } from '../../category/api/sport';
-import { Idrottshall } from '../../category/api/idrottshall';
-import { Fordon } from '../../category/api/fordon';
+// import { BildbegreppWords } from '../../category/api/bildbegrepp';
+// import { Alfabetet } from '../../category/api/alfabetet';
+// import { EnklaOrd } from '../../category/api/enkla-ord';
+// import { Kanslor } from '../../category/api/kanslor';
+// import { Skolord } from '../../category/api/skolord';
+// import { Sport } from '../../category/api/sport';
+// import { Idrottshall } from '../../category/api/idrottshall';
+// import { Fordon } from '../../category/api/fordon';
+import { Bildbegrepp } from '../../category/api/estetisk-verksamhet';
+import { Alfabetet, EnklaOrd, Kanslor, Skolord } from '../../category/api/kommunikation';
+import { Fordon, Frukt, GronsakerOchRotfrukter, Koksredskap, Livsmedel, Religion, Samhallet, Trafik } from '../../category/api/vardagsaktiviteter';
+import { Idrottshall, Rorselse, Sport, Vattensakerhet } from '../../category/api/motorik';
+import { Antal, Djur, Klader, Kroppen, Lagesord, Pengar, Vardagsteknik, Vaxter } from '../../category/api/verklighetsuppfattning';
+
 import { filter } from 'rxjs/operators';
 
 @Injectable({
@@ -67,30 +73,89 @@ export class CardUtilsService {
     let words: string[] = [];
     
     switch(category) {
-      case 'alfabetet':
-        words = Object.values(Alfabetet);
-        break
+      //Bildbegrepp
       case 'bildbegrepp':
-        words = Object.values(BildbegreppWords);
-        break
-      case 'enkla-ord':
-        words = Object.values(EnklaOrd);
-        break
-      case 'kanslor':
-        words = Object.values(Kanslor);
-        break
-      case 'skolord':
-        words = Object.values(Skolord);
-        break
-      case 'sport':
-        words = Object.values(Sport);
-        break
-      case 'idrottshall':
-        words = Object.values(Idrottshall);
-        break
-      default:
-        words = Object.values(BildbegreppWords);
-        break
+        words = Object.values(Bildbegrepp);
+        break;
+    //Kommunikation
+    case 'alfabetet':
+      words = Object.values(Alfabetet);
+        break;
+    case 'enkla ord':
+      words = Object.values(EnklaOrd);
+        break;
+    case 'känslor':
+      words = Object.values(Kanslor);
+        break;
+    case 'skolord':
+      words = Object.values(Skolord);
+        break;
+    //Motorik
+    case 'sport':
+      words = Object.values(Sport);
+        break;
+    case 'idrottshall':
+      words = Object.values(Idrottshall);
+        break;
+    case 'rörelse':
+      words = Object.values(Rorselse);
+        break;
+    case 'vattensäkerhet':
+      words = Object.values(Vattensakerhet);
+        break;
+    //Verklighetsuppfattning
+    case 'antal':
+      words = Object.values(Antal);
+        break;
+    case 'djur':
+      words = Object.values(Djur);
+        break;
+    case 'kläder':
+      words = Object.values(Klader);
+        break;
+    case 'kroppen':
+      words = Object.values(Kroppen);
+        break;
+    case 'lägesord':
+      words = Object.values(Lagesord);
+        break;
+    case 'pengar':
+      words = Object.values(Pengar);
+        break;
+    case 'vardagsteknik':
+      words = Object.values(Vardagsteknik);
+        break;
+    case 'växter':
+      words = Object.values(Vaxter);
+        break;
+    //Vardagsaktiviteter
+    case 'fordon':
+      words = Object.values(Fordon);
+        break;
+    case 'frukt':
+      words = Object.values(Frukt);
+        break;
+    case 'grönsaker och rotfrukter':
+      words = Object.values(GronsakerOchRotfrukter);
+        break;
+    case 'köksredskap':
+      words = Object.values(Koksredskap);
+        break;
+    case 'livsmedel':
+      words = Object.values(Livsmedel);
+        break;
+    case 'religion':
+      words = Object.values(Religion);
+        break;
+    case 'samhället':
+      words = Object.values(Samhallet);
+        break;
+    case 'trafik':
+      words = Object.values(Trafik);
+        break;
+    default:
+      words = Object.values(Bildbegrepp);
+        break;
     }
 
     console.log('words', words);

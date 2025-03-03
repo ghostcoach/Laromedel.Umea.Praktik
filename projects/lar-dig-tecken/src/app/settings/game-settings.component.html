@@ -228,7 +228,7 @@
                    (click)="toggleSubjectAreaDropdown('vardagsaktivitet')" 
                    class="flex items-center justify-between w-full"
                  >
-                   <h2>Vardagsaktivitet</h2>
+                   <h2>Vardagsaktiviteter</h2>
                    <img [src]="isVardagsaktivitetDropdownOpen ? 'assets/layout/icons/arrow-up.svg' : 'assets/layout/icons/arrow-down.svg'" alt="">
                  </button>
                  <ul 
@@ -237,8 +237,8 @@
                  >
                    <li *ngFor="let option of vardagsaktivitetOptions"
                      tabindex="0"
-                     (click)="updateCategory(option, SubjectArea.VARDAGSAKTIVITET)"
-                     (keydown.enter)="updateCategory(option, SubjectArea.VARDAGSAKTIVITET)"
+                     (click)="updateCategory(option, SubjectArea.VARDAGSAKTIVITETER)"
+                     (keydown.enter)="updateCategory(option, SubjectArea.VARDAGSAKTIVITETER)"
                      [class.selected]="option === (category$ | async)"
                      class="flex gap-3 p-1 border-2 border-transparent hover:cursor-pointer hover:border-orange-400 bg-transparent"
                    >

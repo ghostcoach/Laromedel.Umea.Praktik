@@ -41,7 +41,7 @@ export class GameSettingsComponent {
     SubjectArea.ESTETISK_VERKSAMHET,
     SubjectArea.KOMMUNIKATION,
     SubjectArea.MOTORIK,
-    SubjectArea.VARDAGSAKTIVITET,
+    SubjectArea.VARDAGSAKTIVITETER,
     SubjectArea.VERKLIGHETSUPPFATTNING
   ];
 

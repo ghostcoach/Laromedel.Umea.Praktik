@@ -3,14 +3,6 @@ import { Select, Store } from '@ngxs/store';
 import { Observable, combineLatest, Subject, BehaviorSubject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
-// import { BildbegreppWords } from '../../category/api/bildbegrepp';
-// import { Alfabetet } from '../../category/api/alfabetet';
-// import { EnklaOrd } from '../../category/api/enkla-ord';
-// import { Kanslor } from '../../category/api/kanslor';
-// import { Skolord } from '../../category/api/skolord';
-// import { Sport } from '../../category/api/sport';
-// import { Idrottshall } from '../../category/api/idrottshall';
-
 import { Bildbegrepp } from '../../category/api/estetisk-verksamhet';
 import { Alfabetet, EnklaOrd, Kanslor, Skolord } from '../../category/api/kommunikation';
 import { Fordon, Frukt, GronsakerOchRotfrukter, Koksredskap, Livsmedel, Religion, Samhallet, Trafik } from '../../category/api/vardagsaktiviteter';
