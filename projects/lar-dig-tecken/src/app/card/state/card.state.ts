@@ -11,6 +11,8 @@ import { Alfabetet } from '../../category/api/alfabetet';
 import { EnklaOrd } from '../../category/api/enkla-ord';
 import { Kanslor } from '../../category/api/kanslor';
 import { Skolord } from '../../category/api/skolord';
+import { Sport } from '../../category/api/sport';
+import { Idrottshall } from '../../category/api/idrottshall';
 
 
 @Injectable()
@@ -68,6 +70,12 @@ export class CardStates implements NgxsOnInit {
                 break;
             case 'skolord':
                 selectedCategoryWords = Object.values(Skolord);
+                break;
+            case 'sport':
+                selectedCategoryWords = Object.values(Sport);
+                break;
+            case 'idrottshall':
+                selectedCategoryWords = Object.values(Idrottshall);
                 break;
             default:
                 selectedCategoryWords = Object.values(BildbegreppWords);

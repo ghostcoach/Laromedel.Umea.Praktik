@@ -70,14 +70,21 @@ export class GameSettingsComponent {
     Category.KOKSREDSKAP,
     Category.FRUKT,
     Category.GRONSAKER_OCH_ROTFRUKTER,
-    Category.LIVSMEDEL
+    Category.LIVSMEDEL,
+    Category.FORDON,
+    Category.RELIGION,
+    Category.SAMHALLET,
+    Category.TRAFIK
   ];
 
   public verklighetsuppfattningOptions: Category[] = [
     Category.DJUR,
     Category.VAXTER,
     Category.ANTAL,
-    Category.LAGESORD
+    Category.LAGESORD,
+    Category.KLADER,
+    Category.PENGAR,
+    Category.VARDAGSTEKNIK
   ];
 
   public categoryOptions: Category[] = [

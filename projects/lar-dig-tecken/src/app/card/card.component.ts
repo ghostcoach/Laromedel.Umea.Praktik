@@ -22,13 +22,11 @@ export class CardComponent implements DoCheck {
   @ViewChild(CardContentComponent) cardContent!: CardContentComponent;
   @Select(GameSettingsStateQueries.pairingModeFirstCard$) pairingModeFirst$!: Observable<string>;
 
-  // @Input() gameStarted!: Observable<boolean>;
   @Input() cardData!: ICardFullStateModel;
   @ViewChildren('cardElement') cardElement!: QueryList<ElementRef>;
   @ViewChildren(CardContentComponent) cardContentComponent!: QueryList<CardContentComponent>;
   @Select(FlippedState.getFlippedClass) flippedClass$!: Observable<'flipped' | 'not-flipped'>;
   @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
-
 
   mode = '';
   audioPath = '';

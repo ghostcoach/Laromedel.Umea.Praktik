@@ -11,6 +11,9 @@ import { Alfabetet } from '../../category/api/alfabetet';
 import { EnklaOrd } from '../../category/api/enkla-ord';
 import { Kanslor } from '../../category/api/kanslor';
 import { Skolord } from '../../category/api/skolord';
+import { Sport } from '../../category/api/sport';
+import { Idrottshall } from '../../category/api/idrottshall';
+import { Fordon } from '../../category/api/fordon';
 import { filter } from 'rxjs/operators';
 
 @Injectable({
@@ -59,6 +62,7 @@ export class CardUtilsService {
 
   // Function to initialize ALL WORDS from category
   initializeWords(category: string, numberOfOptions: number): void {
+    console.log('initializeWords', category, numberOfOptions);
     
     let words: string[] = [];
     
@@ -78,10 +82,19 @@ export class CardUtilsService {
       case 'skolord':
         words = Object.values(Skolord);
         break
+      case 'sport':
+        words = Object.values(Sport);
+        break
+      case 'idrottshall':
+        words = Object.values(Idrottshall);
+        break
       default:
         words = Object.values(BildbegreppWords);
         break
     }
+
+    console.log('words', words);
+    
       // const words: string[] = Object.values(BildbegreppWords);
         
       // Step 1: Select `numberOfOptions` unique words randomly
@@ -161,25 +174,27 @@ export class CardUtilsService {
   getAudioPath(subjectArea: string, category: string, word: string): string {
     const normalizedWord: string = this.normalizeCharacters(word);
     const formattedSubjectArea: string = this.formatString(subjectArea);
+    const formattedCategory: string = this.formatString(category);
     // return `/assets/subject-area/estetisk-verksamhet/${category}/audio/${normalizedWord}.mp3`;
-    return `/assets/${formattedSubjectArea}/${category}/audio/${normalizedWord}.mp3`;
+    return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/audio/${normalizedWord}.mp3`;
   }
 
   getMediaPath(subjectArea: string, category: string, contentMedium: string, word: string): string {
     
     const normalizedWord: string = this.normalizeCharacters(word);
     const formattedSubjectArea: string = this.formatString(subjectArea);
+    const formattedCategory: string = this.formatString(category);
     if (contentMedium === 'ord') {
       return word;
     } else if (contentMedium === 'bild') {
       // return `/assets/subject-area/estetisk-verksamhet/${category}/illustration/${normalizedWord}.webp`;
-      return `/assets/subject-area/${formattedSubjectArea}/${category}/illustration/${normalizedWord}.webp`;
+      return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/illustration/${normalizedWord}.webp`;
     } else if (contentMedium === 'ritade-tecken') {
       // return `/assets/subject-area/estetisk-verksamhet/${category}/ritade-tecken/${normalizedWord}.webp`;
-      return `/assets/subject-area/${formattedSubjectArea}/${category}/ritade-tecken/${normalizedWord}.webp`;
+      return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/ritade-tecken/${normalizedWord}.webp`;
     } else if (contentMedium === 'tecken-som-stod') {
       // return `/assets/subject-area/estetisk-verksamhet/${category}/video/${normalizedWord}.mp4`;
-      return `/assets/subject-area/${formattedSubjectArea}/${category}/video/${normalizedWord}.mp4`;
+      return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/video/${normalizedWord}.mp4`;
     } else {
       return '';
     }
