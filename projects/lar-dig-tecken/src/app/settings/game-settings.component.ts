@@ -84,7 +84,8 @@ export class GameSettingsComponent {
     Category.LAGESORD,
     Category.KLADER,
     Category.PENGAR,
-    Category.VARDAGSTEKNIK
+    Category.VARDAGSTEKNIK,
+    Category.KROPPEN
   ];
 
   public categoryOptions: Category[] = [

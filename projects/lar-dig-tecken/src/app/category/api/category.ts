@@ -32,6 +32,7 @@ export enum Category{
   KLADER = 'kläder',
   PENGAR = 'pengar',
   VARDAGSTEKNIK = 'vardagsteknik',
+  KROPPEN = 'kroppen'
 }
 
 export enum SubjectArea {

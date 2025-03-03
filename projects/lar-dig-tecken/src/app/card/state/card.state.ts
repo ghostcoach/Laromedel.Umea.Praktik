@@ -6,14 +6,18 @@ import { IMultipleFullStateModel, ICardFullStateModel } from './api/card-interfa
 import { UpdateAllCards, UpdateCard, InitializeCardStates, UpdateFlippedClass } from './card.actions'
 import { GameSettingsState } from '../../settings/state/game-settings-state';
 import { CardUtilsService } from '../service/card-utils.service';
-import { BildbegreppWords } from '../../category/api/bildbegrepp';
-import { Alfabetet } from '../../category/api/alfabetet';
-import { EnklaOrd } from '../../category/api/enkla-ord';
-import { Kanslor } from '../../category/api/kanslor';
-import { Skolord } from '../../category/api/skolord';
-import { Sport } from '../../category/api/sport';
-import { Idrottshall } from '../../category/api/idrottshall';
-
+// import { BildbegreppWords } from '../../category/api/bildbegrepp';
+// import { Alfabetet } from '../../category/api/alfabetet';
+// import { EnklaOrd } from '../../category/api/enkla-ord';
+// import { Kanslor } from '../../category/api/kanslor';
+// import { Skolord } from '../../category/api/skolord';
+// import { Sport } from '../../category/api/sport';
+// import { Idrottshall } from '../../category/api/idrottshall';
+import { Bildbegrepp } from '../../category/api/estetisk-verksamhet';
+import { Alfabetet, EnklaOrd, Kanslor, Skolord } from '../../category/api/kommunikation';
+import { Fordon, Frukt, GronsakerOchRotfrukter, Koksredskap, Livsmedel, Religion, Samhallet, Trafik } from '../../category/api/vardagsaktiviteter';
+import { Idrottshall, Rorselse, Sport, Vattensakerhet } from '../../category/api/motorik';
+import { Antal, Djur, Klader, Kroppen, Lagesord, Pengar, Vardagsteknik, Vaxter } from '../../category/api/verklighetsuppfattning';
 
 @Injectable()
 @State<IMultipleFullStateModel>({
@@ -56,9 +60,11 @@ export class CardStates implements NgxsOnInit {
     private initializeCardStates(ctx: StateContext<IMultipleFullStateModel>): void {
         let selectedCategoryWords: string[] = [];
         switch (this.store.selectSnapshot(GameSettingsState.getCategory)) {
+            //Bildbegrepp
             case 'bildbegrepp':
-                selectedCategoryWords = Object.values(BildbegreppWords);
+                selectedCategoryWords = Object.values(Bildbegrepp);
                 break;
+            //Kommunikation
             case 'alfabetet':
                 selectedCategoryWords = Object.values(Alfabetet);
                 break;
@@ -71,14 +77,71 @@ export class CardStates implements NgxsOnInit {
             case 'skolord':
                 selectedCategoryWords = Object.values(Skolord);
                 break;
+            //Motorik
             case 'sport':
                 selectedCategoryWords = Object.values(Sport);
                 break;
             case 'idrottshall':
                 selectedCategoryWords = Object.values(Idrottshall);
                 break;
+            case 'rörelse':
+                selectedCategoryWords = Object.values(Rorselse);
+                break;
+            case 'vattensäkerhet':
+                selectedCategoryWords = Object.values(Vattensakerhet);
+                break;
+            //Verklighetsuppfattning
+            case 'antal':
+                selectedCategoryWords = Object.values(Antal);
+                break;
+            case 'djur':
+                selectedCategoryWords = Object.values(Djur);
+                break;
+            case 'kläder':
+                selectedCategoryWords = Object.values(Klader);
+                break;
+            case 'kroppen':
+                selectedCategoryWords = Object.values(Kroppen);
+                break;
+            case 'lägesord':
+                selectedCategoryWords = Object.values(Lagesord);
+                break;
+            case 'pengar':
+                selectedCategoryWords = Object.values(Pengar);
+                break;
+            case 'vardagsteknik':
+                selectedCategoryWords = Object.values(Vardagsteknik);
+                break;
+            case 'växter':
+                selectedCategoryWords = Object.values(Vaxter);
+                break;
+            //Vardagsaktiviteter
+            case 'fordon':
+                selectedCategoryWords = Object.values(Fordon);
+                break;
+            case 'frukt':
+                selectedCategoryWords = Object.values(Frukt);
+                break;
+            case 'grönsaker och rotfrukter':
+                selectedCategoryWords = Object.values(GronsakerOchRotfrukter);
+                break;
+            case 'köksredskap':
+                selectedCategoryWords = Object.values(Koksredskap);
+                break;
+            case 'livsmedel':
+                selectedCategoryWords = Object.values(Livsmedel);
+                break;
+            case 'religion':
+                selectedCategoryWords = Object.values(Religion);
+                break;
+            case 'samhället':
+                selectedCategoryWords = Object.values(Samhallet);
+                break;
+            case 'trafik':
+                selectedCategoryWords = Object.values(Trafik);
+                break;
             default:
-                selectedCategoryWords = Object.values(BildbegreppWords);
+                selectedCategoryWords = Object.values(Bildbegrepp);
                 break;
         }
         

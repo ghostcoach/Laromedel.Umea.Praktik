@@ -55,7 +55,7 @@ export enum GronsakerOchRotfrukter {
     VITKAL = 'vitkål',
 }
 
-export enum KOKSREDSKAP {
+export enum Koksredskap {
     BUNKE = 'bunke',
     DURKSLAG = 'durkslag',
     ELVISP = 'elvisp',
@@ -74,7 +74,7 @@ export enum KOKSREDSKAP {
     VITLOKSPRESS = 'vitlökspress',
 }
 
-export enum LIVSMEDEL {
+export enum Livsmedel {
     AGG = 'ägg',
     FILMJOLK = 'filmjölk',
     FLINGOR = 'flingor',
