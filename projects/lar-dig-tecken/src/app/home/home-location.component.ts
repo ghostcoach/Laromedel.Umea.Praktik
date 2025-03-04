@@ -28,9 +28,26 @@ export class HomeLocationComponent implements OnInit {
   public selectedGameEnum = SelectedGame;
   currentPath: string = '';
   isHomeVisible: boolean = false;
-
+  // isDropdownOpen: boolean = false;
+  arrowImg = 'assets/layout/icons/arrow-down.svg';
 
   constructor(private router: Router, private cdr: ChangeDetectorRef){}
+
+  // toggleDropdown() : void {
+  //   this.isDropdownOpen = !this.isDropdownOpen;
+  //   if(this.isDropdownOpen){
+  //     this.arrowImg = 'assets/layout/icons/arrow-up.svg';
+  //   } else {
+  //     this.arrowImg = 'assets/layout/icons/arrow-down.svg';
+  //   }
+  // }
+
+  // closeDropdown() : void {
+  //   this.isDropdownOpen = false;
+  //   this.arrowImg = 'assets/layout/icons/arrow-down.svg';
+  //   console.log('isDropdownOpen:', this.isDropdownOpen);
+    
+  // }
 
   ngOnInit(): void {
     // Subscribe to NavigationEnd events to detect route changes

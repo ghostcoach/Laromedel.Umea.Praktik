@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ElementRef, HostListener, Host} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UntilDestroy } from "@ngneat/until-destroy";
 import { IGameSettingStateModel } from '../settings/state/api/game-settings-state-model';
@@ -17,10 +17,12 @@ import { Category, SubjectArea } from "../category/api/category"
   styleUrl: './game-settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GameSettingsComponent {
+export class GameSettingsComponent{
   @Input() gameSettings: IGameSettingStateModel;
   @Output() settingSelected = new EventEmitter<string>();
   SubjectArea = SubjectArea;
+
+  constructor(private store: Store, private eRef: ElementRef){}
 
   public firstCardOptions: CardContent[] = [
     CardContent.ILLUSTRATION,
@@ -138,13 +140,21 @@ export class GameSettingsComponent {
   buttonImg = '';
   arrowImg = 'assets/layout/icons/arrow-down.svg';
 
-  constructor(private store: Store){}
+
 
   toggleDropdown() : void {
     this.isDropdownOpen = !this.isDropdownOpen;
     if(this.isDropdownOpen){
       this.arrowImg = 'assets/layout/icons/arrow-up.svg';
     } else {
+      this.arrowImg = 'assets/layout/icons/arrow-down.svg';
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) : void {
+    if (this.isDropdownOpen && !this.eRef.nativeElement.contains(event.target)) {
+      this.isDropdownOpen = false;
       this.arrowImg = 'assets/layout/icons/arrow-down.svg';
     }
   }

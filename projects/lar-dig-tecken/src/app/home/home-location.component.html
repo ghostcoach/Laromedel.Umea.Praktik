@@ -1,6 +1,7 @@
 
 <div class="flex flex-col min-h-screen  bg-blue-200 m-0 p-0 justify-center ">
 <header class="absolute flex justify-between mb-4 top-0 z-10 w-full">
+
      <h1 class="font-bold text-xl lg:text-3xl md:text-2xl p-5 sm:text-2xl">Lika = Lika: Lär dig tecken</h1>
      <div class="flex items-start ">
       <button 
@@ -13,11 +14,11 @@
        
       </button>
       <app-game-settings
-      
         [tabindex]="(gameStarted$ | async) ? '3' : '1'"
         *ngIf="!isHomeVisible"
         [gameSettings]="currentGameSettings"
         class="right-0 sticky"
+        
       ></app-game-settings>
      </div>
 
@@ -30,8 +31,11 @@
           [selectedGameEnum]="selectedGameEnum"
           class="flex"
         ></app-selected-game-link>
-  </ng-container>
+</ng-container>
 
-<!-- This is where the selected component will be dynamically loaded -->
-<router-outlet></router-outlet>
+<!-- <div class="mt-7"> -->
+  <!-- This is where the selected component will be dynamically loaded -->
+  <router-outlet ></router-outlet>
+<!-- </div> -->
+
 </div>
