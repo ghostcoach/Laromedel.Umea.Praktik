@@ -49,7 +49,7 @@ export class GameSettingsComponent{
 
   public estetiskVerksamhetOptions: Category[] = [
     Category.BILDBEGREPP,
-    Category.SYSLOJD,
+    Category.TEXTILSLOJD,
     Category.TRASLOJD,
     Category.INSTRUMENT
   ];
@@ -90,28 +90,28 @@ export class GameSettingsComponent{
     Category.KROPPEN
   ];
 
-  public categoryOptions: Category[] = [
-    Category.ALLA,
-    Category.BILDBEGREPP,
-    Category.SYSLOJD,
-    Category.TRASLOJD,
-    Category.ALFABETET,
-    Category.ENKLA_ORD,
-    Category.KANSLOR,
-    Category.SKOLORD,
-    Category.SPORT,
-    Category.VATTENSAKERHET,
-    Category.RORELSE,
-    Category.IDROTTSHALL,
-    Category.KOKSREDSKAP,
-    Category.FRUKT,
-    Category.GRONSAKER_OCH_ROTFRUKTER,
-    Category.LIVSMEDEL,
-    Category.DJUR,
-    Category.VAXTER,
-    Category.ANTAL,
-    Category.LAGESORD
-  ];
+  // public categoryOptions: Category[] = [
+  //   Category.ALLA,
+  //   Category.BILDBEGREPP,
+  //   Category.TEXTILSLOJD,
+  //   Category.TRASLOJD,
+  //   Category.ALFABETET,
+  //   Category.ENKLA_ORD,
+  //   Category.KANSLOR,
+  //   Category.SKOLORD,
+  //   Category.SPORT,
+  //   Category.VATTENSAKERHET,
+  //   Category.RORELSE,
+  //   Category.IDROTTSHALL,
+  //   Category.KOKSREDSKAP,
+  //   Category.FRUKT,
+  //   Category.GRONSAKER_OCH_ROTFRUKTER,
+  //   Category.LIVSMEDEL,
+  //   Category.DJUR,
+  //   Category.VAXTER,
+  //   Category.ANTAL,
+  //   Category.LAGESORD
+  // ];
 
   public numberOfOptions: number[] = [2, 3, 4];
   public numberOfRounds: number[] = [1, 2, 3, 4, 5];

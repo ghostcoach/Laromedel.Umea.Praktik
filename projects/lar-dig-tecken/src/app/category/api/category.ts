@@ -3,7 +3,7 @@ export enum Category{
   // Estetisk verksamhet
   BILDBEGREPP = 'bildbegrepp',
   INSTRUMENT = 'instrument',
-  SYSLOJD = 'syslöjd',
+  TEXTILSLOJD = 'textilslöjd',
   TRASLOJD = 'traslöjd',
   // Kommunikation
   ALFABETET = 'alfabetet',

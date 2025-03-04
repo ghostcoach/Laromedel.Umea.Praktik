@@ -19,16 +19,60 @@ export enum Bildbegrepp {
     VATTENFARG = 'vattenfärg'
 }
 
-//BE OM FILER
-// export enum Instrument {
+export enum Instrument {
+    BJALLRA = 'bjällra',
+    CYMBAL = 'cymbal',
+    DRAGSPEL = 'dragspel',
+    ELBASS = 'elbas',
+    FIOL = 'fiol',
+    FLOJT = 'flöjt',
+    GITARR = 'gitarr',
+    MUNSPEL = 'munspel',
+    PIANO = 'piano',
+    SAXOFON = 'saxofon',
+    TAMBURIN = 'tamburin',
+    TRIANGEL = 'triangel',
+    TRUMMA = 'trumma',
+    TRUMPET = 'trumpet',
+    UKULELE = 'ukulele',
+    XYLOFON = 'xylofon'
+}
 
-// }
+export enum Textilslojd {
+    FINGERBORG = 'fingerborg',
+    GARN = 'garn',
+    KNAPPNAL = 'knappnål',
+    MATTBAND = 'måttband',
+    MONSTER = 'mönster',
+    NAL = 'nål',
+    SAKERHETSNAL = 'säkerhetsnål',
+    STICKOR = 'stickor',
+    STRYKBRADA = 'strykbräda',
+    STRYKJARN = 'strykjärn',
+    SYMASKIN = 'symaskin',
+    TRAD = 'tråd',
+    TYG = 'tyg',
+    TYGSAX = 'tygsax',
+    ULL = 'ull',
+    VAVRAM = 'vävram',
+}
 
-// export enum Textilslöjd {
-
-// }
-
-// export enum Traslojd {
-
-// }
+export enum Traslojd {
+    ARBETSBANK = 'arbetsbank',
+    BORRMASKIN = 'borrmaskin',
+    BRADA = 'bräda',
+    HAMMARE = 'hammare',
+    HORSELKAPOR = 'hörselkåpor',
+    HYVEL = 'hyvel',
+    KNIV = 'kniv',
+    RITNING = 'ritning',
+    SAG = 'såg',
+    SAGLADA = 'såglåda',
+    SANDPAPPER = 'sandpapper',
+    SKRUV = 'skruv',
+    SKRUVMEJSSEL = 'skruvmejsel',
+    SPIK = 'spik',
+    TANG = 'tång',
+    TUMSTOCK = 'tumstock'
+}
 

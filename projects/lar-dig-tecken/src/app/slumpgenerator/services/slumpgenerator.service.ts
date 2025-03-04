@@ -3,7 +3,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable, combineLatest, Subject, BehaviorSubject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
-import { Bildbegrepp } from '../../category/api/estetisk-verksamhet';
+import { Bildbegrepp, Instrument, Textilslojd, Traslojd } from '../../category/api/estetisk-verksamhet';
 import { Alfabetet, EnklaOrd, Kanslor, Skolord } from '../../category/api/kommunikation';
 import { Fordon, Frukt, GronsakerOchRotfrukter, Koksredskap, Livsmedel, Religion, Samhallet, Trafik } from '../../category/api/vardagsaktiviteter';
 import { Idrottshall, Rorselse, Sport, Vattensakerhet } from '../../category/api/motorik';
@@ -88,6 +88,15 @@ export class SlumpgeneratorService implements OnDestroy {
         case 'bildbegrepp':
           selectedCategoryWords = Object.values(Bildbegrepp);
           break;
+        case 'instrument':
+            selectedCategoryWords = Object.values(Instrument);
+            break;
+        case 'textilslöjd':
+            selectedCategoryWords = Object.values(Textilslojd);
+            break;
+        case 'traslöjd':
+            selectedCategoryWords = Object.values(Traslojd);
+            break;
       //Kommunikation
       case 'alfabetet':
           selectedCategoryWords = Object.values(Alfabetet);

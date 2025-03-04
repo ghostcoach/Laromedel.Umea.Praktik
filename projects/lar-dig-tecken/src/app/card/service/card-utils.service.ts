@@ -6,15 +6,7 @@ import { GameSettingsStateQueries } from '../../settings/state/game-settings-que
 import { GameSettingsState } from '../../settings/state/game-settings-state';
 import { ICardFullStateModel } from '../state/api/card-interface';
 import { CardStateQueries } from '../state/card.queries';
-// import { BildbegreppWords } from '../../category/api/bildbegrepp';
-// import { Alfabetet } from '../../category/api/alfabetet';
-// import { EnklaOrd } from '../../category/api/enkla-ord';
-// import { Kanslor } from '../../category/api/kanslor';
-// import { Skolord } from '../../category/api/skolord';
-// import { Sport } from '../../category/api/sport';
-// import { Idrottshall } from '../../category/api/idrottshall';
-// import { Fordon } from '../../category/api/fordon';
-import { Bildbegrepp } from '../../category/api/estetisk-verksamhet';
+import { Bildbegrepp, Instrument, Textilslojd, Traslojd } from '../../category/api/estetisk-verksamhet';
 import { Alfabetet, EnklaOrd, Kanslor, Skolord } from '../../category/api/kommunikation';
 import { Fordon, Frukt, GronsakerOchRotfrukter, Koksredskap, Livsmedel, Religion, Samhallet, Trafik } from '../../category/api/vardagsaktiviteter';
 import { Idrottshall, Rorselse, Sport, Vattensakerhet } from '../../category/api/motorik';
@@ -76,6 +68,15 @@ export class CardUtilsService {
       //Bildbegrepp
       case 'bildbegrepp':
         words = Object.values(Bildbegrepp);
+        break;
+      case 'instrument':
+        words = Object.values(Instrument);
+        break;
+      case 'textilslöjd':
+        words = Object.values(Textilslojd);
+        break;
+      case 'traslöjd':
+        words = Object.values(Traslojd);
         break;
     //Kommunikation
     case 'alfabetet':
