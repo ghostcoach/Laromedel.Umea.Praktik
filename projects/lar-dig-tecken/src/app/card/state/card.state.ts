@@ -51,7 +51,6 @@ export class CardStates implements NgxsOnInit {
 
     /** Initialize card states dynamically */
     private initializeCardStates(ctx: StateContext<IMultipleFullStateModel>): void {
-        console.log('Initializing card states in card state running');
         
         let selectedCategoryWords: string[] = [];
         switch (this.store.selectSnapshot(GameSettingsState.getCategory)) {

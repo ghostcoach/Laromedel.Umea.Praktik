@@ -22,8 +22,6 @@ import { ICardFullStateModel } from '../../card/state/api/card-interface';
 import { UpdateFlippedState} from '../../card/state/flipped.actions';
 import { UpdateGameState } from '../../game-state/state/game.actions';
 import { GameState } from '../../game-state/state/game.state';
-import { Category } from '../../category/api/category';
-import { IGameSettingStateModel } from '../../settings/state/api/game-settings-state-model';
 
 
 @Injectable({
@@ -81,7 +79,6 @@ export class SlumpgeneratorService implements OnDestroy {
 
    // Method to initialize card states
    reinitializeCardStates(): void {
-    console.log('reiitializing card states in slumpgenerator service');
     
     let selectedCategoryWords: string[] = [];
     switch (this.store.selectSnapshot(GameSettingsState.getCategory)) {

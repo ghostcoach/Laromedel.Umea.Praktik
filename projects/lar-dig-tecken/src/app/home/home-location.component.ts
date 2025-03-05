@@ -7,7 +7,7 @@ import {Category, SubjectArea} from '../category/api/category'
 import {RouterOutlet, Router, NavigationEnd, RouterLink} from "@angular/router";
 import {SelectedGameLinkComponent} from  "./selected-game-link/selected-game-link.component";
 import { SelectedGame } from "../selected-game/api/selected-game";
-import {NgForOf, NgIf, CommonModule} from "@angular/common";
+import { NgIf, CommonModule} from "@angular/common";
 import {filter} from "rxjs/operators";
 import { GameState } from "../game-state/state/game.state";
 import { Select } from "@ngxs/store";
@@ -16,7 +16,7 @@ import { Observable } from "rxjs";
 
 @UntilDestroy()
 @Component({
-  imports: [CommonModule, GameSettingsComponent, SelectedGameLinkComponent, NgForOf, RouterOutlet, NgIf, RouterLink],
+  imports: [CommonModule, GameSettingsComponent, SelectedGameLinkComponent, RouterOutlet, NgIf, RouterLink],
   standalone: true,
   templateUrl: "./home-location.component.html",
   styleUrl: "./home-location.component.scss",
@@ -28,26 +28,9 @@ export class HomeLocationComponent implements OnInit {
   public selectedGameEnum = SelectedGame;
   currentPath: string = '';
   isHomeVisible: boolean = false;
-  // isDropdownOpen: boolean = false;
   arrowImg = 'assets/layout/icons/arrow-down.svg';
 
   constructor(private router: Router, private cdr: ChangeDetectorRef){}
-
-  // toggleDropdown() : void {
-  //   this.isDropdownOpen = !this.isDropdownOpen;
-  //   if(this.isDropdownOpen){
-  //     this.arrowImg = 'assets/layout/icons/arrow-up.svg';
-  //   } else {
-  //     this.arrowImg = 'assets/layout/icons/arrow-down.svg';
-  //   }
-  // }
-
-  // closeDropdown() : void {
-  //   this.isDropdownOpen = false;
-  //   this.arrowImg = 'assets/layout/icons/arrow-down.svg';
-  //   console.log('isDropdownOpen:', this.isDropdownOpen);
-    
-  // }
 
   ngOnInit(): void {
     // Subscribe to NavigationEnd events to detect route changes
@@ -84,8 +67,6 @@ export class HomeLocationComponent implements OnInit {
   updateHomeVisibility(): void {
     // Determine if the current path is the home page
     this.isHomeVisible = this.currentPath === '/';
-    console.log('isHomeVisible:', this.isHomeVisible);
-
 
     // Trigger Angular's change detection
     this.cdr.detectChanges();

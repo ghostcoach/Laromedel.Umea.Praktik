@@ -15,6 +15,7 @@ import { ICardFullStateModel } from '../../card/state/api/card-interface';
 import { CardStates } from '../../card/state/card.state';
 import { GameState } from '../../game-state/state/game.state';
 
+
 @Component({
   selector: 'app-slumpgenerator-location',
   imports: [CommonModule, StartButtonComponent, CardComponent, RoundsComponent, GameOverComponent],

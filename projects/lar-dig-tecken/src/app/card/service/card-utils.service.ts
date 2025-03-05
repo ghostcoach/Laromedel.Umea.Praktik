@@ -12,7 +12,6 @@ import { Fordon, Frukt, GronsakerOchRotfrukter, Koksredskap, Livsmedel, Religion
 import { Idrottshall, Rorselse, Sport, Vattensakerhet } from '../../category/api/motorik';
 import { Antal, Djur, Klader, Kroppen, Lagesord, Pengar, Vardagsteknik, Vaxter } from '../../category/api/verklighetsuppfattning';
 
-import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -187,7 +186,6 @@ export class CardUtilsService {
     pairingModeFirst: string, 
     pairingModeSecond: string
   ): ICardFullStateModel[] {
-     console.log('initialize cardStates in card-utils going');
      
     // Step 1: Select `numberOfOptions` unique words randomly
     const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
@@ -271,18 +269,6 @@ export class CardUtilsService {
         return '';
       }
     }
-
-    // if (contentMedium === 'ord') {
-    //   return word;
-    // } else if (contentMedium === 'bild') {
-    //   return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/illustration/${normalizedWord}.webp`;
-    // } else if (contentMedium === 'ritade-tecken') {
-    //   return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/ritade-tecken/${normalizedWord}.webp`;
-    // } else if (contentMedium === 'tecken-som-stod') {
-    //   return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/video/${normalizedWord}.mp4`;
-    // } else {
-    //   return '';
-    // }
   }
 
   playIncorrectAudio(): void {
