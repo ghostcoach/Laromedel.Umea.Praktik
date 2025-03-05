@@ -13,6 +13,8 @@ export class CardContentComponent {
 @Input() content!: string;
 @Input() contentMedium!: string;
 @Input() word!: string;
+@Input() category!: string;
+
 
 playVideo(): void {
   if (this.videoElement) {

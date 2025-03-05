@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
 import { CardContentComponent } from './card-content/card-content.component';
-import { GameSettingsStateQueries } from '../settings/state/game-settings-queries';
+// import { GameSettingsStateQueries } from '../settings/state/game-settings-queries';
 import { ICardFullStateModel  } from './state/api/card-interface';
 import { FlippedState } from './state/flipped.state';
 import { GameState } from '../game-state/state/game.state';
@@ -20,7 +20,7 @@ export class CardComponent implements DoCheck {
 
   @Output() cardClick = new EventEmitter<string>()
   @ViewChild(CardContentComponent) cardContent!: CardContentComponent;
-  @Select(GameSettingsStateQueries.pairingModeFirstCard$) pairingModeFirst$!: Observable<string>;
+  // @Select(GameSettingsStateQueries.pairingModeFirstCard$) pairingModeFirst$!: Observable<string>;
 
   @Input() cardData!: ICardFullStateModel;
   @ViewChildren('cardElement') cardElement!: QueryList<ElementRef>;
@@ -35,6 +35,7 @@ export class CardComponent implements DoCheck {
   content = '';
   word = '';
   imgSrc = '';
+  category = '';
   videoOrSound: () => void = () => {};
 
   constructor(private cdr: ChangeDetectorRef) {}
@@ -45,6 +46,7 @@ export class CardComponent implements DoCheck {
       this.audioPath = this.cardData.audioPath;
       this.correctClass = this.cardData.correctClass;
       this.contentMedium = this.cardData.contentMedium;
+      this.category = this.cardData.category;
       this.content = this.cardData.content;
       this.word = this.cardData.word;
       this.imgSrc = this.contentMedium === 'tecken-som-stod' ? `assets/layout/icons/play-video-icon.svg` : `assets/layout/icons/play-sound-icon.svg`;

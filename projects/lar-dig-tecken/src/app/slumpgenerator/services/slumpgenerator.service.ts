@@ -81,7 +81,8 @@ export class SlumpgeneratorService implements OnDestroy {
 
    // Method to initialize card states
    reinitializeCardStates(): void {
-
+    console.log('reiitializing card states in slumpgenerator service');
+    
     let selectedCategoryWords: string[] = [];
     switch (this.store.selectSnapshot(GameSettingsState.getCategory)) {
         //Bildbegrepp
@@ -202,6 +203,7 @@ export class SlumpgeneratorService implements OnDestroy {
   }
 
   reinitializeAndFlipBack(): void {
+    console.log('reinitializing and flipping back in slumpgenerator service');
     
     this.store.dispatch(new UpdateFlippedState({ flippedClass: 'flipped' }));
     
@@ -226,7 +228,7 @@ export class SlumpgeneratorService implements OnDestroy {
       .subscribe(([numberOfRounds]) => {
         
         if (this.gameStartedSubject.value) {
-          this.store.dispatch(new UpdateGameState(false));
+          this.store.dispatch(new UpdateGameState(true));
           this.currentRound = 0;
           this.maxRounds = numberOfRounds;
           this.reinitializeAndFlipBack();

@@ -158,10 +158,6 @@ export class CardUtilsService {
       words = Object.values(Bildbegrepp);
         break;
     }
-
-    console.log('words', words);
-    
-      // const words: string[] = Object.values(BildbegreppWords);
         
       // Step 1: Select `numberOfOptions` unique words randomly
       const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
@@ -191,6 +187,7 @@ export class CardUtilsService {
     pairingModeFirst: string, 
     pairingModeSecond: string
   ): ICardFullStateModel[] {
+     console.log('initialize cardStates in card-utils going');
      
     // Step 1: Select `numberOfOptions` unique words randomly
     const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
@@ -203,13 +200,12 @@ export class CardUtilsService {
 
     // Step 4: Insert the duplicate at index 0
     this.shuffledWords = [wordToDuplicate, ...shuffledSelectedWords];
-
     
-      
     return this.shuffledWords.map((word, index) => ({
-      mode: index === 0 ? 'firstCard' : 'secondCard', // example mode
-      contentMedium: index === 0 ? this.formatString(pairingModeFirst) : this.formatString(pairingModeSecond), // example category
+      mode: index === 0 ? 'firstCard' : 'secondCard', 
+      contentMedium: index === 0 ? this.formatString(pairingModeFirst) : this.formatString(pairingModeSecond),
       word: word, // word or image/video-path
+      category: category, // category
       content: index === 0 ? this.getMediaPath(subjectArea, category, this.formatString(pairingModeFirst), word) : this.getMediaPath(subjectArea, category, this.formatString(pairingModeSecond), word),
       audioPath: this.getAudioPath(subjectArea, category, word), // audio path
       flippedClass: 'flipped', // flipped by default
@@ -250,20 +246,43 @@ export class CardUtilsService {
     const normalizedWord: string = this.normalizeCharacters(word);
     const formattedSubjectArea: string = this.formatString(subjectArea);
     const formattedCategory: string = this.formatString(category);
-    if (contentMedium === 'ord') {
-      return word;
-    } else if (contentMedium === 'bild') {
-      // return `/assets/subject-area/estetisk-verksamhet/${category}/illustration/${normalizedWord}.webp`;
-      return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/illustration/${normalizedWord}.webp`;
-    } else if (contentMedium === 'ritade-tecken') {
-      // return `/assets/subject-area/estetisk-verksamhet/${category}/ritade-tecken/${normalizedWord}.webp`;
-      return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/ritade-tecken/${normalizedWord}.webp`;
-    } else if (contentMedium === 'tecken-som-stod') {
-      // return `/assets/subject-area/estetisk-verksamhet/${category}/video/${normalizedWord}.mp4`;
-      return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/video/${normalizedWord}.mp4`;
+    if (category === 'alfabetet'){
+      if (contentMedium === 'ord') {
+        return word;
+      } else if (contentMedium === 'bild') {
+        return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/illustration/${word}.webp`;
+      } else if (contentMedium === 'ritade-tecken') {
+        return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/ritade-tecken/${word}.webp`;
+      } else if (contentMedium === 'tecken-som-stod') {
+        return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/video/${word}.mp4`;
+      } else {
+        return '';
+      }
     } else {
-      return '';
+      if (contentMedium === 'ord') {
+        return word;
+      } else if (contentMedium === 'bild') {
+        return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/illustration/${normalizedWord}.webp`;
+      } else if (contentMedium === 'ritade-tecken') {
+        return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/ritade-tecken/${normalizedWord}.webp`;
+      } else if (contentMedium === 'tecken-som-stod') {
+        return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/video/${normalizedWord}.mp4`;
+      } else {
+        return '';
+      }
     }
+
+    // if (contentMedium === 'ord') {
+    //   return word;
+    // } else if (contentMedium === 'bild') {
+    //   return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/illustration/${normalizedWord}.webp`;
+    // } else if (contentMedium === 'ritade-tecken') {
+    //   return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/ritade-tecken/${normalizedWord}.webp`;
+    // } else if (contentMedium === 'tecken-som-stod') {
+    //   return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/video/${normalizedWord}.mp4`;
+    // } else {
+    //   return '';
+    // }
   }
 
   playIncorrectAudio(): void {

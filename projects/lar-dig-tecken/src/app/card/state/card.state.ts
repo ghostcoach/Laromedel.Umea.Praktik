@@ -6,13 +6,6 @@ import { IMultipleFullStateModel, ICardFullStateModel } from './api/card-interfa
 import { UpdateAllCards, UpdateCard, InitializeCardStates, UpdateFlippedClass } from './card.actions'
 import { GameSettingsState } from '../../settings/state/game-settings-state';
 import { CardUtilsService } from '../service/card-utils.service';
-// import { BildbegreppWords } from '../../category/api/bildbegrepp';
-// import { Alfabetet } from '../../category/api/alfabetet';
-// import { EnklaOrd } from '../../category/api/enkla-ord';
-// import { Kanslor } from '../../category/api/kanslor';
-// import { Skolord } from '../../category/api/skolord';
-// import { Sport } from '../../category/api/sport';
-// import { Idrottshall } from '../../category/api/idrottshall';
 import { Bildbegrepp, Instrument, Textilslojd, Traslojd } from '../../category/api/estetisk-verksamhet';
 import { Alfabetet, EnklaOrd, Kanslor, Skolord } from '../../category/api/kommunikation';
 import { Fordon, Frukt, GronsakerOchRotfrukter, Koksredskap, Livsmedel, Religion, Samhallet, Trafik } from '../../category/api/vardagsaktiviteter';
@@ -58,6 +51,8 @@ export class CardStates implements NgxsOnInit {
 
     /** Initialize card states dynamically */
     private initializeCardStates(ctx: StateContext<IMultipleFullStateModel>): void {
+        console.log('Initializing card states in card state running');
+        
         let selectedCategoryWords: string[] = [];
         switch (this.store.selectSnapshot(GameSettingsState.getCategory)) {
             //Bildbegrepp
@@ -157,7 +152,6 @@ export class CardStates implements NgxsOnInit {
         const numberOfOptions: number = this.store.selectSnapshot(GameSettingsState.getNumberOfOptions);
         const subjectArea: string = this.store.selectSnapshot(GameSettingsState.getSubjectArea);
         const category: string = this.store.selectSnapshot(GameSettingsState.getCategory);
-        // const words: string[] = Object.values(BildbegreppWords); // Fetch words dynamically
         const words: string[] = selectedCategoryWords // Fetch words dynamically
         const pairingModeFirst: string = this.store.selectSnapshot(GameSettingsState.getFirstPairingMode);
         const pairingModeSecond: string = this.store.selectSnapshot(GameSettingsState.getSecondPairingMode);
