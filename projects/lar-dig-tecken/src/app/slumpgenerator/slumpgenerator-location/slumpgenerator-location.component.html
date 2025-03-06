@@ -5,8 +5,7 @@
         <div class="flex absolute top-0 right-5 gap-2 z-0">
             <ng-container *ngIf="numberOfRounds$ | async as numberOfRounds">
                 <ng-container *ngFor="let i of getNumberArray(numberOfRounds); let idx = index">
-                    <app-rounds [round]="idx < slumpgeneratorService.currentRound ? idx + 1 : 0"></app-rounds>
-                </ng-container>
+                    <app-rounds [round]="idx < ((slumpgeneratorService.currentRound | async) ?? 0) ? idx + 1 : 0"></app-rounds>                </ng-container>
             </ng-container>
         </div>
        
@@ -26,7 +25,7 @@
                     </ng-container>
                 </ng-container>
                 <app-start-button 
-                    [onClick]="slumpgeneratorService.startGame.bind(this)"
+                    [onClick]="utilsService.startGame.bind(this)"
                     [tabindex]="(gameStarted$ | async) === false ? '2' : '-1'"
                 ></app-start-button>
             </ul>
@@ -48,8 +47,8 @@
 
     </section>
 
-    <ng-container *ngIf="slumpgeneratorService.gameOver">
-        <app-game-over [gameOver]="slumpgeneratorService.gameOver"></app-game-over>
+    <ng-container *ngIf="(gameOver$ | async) === true">
+        <app-game-over></app-game-over>
     </ng-container>
 
 </div>

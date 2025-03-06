@@ -9,7 +9,7 @@ import {SelectedGameLinkComponent} from  "./selected-game-link/selected-game-lin
 import { SelectedGame } from "../selected-game/api/selected-game";
 import { NgIf, CommonModule} from "@angular/common";
 import {filter} from "rxjs/operators";
-import { GameState } from "../game-state/state/game.state";
+import { GameState } from "../game/state/game.state";
 import { Select } from "@ngxs/store";
 import { Observable } from "rxjs";
 

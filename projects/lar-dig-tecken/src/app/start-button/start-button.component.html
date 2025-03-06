@@ -1,13 +1,26 @@
 <button 
-    *ngIf="(gameStarted$ | async) === false"
+    *ngIf="(gameStarted$ | async) === false && ((numberOfGamesPlayed$ | async) ?? 0) === 0"
     (click)="onClick()"
-    class="bg-green-300 rounded-sm text-xl px-10 py-4 border border-black border-1  tracking-wide font-semibold  hover:bg-green-400 scale-100 hover:scale-95"
+    class="bg-green-300 rounded-sm text-xl px-10 py-4 border border-black border-1 tracking-wide font-semibold hover:bg-green-400 scale-100 hover:scale-95"
+>
+    Starta
+</button>
+<button 
+    *ngIf="(gameStarted$ | async) === true && ((numberOfGamesPlayed$ | async) ?? 0) === 0"
+    class="bg-green-100 scale-95 cursor-not-allowed text-gray-500 rounded-sm text-xl px-10 py-4 border border-black border-1  tracking-wide font-semibold"
 >
         Starta
 </button>
 <button 
-    *ngIf="(gameStarted$ | async) === true"
-    class="bg-green-100 scale-95 cursor-not-allowed text-gray-500 rounded-sm text-xl px-10 py-4 border border-black border-1  tracking-wide font-semibold"
+    *ngIf="(numberOfGamesPlayed$ | async) ?? 0 > 0 && (gameStarted$ | async) === false"
+    class="bg-green-300 rounded-sm text-xl px-7 py-4 border border-black border-1  tracking-wide font-semibold  hover:bg-green-400 scale-100 hover:scale-95"
+    (click)="onClick()"
 >
-        Starta
+        Starta om
+</button>
+<button 
+    *ngIf="(gameStarted$ | async) === true && ((numberOfGamesPlayed$ | async) ?? 0) > 0"
+    class="bg-green-100 scale-95 cursor-not-allowed text-gray-500 rounded-sm text-xl px-7 py-4 border border-black border-1  tracking-wide font-semibold"
+>
+        Starta om
 </button>

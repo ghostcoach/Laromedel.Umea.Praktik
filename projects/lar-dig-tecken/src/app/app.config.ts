@@ -11,7 +11,7 @@ import { GameSettingsState } from '../app/settings/state/game-settings-state'
 // import { StartButtonState } from "./start-button/state/start-button-state";
 import { CardStates } from "./card/state/card.state";
 import { FlippedState } from "./card/state/flipped.state";
-import { GameState } from "./game-state/state/game.state";
+import { GameState } from "./game/state/game.state";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,8 +20,6 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       NgxsModule.forRoot([
         GameSettingsState,
-        // StartButtonState,
-        // CardState,
         CardStates,
         FlippedState,
         GameState

@@ -1,12 +1,11 @@
-import { Component, Input, Output, EventEmitter, ViewChild, QueryList,  ChangeDetectorRef, ChangeDetectionStrategy, DoCheck, ViewChildren, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, QueryList,  ChangeDetectorRef, ChangeDetectionStrategy, DoCheck, ViewChildren, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from "@angular/common";
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Select } from '@ngxs/store';
 import { CardContentComponent } from './card-content/card-content.component';
-// import { GameSettingsStateQueries } from '../settings/state/game-settings-queries';
 import { ICardFullStateModel  } from './state/api/card-interface';
 import { FlippedState } from './state/flipped.state';
-import { GameState } from '../game-state/state/game.state';
+import { GameState } from '../game/state/game.state';
 
 @Component({
   selector: 'app-card',
@@ -16,17 +15,17 @@ import { GameState } from '../game-state/state/game.state';
   styleUrl: './card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CardComponent implements DoCheck {
+export class CardComponent implements DoCheck, OnDestroy, OnInit {
 
   @Output() cardClick = new EventEmitter<string>()
   @ViewChild(CardContentComponent) cardContent!: CardContentComponent;
-  // @Select(GameSettingsStateQueries.pairingModeFirstCard$) pairingModeFirst$!: Observable<string>;
-
   @Input() cardData!: ICardFullStateModel;
   @ViewChildren('cardElement') cardElement!: QueryList<ElementRef>;
   @ViewChildren(CardContentComponent) cardContentComponent!: QueryList<CardContentComponent>;
   @Select(FlippedState.getFlippedClass) flippedClass$!: Observable<'flipped' | 'not-flipped'>;
   @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
+  @Select(GameState.getCurrentRound) currentRound$!: Observable<number>;
+  private currentRoundSub!: Subscription;
 
   mode = '';
   audioPath = '';
@@ -36,11 +35,23 @@ export class CardComponent implements DoCheck {
   word = '';
   imgSrc = '';
   category = '';
+
   videoOrSound: () => void = () => {};
 
   constructor(private cdr: ChangeDetectorRef) {}
 
+  ngOnInit(): void {
+    this.currentRoundSub = this.currentRound$.subscribe((currentRound) => {
+
+      // Play video only once when the game starts (currentRound === 0)
+      if (currentRound === 0 && this.cardData?.contentMedium === 'tecken-som-stod' && this.cardData?.mode === 'firstCard') {
+        this.cardContent.playVideo();
+      }
+    });
+  }
+
   ngDoCheck(): void {
+    
     if (this.cardData) {
       this.mode = this.cardData.mode;
       this.audioPath = this.cardData.audioPath;
@@ -51,8 +62,15 @@ export class CardComponent implements DoCheck {
       this.word = this.cardData.word;
       this.imgSrc = this.contentMedium === 'tecken-som-stod' ? `assets/layout/icons/play-video-icon.svg` : `assets/layout/icons/play-sound-icon.svg`;
       this.videoOrSound = this.contentMedium === 'tecken-som-stod' ? this.playVideo.bind(this) : this.playAudio.bind(this);
+      
       // ✅ Mark component for change detection if necessary
       this.cdr.markForCheck();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.currentRoundSub) {
+      this.currentRoundSub.unsubscribe();
     }
   }
 

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { GameState } from '../game-state/state/game.state';
+import { GameState } from '../game/state/game.state';
 
 
 @Component({
@@ -16,5 +16,6 @@ import { GameState } from '../game-state/state/game.state';
 export class StartButtonComponent {
   @Input() onClick: () => void = () => {};
   @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
+  @Select(GameState.getNumberOfGamesPlayed) numberOfGamesPlayed$!: Observable<number>;
 
 }

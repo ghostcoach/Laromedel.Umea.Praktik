@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, combineLatest } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
 import { GameSettingsState } from '../../settings/state/game-settings-state';
 import { ICardFullStateModel } from '../state/api/card-interface';
 import { CardStateQueries } from '../state/card.queries';

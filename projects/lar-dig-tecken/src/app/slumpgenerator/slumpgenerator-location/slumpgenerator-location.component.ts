@@ -13,8 +13,9 @@ import { GameSettingsStateQueries } from '../../settings/state/game-settings-que
 import { SlumpgeneratorService } from '../services/slumpgenerator.service';
 import { ICardFullStateModel } from '../../card/state/api/card-interface';
 import { CardStates } from '../../card/state/card.state';
-import { GameState } from '../../game-state/state/game.state';
+import { GameState } from '../../game/state/game.state';
 
+import { UtilsService } from '../../game/utils.service';
 
 @Component({
   selector: 'app-slumpgenerator-location',
@@ -34,6 +35,8 @@ export class SlumpgeneratorLocationComponent implements OnInit{
   @Select(GameSettingsStateQueries.subjectArea$) subjectArea$!:Observable<string>
   @Select(CardStates.getCardStates) cardStates$!: Observable<ICardFullStateModel[]>;
   @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
+  @Select(GameState.getCurrentRound) currentRound$!: Observable<number>;
+  @Select(GameState.getGameOver) gameOver$!: Observable<boolean>;
 
   firstCardState: ICardFullStateModel[] = [];
   secondCardState: ICardFullStateModel[] = [];
@@ -43,11 +46,11 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     private cdRef: ChangeDetectorRef, 
     private ngZone: NgZone, 
     public slumpgeneratorService: SlumpgeneratorService,
-    private store: Store  
+    private store: Store  ,
+    public utilsService: UtilsService
   ) {}
 
   ngOnInit():void {
-    
     
     this.cardStates$.pipe(
       distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
