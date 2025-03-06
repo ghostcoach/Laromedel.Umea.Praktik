@@ -21,7 +21,7 @@ export class UpdateCurrentRound {
 export class UpdateNumberOfGamesPlayed {
     static readonly type = '[Game State] Update Number Of Games Played';
 
-    constructor(public payload: IGameStateModel["numberOfGamesPlayed"]) {}    
+    constructor(public payload?: IGameStateModel["numberOfGamesPlayed"]) {}    
 }
 
 export class ResetCurrentRound {

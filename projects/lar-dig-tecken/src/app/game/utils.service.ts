@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { UpdateGameState, UpdateGameOver, UpdateCurrentRound } from './state/game.actions';
+import { UpdateGameState, UpdateGameOver, UpdateCurrentRound, ResetCurrentRound } from './state/game.actions';
 import { UpdateFlippedState } from '../card/state/flipped.actions';
 import { Bildbegrepp, Instrument, Textilslojd, Traslojd } from '../category/api/estetisk-verksamhet';
 import { Alfabetet, EnklaOrd, Kanslor, Skolord } from '../category/api/kommunikation';
@@ -10,7 +10,7 @@ import { Antal, Djur, Klader, Kroppen, Lagesord, Pengar, Vardagsteknik, Vaxter }
 import { GameSettingsState } from '../settings/state/game-settings-state';
 import { Select } from '@ngxs/store';
 import { CardUtilsService } from '../card/service/card-utils.service';
-import { InitializeCardStates, UpdateCard } from '../card/state/card.actions';
+import { InitializeCardStates } from '../card/state/card.actions';
 import { Observable, BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { map, debounceTime, takeUntil } from 'rxjs/operators';
 import { ICardFullStateModel } from '../card/state/api/card-interface';
@@ -65,7 +65,7 @@ export class UtilsService {
   // Function to start the game
     startGame(): void {
       this.store.dispatch(new UpdateGameState(true));
-      this.store.dispatch(new UpdateCurrentRound(0));
+      this.store.dispatch(new UpdateCurrentRound());
       this.store.dispatch(new UpdateGameOver(false));
   
       setTimeout(() => {
@@ -218,12 +218,11 @@ export class UtilsService {
             debounceTime(100), // Prevent rapid consecutive updates
             takeUntil(this.destroy$) // Automatically unsubscribe on service destruction
           )
-          .subscribe(([numberOfRounds]) => {
+          .subscribe(() => {
             
             if (this.gameStartedSubject.value) {
-              // this.currentRound = 0;
-              this.store.dispatch(new UpdateCurrentRound(0));
-              // this.maxRounds = numberOfRounds;
+              this.store.dispatch(new ResetCurrentRound());
+              this.store.dispatch(new UpdateCurrentRound());
               this.reinitializeAndFlipBack();
             }
             

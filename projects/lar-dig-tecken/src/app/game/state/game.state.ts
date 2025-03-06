@@ -2,8 +2,6 @@ import { Action, State, StateContext, StateToken, Selector } from '@ngxs/store'
 import { Injectable } from '@angular/core'
 import { IGameStateModel } from './api/game-state-model'
 import { UpdateGameState, UpdateCurrentRound, ResetCurrentRound, UpdateGameOver, UpdateNumberOfGamesPlayed } from './game.actions'
-import { GameSettingsState } from '../../settings/state/game-settings-state'
-import { IGameSettingStateModel } from '../../settings/state/api/game-settings-state-model'
 
 const stateToken: StateToken<IGameStateModel> = new StateToken<IGameStateModel>("gameState")
 
@@ -58,7 +56,7 @@ export class GameState {
     @Action(ResetCurrentRound) // New Action
     resetCurrentRound(ctx: StateContext<IGameStateModel>): void {
         ctx.patchState({
-            currentRound: 0
+            currentRound: -1
         });
     }
     
@@ -68,13 +66,12 @@ export class GameState {
     }
 
     @Action(UpdateNumberOfGamesPlayed)
-    updateNumberOfGamesPlayed(
-        ctx: StateContext<IGameStateModel>,
-        action: UpdateNumberOfGamesPlayed):void {
-            ctx.patchState({
-                numberOfGamesPlayed: action.payload
-            });
-        }
+    updateNumberOfGamesPlayes(ctx: StateContext<IGameStateModel>): void {
+        const state = ctx.getState();
+        ctx.patchState({
+            numberOfGamesPlayed: state.numberOfGamesPlayed + 1
+        });
+    }
 
     @Selector()
     static getNumberOfGamesPlayed(state: IGameStateModel): number {
