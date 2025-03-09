@@ -8,7 +8,6 @@ import { environment } from "@shared/environments/environment";
 import { provideAnimations } from "@angular/platform-browser/animations";
 
 import { GameSettingsState } from '../app/settings/state/game-settings-state'
-// import { StartButtonState } from "./start-button/state/start-button-state";
 import { CardStates } from "./card/state/card.state";
 import { FlippedState } from "./card/state/flipped.state";
 import { GameState } from "./game/state/game.state";

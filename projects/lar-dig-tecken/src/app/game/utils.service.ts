@@ -204,11 +204,11 @@ export class UtilsService {
       setTimeout(() => {
         this.reinitializeCardStates();
       }
-      , 1000);
+      , 1200);
     
       setTimeout(() => {
         this.store.dispatch(new UpdateFlippedState({ flippedClass: 'not-flipped' }));
-      }, 1200);
+      }, 1400);
   
     }
 
@@ -221,9 +221,10 @@ export class UtilsService {
           .subscribe(() => {
             
             if (this.gameStartedSubject.value) {
+              this.reinitializeAndFlipBack();
               this.store.dispatch(new ResetCurrentRound());
               this.store.dispatch(new UpdateCurrentRound());
-              this.reinitializeAndFlipBack();
+              
             }
             
           });

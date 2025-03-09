@@ -8,6 +8,7 @@
         *ngIf="!isHomeVisible" 
         class="m-2 flex items-center justify-end rounded-md border-4 border-transparent hover:border-blue-500 shrink-0" 
         [routerLink]="['/']"
+        (click)="onHomeClick()"
         [tabindex]="(gameStarted$ | async) ? '3' : '0'"
       >
         <img src="assets/layout/icons/home-icon.svg" alt="" class="w-10 shrink-0">

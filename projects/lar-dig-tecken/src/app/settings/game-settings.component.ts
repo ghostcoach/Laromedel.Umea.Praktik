@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ElementRef, HostListener, Host} from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ElementRef, HostListener} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UntilDestroy } from "@ngneat/until-destroy";
 import { IGameSettingStateModel } from '../settings/state/api/game-settings-state-model';

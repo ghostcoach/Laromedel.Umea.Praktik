@@ -10,9 +10,11 @@ import { SelectedGame } from "../selected-game/api/selected-game";
 import { NgIf, CommonModule} from "@angular/common";
 import {filter} from "rxjs/operators";
 import { GameState } from "../game/state/game.state";
-import { Select } from "@ngxs/store";
+import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-
+import { UpdateGameOver, UpdateGameState, ResetNumberOfGamesPlayed, ResetCurrentRound } from "../game/state/game.actions";
+import { UpdateFlippedState } from "../card/state/flipped.actions";
+import { UtilsService } from "../game/utils.service";
 
 @UntilDestroy()
 @Component({
@@ -30,7 +32,7 @@ export class HomeLocationComponent implements OnInit {
   isHomeVisible: boolean = false;
   arrowImg = 'assets/layout/icons/arrow-down.svg';
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef){}
+  constructor(private router: Router, private cdr: ChangeDetectorRef, public store: Store, private utilsService: UtilsService){}
 
   ngOnInit(): void {
     // Subscribe to NavigationEnd events to detect route changes
@@ -70,6 +72,19 @@ export class HomeLocationComponent implements OnInit {
 
     // Trigger Angular's change detection
     this.cdr.detectChanges();
+  }
+
+  onHomeClick(): void {
+    // Reset the game state
+
+    this.store.dispatch([
+      new ResetCurrentRound(),
+      new UpdateGameOver(false),
+      new UpdateGameState(false),
+      new ResetNumberOfGamesPlayed(),
+      new UpdateFlippedState({ flippedClass: 'flipped' }),
+    ]);
+    this.utilsService.reinitializeCardStates()
   }
 
 

@@ -5,12 +5,6 @@ import { debounceTime } from 'rxjs/operators';
 import { GameSettingsState } from '../../settings/state/game-settings-state';
 import { ICardFullStateModel } from '../state/api/card-interface';
 import { CardStateQueries } from '../state/card.queries';
-import { Bildbegrepp, Instrument, Textilslojd, Traslojd } from '../../category/api/estetisk-verksamhet';
-import { Alfabetet, EnklaOrd, Kanslor, Skolord } from '../../category/api/kommunikation';
-import { Fordon, Frukt, GronsakerOchRotfrukter, Koksredskap, Livsmedel, Religion, Samhallet, Trafik } from '../../category/api/vardagsaktiviteter';
-import { Idrottshall, Rorselse, Sport, Vattensakerhet } from '../../category/api/motorik';
-import { Antal, Djur, Klader, Kroppen, Lagesord, Pengar, Vardagsteknik, Vaxter } from '../../category/api/verklighetsuppfattning';
-
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +25,6 @@ export class CardUtilsService {
   
   shuffledWords: string[] = [];
   updatedCards: ICardFullStateModel[] = [];
-  currentRound = 0;
-  maxRounds = 0;
   audioFiles = [
     '/assets/audio/try-again/try-again_1.mp3',
     '/assets/audio/try-again/try-again_2.mp3',
@@ -48,125 +40,9 @@ export class CardUtilsService {
       this.category$,
     ])
     .pipe(debounceTime(100)) // ✅ Prevents rapid multiple updates
-    .subscribe(([numberOfOptions, numberOfRounds, category]) => {
-      this.maxRounds = numberOfRounds;
-      this.initializeWords(category, numberOfOptions);
-    });
+    .subscribe(() => {});
    }
 
-  // WORD SHUFFLING FUNCTIONS
-
-  // Function to initialize ALL WORDS from category
-  initializeWords(category: string, numberOfOptions: number): void {
-    console.log('initializeWords', category, numberOfOptions);
-    
-    let words: string[] = [];
-    
-    switch(category) {
-      //Bildbegrepp
-      case 'bildbegrepp':
-        words = Object.values(Bildbegrepp);
-        break;
-      case 'instrument':
-        words = Object.values(Instrument);
-        break;
-      case 'textilslöjd':
-        words = Object.values(Textilslojd);
-        break;
-      case 'traslöjd':
-        words = Object.values(Traslojd);
-        break;
-    //Kommunikation
-    case 'alfabetet':
-      words = Object.values(Alfabetet);
-        break;
-    case 'enkla ord':
-      words = Object.values(EnklaOrd);
-        break;
-    case 'känslor':
-      words = Object.values(Kanslor);
-        break;
-    case 'skolord':
-      words = Object.values(Skolord);
-        break;
-    //Motorik
-    case 'sport':
-      words = Object.values(Sport);
-        break;
-    case 'idrottshall':
-      words = Object.values(Idrottshall);
-        break;
-    case 'rörelse':
-      words = Object.values(Rorselse);
-        break;
-    case 'vattensäkerhet':
-      words = Object.values(Vattensakerhet);
-        break;
-    //Verklighetsuppfattning
-    case 'antal':
-      words = Object.values(Antal);
-        break;
-    case 'djur':
-      words = Object.values(Djur);
-        break;
-    case 'kläder':
-      words = Object.values(Klader);
-        break;
-    case 'kroppen':
-      words = Object.values(Kroppen);
-        break;
-    case 'lägesord':
-      words = Object.values(Lagesord);
-        break;
-    case 'pengar':
-      words = Object.values(Pengar);
-        break;
-    case 'vardagsteknik':
-      words = Object.values(Vardagsteknik);
-        break;
-    case 'växter':
-      words = Object.values(Vaxter);
-        break;
-    //Vardagsaktiviteter
-    case 'fordon':
-      words = Object.values(Fordon);
-        break;
-    case 'frukt':
-      words = Object.values(Frukt);
-        break;
-    case 'grönsaker och rotfrukter':
-      words = Object.values(GronsakerOchRotfrukter);
-        break;
-    case 'köksredskap':
-      words = Object.values(Koksredskap);
-        break;
-    case 'livsmedel':
-      words = Object.values(Livsmedel);
-        break;
-    case 'religion':
-      words = Object.values(Religion);
-        break;
-    case 'samhället':
-      words = Object.values(Samhallet);
-        break;
-    case 'trafik':
-      words = Object.values(Trafik);
-        break;
-    default:
-      words = Object.values(Bildbegrepp);
-        break;
-    }
-        
-      // Step 1: Select `numberOfOptions` unique words randomly
-      const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
-    
-      // Step 2: Pick one word to duplicate
-      const wordToDuplicate: string = selectedWords[Math.floor(Math.random() * selectedWords.length)];
-    
-      // Step 3: Insert the duplicate at index 0
-      this.shuffledWords = [wordToDuplicate, ...selectedWords];
-  
-  }
  
    // Function to shuffle an array
    shuffleArray<T>(array: T[]): T[] {
@@ -176,7 +52,7 @@ export class CardUtilsService {
       .map(({ value }) => value);
   }
 
-  // Function to initialize words and set initial card states
+  // Function to initialize words before game has started and set initial card states
   initializeCardStates(
     subjectArea: string,
     category: string, 
@@ -185,6 +61,7 @@ export class CardUtilsService {
     pairingModeFirst: string, 
     pairingModeSecond: string
   ): ICardFullStateModel[] {
+     console.log('this function workds');
      
     // Step 1: Select `numberOfOptions` unique words randomly
     const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
@@ -234,7 +111,6 @@ export class CardUtilsService {
     const normalizedWord: string = this.normalizeCharacters(word);
     const formattedSubjectArea: string = this.formatString(subjectArea);
     const formattedCategory: string = this.formatString(category);
-    // return `/assets/subject-area/estetisk-verksamhet/${category}/audio/${normalizedWord}.mp3`;
     return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/audio/${normalizedWord}.mp3`;
   }
 
