@@ -1,26 +1,28 @@
 <button 
     *ngIf="(gameStarted$ | async) === false && ((numberOfGamesPlayed$ | async) ?? 0) === 0"
     (click)="onClick()"
-    class="bg-green-300 rounded-sm text-xl px-10 py-4 border border-black border-1 tracking-wide font-semibold hover:bg-green-400 scale-100 hover:scale-95"
+    class="btn-not-clicked bg-white rounded-md text-xl px-10 py-4 border border-transparent border-4 tracking-wide font-semibold hover:border-blue-500"
 >
     Starta
 </button>
 <button 
     *ngIf="(gameStarted$ | async) === true && ((numberOfGamesPlayed$ | async) ?? 0) === 0"
-    class="bg-green-100 scale-95 cursor-not-allowed text-gray-500 rounded-sm text-xl px-10 py-4 border border-black border-1  tracking-wide font-semibold"
+    class="bg-gray-200  scale-95 cursor-not-allowed text-gray-500 rounded-md text-xl px-10 py-4 border border-transparent border-4  tracking-wide font-semibold"
 >
         Starta
 </button>
 <button 
     *ngIf="(numberOfGamesPlayed$ | async) ?? 0 > 0 && (gameStarted$ | async) === false"
-    class="bg-green-300 rounded-sm text-xl px-7 py-4 border border-black border-1  tracking-wide font-semibold  hover:bg-green-400 scale-100 hover:scale-95"
+    class="flex btn-not-clicked text-nowrap gap-2 bg-white  rounded-md text-xl px-5 py-4 border border-transparent border-4  tracking-wide font-semibold  hover:border-blue-500"
     (click)="onClick()"
 >
         Starta om
+        <img src="assets/layout/icons/repeat.svg" alt="" class="w-6 inline-block">
 </button>
 <button 
     *ngIf="(gameStarted$ | async) === true && ((numberOfGamesPlayed$ | async) ?? 0) > 0"
-    class="bg-green-100 scale-95 cursor-not-allowed text-gray-500 rounded-sm text-xl px-7 py-4 border border-black border-1  tracking-wide font-semibold"
+    class="flex text-nowrap bg-gray-200 gap-2  scale-95 cursor-not-allowed text-gray-500 rounded-md text-xl px-5 py-4 border border-transparent border-4  tracking-wide font-semibold"
 >
         Starta om
+    <img src="assets/layout/icons/repeat.svg" alt="" class="w-6 inline-block opacity-50">
 </button>

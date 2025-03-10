@@ -1,11 +1,16 @@
 .selected-game-slumpgenerator{
-    background-color: #010e38;
+    background-color: rgb(7, 24, 78);
     color: white;
-
+    -webkit-box-shadow: 10px 10px 0px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 0px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 0px 0px rgba(0,0,0,0.75);
 }
 
 .selected-game-dra-till-ratt, .selected-game-para-ihop, .selected-game-snurrhjul, .selected-game-bingo, .selected-game-vilket-ord, .selected-game-dra-till-rätt {
-    background-color: #010e38;
+    background-color: rgb(7, 24, 78);
     color: white;
+    -webkit-box-shadow: 10px 10px 0px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 0px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 0px 0px rgba(0,0,0,0.75);
 }
 
