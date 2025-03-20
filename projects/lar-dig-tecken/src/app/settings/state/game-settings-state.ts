@@ -12,8 +12,8 @@ const stateToken: StateToken<IGameSettingStateModel> = new StateToken<IGameSetti
     defaults: {
         numberOfOptions: 3,
         pairingMode: {
-            first: CardContent.WORD,
-            second: CardContent.WORD,
+            first: CardContent.RITADE_TECKEN,
+            second: CardContent.ILLUSTRATION,
         },
         subjectArea: SubjectArea.ESTETISK_VERKSAMHET,
         category: Category.BILDBEGREPP,
