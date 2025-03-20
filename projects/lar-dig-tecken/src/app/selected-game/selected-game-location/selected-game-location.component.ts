@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { UpdateSelectedGame } from '../state/selected-game-state-actions';
-import { SelectedGame } from '../api/selected-game';
-import { SelectedGameStateQueries } from '../state/selected-game-state-queries';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { UpdateSelectedGame } from '../state/selected-game-state-actions'; // Action to update the selected game
+import { SelectedGame } from '../api/selected-game'; // Enum for the selected game
+import { SelectedGameStateQueries } from '../state/selected-game-state-queries'; // Queries to retrieve selected game state
+
 
 @UntilDestroy
 @Component({
@@ -17,14 +18,17 @@ import { UntilDestroy } from '@ngneat/until-destroy';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectedGameLocationComponent implements OnInit {
+  // Selectors to retrieve selected game state
   public selectedGameCapitalized$: Observable<string> = this.store.select(SelectedGameStateQueries.capitalizedSelectedGame$);
   public selectedGameDataName$: Observable<string> = this.store.select(SelectedGameStateQueries.selectedGameDataName$);
 
+  // Constructor to inject the activated route and store
   constructor(
     private route: ActivatedRoute,
     private store: Store,
   ) {}
 
+  // Method to retrieve the selected game from the route
   public ngOnInit():void{
     this.route.paramMap.subscribe((params: ParamMap): void => {
       const selectedGameDataName: string | null = params.get("selected-game") as string;

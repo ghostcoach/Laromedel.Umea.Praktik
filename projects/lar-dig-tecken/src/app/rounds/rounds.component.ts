@@ -7,7 +7,7 @@ import { Component,Input } from '@angular/core';
   styleUrl: './rounds.component.scss'
 })
 export class RoundsComponent {
-@Input() round: number = 0;
+@Input() round: number = 0; // The current round from parent component
 
 get imageSrc():string {
   return this.round > 0 ? `/assets/layout/icons/star-filled.svg` : `/assets/layout/icons/star.svg`;
