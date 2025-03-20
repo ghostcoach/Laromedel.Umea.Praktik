@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import { StartButtonComponent } from '../../start-button/start-button.component'
 import { CardComponent } from '../../card/card.component';
 import { RoundsComponent } from '../../rounds/rounds.component';
-import { GameOverComponent } from '../../game-over/game-over.component';
+import { GameOverComponent } from '../../game/game-over/game-over.component';
 
 import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
 import { SlumpgeneratorService } from '../services/slumpgenerator.service';
