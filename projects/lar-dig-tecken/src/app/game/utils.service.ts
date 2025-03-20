@@ -210,13 +210,13 @@ export class UtilsService {
 
     // Method to flip cards  and reinitialize card states
     reinitializeAndFlipBack(): void {
-      
+      // Dispatch an action to update the FlippedState
       this.store.dispatch(new UpdateFlippedState({ flippedClass: 'flipped' }));
       setTimeout(() => {
-        this.reinitializeCardStates();
+        this.reinitializeCardStates(); // Reinitialize the card states
       }
       , 1200);
-    
+      // Dispatch an action to update the FlippedState after delay
       setTimeout(() => {
         this.store.dispatch(new UpdateFlippedState({ flippedClass: 'not-flipped' }));
       }, 1400);
@@ -232,11 +232,11 @@ export class UtilsService {
             takeUntil(this.destroy$) // Automatically unsubscribe on service destruction
           )
           .subscribe(() => {
-            
+            // Reinitialize the game if it has started
             if (this.gameStartedSubject.value) {
-              this.reinitializeAndFlipBack();
-              this.store.dispatch(new ResetCurrentRound());
-              this.store.dispatch(new UpdateCurrentRound());
+              this.reinitializeAndFlipBack(); // Flip back the cards and reinitialize and flip back
+              this.store.dispatch(new ResetCurrentRound()); // Reset the current round
+              this.store.dispatch(new UpdateCurrentRound()); // Set current round to 1
             }
             
           });

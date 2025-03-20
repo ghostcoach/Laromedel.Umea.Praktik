@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, combineLatest } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-
-//States
+// States
 import { GameSettingsState } from '../../settings/state/game-settings-state';
 import { ICardFullStateModel } from '../state/api/card-interface';
-
-//Queries
+// Queries
 import { CardStateQueries } from '../state/card.queries';
 
 @Injectable({
@@ -54,7 +52,6 @@ export class CardUtilsService {
     pairingModeFirst: string, 
     pairingModeSecond: string
   ): ICardFullStateModel[] {
-     console.log('this function workds');
      
     // Step 1: Select `numberOfOptions` unique words randomly
     const selectedWords: string[] = this.getRandomUniqueWords(words, numberOfOptions);
