@@ -2,7 +2,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 // Services
-import { AudioService } from '../../game/audio/audio.service';
 import { CardUtilsService } from '../../card/service/card-utils.service';
 import { UtilsService } from '../../game/utils.service';
 // States
@@ -41,7 +40,6 @@ export class SlumpgeneratorService implements OnDestroy {
   // Constructor to inject the store, audio service, card utils service and utility service
   constructor(
     private store: Store, 
-    public audioService: AudioService, 
     private cardUtils: CardUtilsService,
     private utilsService: UtilsService
   ) {
@@ -119,7 +117,7 @@ export class SlumpgeneratorService implements OnDestroy {
         correctClass: 'incorrect-card' as 'incorrect-card' | 'correct-card' 
       }));
 
-      this.audioService.playIncorrectAudio();
+      this.cardUtils.playIncorrectAudio();
     }
 
   }
