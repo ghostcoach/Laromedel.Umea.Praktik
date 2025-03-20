@@ -4,7 +4,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable, distinctUntilChanged } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { StartButtonComponent } from '../../start-button/start-button.component'
+import { StartButtonComponent } from '../../game/start-button/start-button.component'
 import { CardComponent } from '../../card/card.component';
 import { RoundsComponent } from '../../rounds/rounds.component';
 import { GameOverComponent } from '../../game/game-over/game-over.component';

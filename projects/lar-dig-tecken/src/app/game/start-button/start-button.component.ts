@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { GameState } from '../game/state/game.state';
+import { GameState } from '../state/game.state';
 
 
 @Component({
