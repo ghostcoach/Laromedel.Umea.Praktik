@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { StartButtonComponent } from '../../game/start-button/start-button.component'
 import { CardComponent } from '../../card/card.component';
-import { RoundsComponent } from '../../rounds/rounds.component';
+import { RoundsComponent } from '../../game/rounds/rounds.component';
 import { GameOverComponent } from '../../game/game-over/game-over.component';
 
 import { GameSettingsStateQueries } from '../../settings/state/game-settings-queries';
