@@ -26,7 +26,7 @@ import { UtilsService } from '../../game/utils.service';
 })
 
 export class SlumpgeneratorLocationComponent implements OnInit{
-
+  // Selectors to retrieve the game settings and card states
   @Select(GameSettingsStateQueries.pairingModeFirstCard$) pairingModeFirst$!: Observable<string>;
   @Select(GameSettingsStateQueries.pairingModeSecondCard$) pairingModeSecond$!: Observable<string>;
   @Select(GameSettingsStateQueries.numberOfOptions$) numberOfOptions$!:Observable<number>
@@ -50,12 +50,12 @@ export class SlumpgeneratorLocationComponent implements OnInit{
     public utilsService: UtilsService
   ) {}
 
+
   ngOnInit():void {
-    
     this.cardStates$.pipe(
       distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
       map(cards => {
-
+        // Divide the cards into two arrays, one for firstCard and one for secondCards
         const newFirstCardState: ICardFullStateModel[] = cards.filter(card => card.mode === 'firstCard');
         const newSecondCardState: ICardFullStateModel[] = cards.filter(card => card.mode === 'secondCard');
     
@@ -72,7 +72,7 @@ export class SlumpgeneratorLocationComponent implements OnInit{
    
       })
       
-    ).subscribe(); // Don't forget to subscribe!
+    ).subscribe();
     
       
   }

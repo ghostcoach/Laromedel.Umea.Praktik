@@ -1,30 +1,34 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-
+// Services
 import { AudioService } from '../../game/audio/audio.service';
 import { CardUtilsService } from '../../card/service/card-utils.service';
-
+import { UtilsService } from '../../game/utils.service';
+// States
 import { CardStates } from '../../card/state/card.state';
+import { GameState } from '../../game/state/game.state';
+// Actions
 import { UpdateCard } from '../../card/state/card.actions';
-import { ICardFullStateModel } from '../../card/state/api/card-interface';
-
 import { UpdateFlippedState} from '../../card/state/flipped.actions';
 import { UpdateGameState, UpdateCurrentRound, ResetCurrentRound, UpdateGameOver, UpdateNumberOfGamesPlayed } from '../../game/state/game.actions';
-import { GameState } from '../../game/state/game.state';
+// Interfaces
+import { ICardFullStateModel } from '../../card/state/api/card-interface';
 
-import { UtilsService } from '../../game/utils.service';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class SlumpgeneratorService implements OnDestroy {
+  // Selectors to retrieve the current game settings and card states
   @Select(CardStates.getCardStates) cardStates$!: Observable<ICardFullStateModel[]>;
   @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
   @Select(GameState.getCurrentRound) currentRound$!: Observable<number>;
   @Select(GameState.getGameOver) gameOver$!: Observable<boolean>;
-
   private destroy$ = new Subject<void>();
+
+  // Subjects to emit values to subscribers
   private gameStartedSubject = new BehaviorSubject<boolean>(false);
   gameStarted = this.gameStartedSubject.asObservable();
   private currentRoundSubject = new BehaviorSubject<number>(0);
@@ -34,6 +38,7 @@ export class SlumpgeneratorService implements OnDestroy {
   
   currentRoundLessThanTotalRounds = true;
 
+  // Constructor to inject the store, audio service, card utils service and utility service
   constructor(
     private store: Store, 
     public audioService: AudioService, 
