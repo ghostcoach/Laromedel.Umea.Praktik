@@ -2,10 +2,15 @@ import { Observable } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { Action, State, StateContext, Store, NgxsOnInit, Selector, Select, Actions } from '@ngxs/store'
 import { Injectable } from '@angular/core';
+// Interfaces
 import { IMultipleFullStateModel, ICardFullStateModel } from './api/card-interface'
+// Actions
 import { UpdateAllCards, UpdateCard, InitializeCardStates, UpdateFlippedClass } from './card.actions'
+// States
 import { GameSettingsState } from '../../settings/state/game-settings-state';
+// Services
 import { CardUtilsService } from '../service/card-utils.service';
+// Categories
 import { Bildbegrepp, Instrument, Textilslojd, Traslojd } from '../../category/api/estetisk-verksamhet';
 import { Alfabetet, EnklaOrd, Kanslor, Skolord } from '../../category/api/kommunikation';
 import { Fordon, Frukt, GronsakerOchRotfrukter, Koksredskap, Livsmedel, Religion, Samhallet, Trafik } from '../../category/api/vardagsaktiviteter';
@@ -19,8 +24,9 @@ import { Antal, Djur, Klader, Kroppen, Lagesord, Pengar, Vardagsteknik, Vaxter }
       cardStates: [],
     },
   })
-export class CardStates implements NgxsOnInit {
 
+export class CardStates implements NgxsOnInit {
+    // Constructor to inject the store and card utility service
     constructor(private store: Store, private cardUtils: CardUtilsService, private actions$: Actions) {}
 
     // **Selectors for game settings**

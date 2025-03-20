@@ -2,8 +2,9 @@ import { Component, Input, Output, EventEmitter, ViewChild, QueryList,  ChangeDe
 import { CommonModule } from "@angular/common";
 import { Observable, Subscription } from 'rxjs';
 import { Select } from '@ngxs/store';
-import { CardContentComponent } from './card-content/card-content.component';
-import { ICardFullStateModel  } from './state/api/card-interface';
+import { CardContentComponent } from './card-content/card-content.component'; //Child component
+import { ICardFullStateModel  } from './state/api/card-interface'; //Interface
+//States
 import { FlippedState } from './state/flipped.state';
 import { GameState } from '../game/state/game.state';
 
@@ -15,13 +16,15 @@ import { GameState } from '../game/state/game.state';
   styleUrl: './card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CardComponent implements DoCheck, OnDestroy, OnInit {
 
-  @Output() cardClick = new EventEmitter<string>()
+export class CardComponent implements DoCheck, OnDestroy, OnInit {
+  @Input() cardData!: ICardFullStateModel;  // Inputs to determine the content of the card from parent component
+  @Output() cardClick = new EventEmitter<string>()  // Output to emit the word when the card is clicked
+  // ViewChild and ViewChildren to retrieve data from the child components
   @ViewChild(CardContentComponent) cardContent!: CardContentComponent;
-  @Input() cardData!: ICardFullStateModel;
   @ViewChildren('cardElement') cardElement!: QueryList<ElementRef>;
   @ViewChildren(CardContentComponent) cardContentComponent!: QueryList<CardContentComponent>;
+  // Selectors to retrieve the current flipped state and game state
   @Select(FlippedState.getFlippedClass) flippedClass$!: Observable<'flipped' | 'not-flipped'>;
   @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
   @Select(GameState.getCurrentRound) currentRound$!: Observable<number>;
@@ -40,18 +43,17 @@ export class CardComponent implements DoCheck, OnDestroy, OnInit {
 
   constructor(private cdr: ChangeDetectorRef) {}
 
+  // Play video only once when the game starts (currentRound === 0), the content is 'tecken-som-stod' and the mode is 'firstCard'
   ngOnInit(): void {
     this.currentRoundSub = this.currentRound$.subscribe((currentRound) => {
-
-      // Play video only once when the game starts (currentRound === 0)
       if (currentRound === 0 && this.cardData?.contentMedium === 'tecken-som-stod' && this.cardData?.mode === 'firstCard') {
         this.cardContent.playVideo();
       }
     });
   }
 
+  // DoCheck lifecycle hook to update the card data when the input changes
   ngDoCheck(): void {
-    
     if (this.cardData) {
       this.mode = this.cardData.mode;
       this.audioPath = this.cardData.audioPath;
@@ -74,11 +76,12 @@ export class CardComponent implements DoCheck, OnDestroy, OnInit {
     }
   }
 
-
+  // Function to emit the word when the card is clicked
   onCardClick(): void {
     this.cardClick.emit(this.word);   
   }
   
+  // Function to play audio of chosen card
   playAudio(): void {
     if (this.audioPath) {
       const audio: HTMLAudioElement = new Audio(this.audioPath);
@@ -86,6 +89,7 @@ export class CardComponent implements DoCheck, OnDestroy, OnInit {
     }
   }
 
+  // Function to play video of chosen card
   playVideo(): void {
     if (this.cardContent) {
       this.cardContent.playVideo();
@@ -94,6 +98,7 @@ export class CardComponent implements DoCheck, OnDestroy, OnInit {
     }
   }
 
+  // Function to handle keydown event for accessibility
   handleKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Enter') {
       event.preventDefault();

@@ -1,14 +1,3 @@
-// export interface ICardStateModel {
-//     isFlipped: boolean,
-//     isSelected: boolean,
-//     isCorrect: boolean
-// }
-
-// export interface IMultipleCardStatesModel {
-//     cardStates: ICardStateModel[];
-//   }
-  
-
 export interface ICardFullStateModel {
     mode: "firstCard" | "secondCard" | "", //firstCard or secondCard ---> retrieved in card.component
     contentMedium: string, //category ---> retrieved in card.component
