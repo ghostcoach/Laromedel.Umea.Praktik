@@ -2,19 +2,20 @@ import { Injectable } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, combineLatest } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+
+//States
 import { GameSettingsState } from '../../settings/state/game-settings-state';
 import { ICardFullStateModel } from '../state/api/card-interface';
+
+//Queries
 import { CardStateQueries } from '../state/card.queries';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class CardUtilsService {
-  // @Select(GameSettingsStateQueries.pairingModeFirstCard$) pairingModeFirst$!: Observable<string>;
-  // @Select(GameSettingsStateQueries.pairingModeSecondCard$) pairingModeSecond$!: Observable<string>;
-  // @Select(GameSettingsStateQueries.numberOfOptions$) numberOfOptions$!:Observable<number>
-  // @Select(GameSettingsStateQueries.numberOfRounds$) numberOfRounds$!:Observable<number>
-  // @Select(GameSettingsStateQueries.category$) category$!:Observable<string>
+  // Selectors to retrieve the current game settings and card states
   @Select(GameSettingsState.getNumberOfOptions) numberOfOptions$!: Observable<number>;
   @Select(GameSettingsState.getCategory) category$!: Observable<string>;
   @Select(GameSettingsState.getFirstPairingMode) pairingModeFirst$!: Observable<string>;
@@ -33,6 +34,7 @@ export class CardUtilsService {
   audio: HTMLAudioElement | null = null;
   audioIndex = 0; // Keep track of which audio to play next
 
+  // Constructor to subscribe to the game settings and card states
   constructor(private store: Store) {
     combineLatest([
       this.numberOfOptions$, 
@@ -42,15 +44,6 @@ export class CardUtilsService {
     .pipe(debounceTime(100)) // ✅ Prevents rapid multiple updates
     .subscribe(() => {});
    }
-
- 
-   // Function to shuffle an array
-   shuffleArray<T>(array: T[]): T[] {
-    return array
-      .map(value => ({ value, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ value }) => value);
-  }
 
   // Function to initialize words before game has started and set initial card states
   initializeCardStates(
@@ -75,6 +68,7 @@ export class CardUtilsService {
     // Step 4: Insert the duplicate at index 0
     this.shuffledWords = [wordToDuplicate, ...shuffledSelectedWords];
     
+    // Step 5: Create the card states
     return this.shuffledWords.map((word, index) => ({
       mode: index === 0 ? 'firstCard' : 'secondCard', 
       contentMedium: index === 0 ? this.formatString(pairingModeFirst) : this.formatString(pairingModeSecond),
@@ -88,7 +82,7 @@ export class CardUtilsService {
   }
 
   // Helper function to retrieve a specified number of unique random words
- getRandomUniqueWords(words: string[], numberOfOptions: number): string[] {
+  getRandomUniqueWords(words: string[], numberOfOptions: number): string[] {
     numberOfOptions = Math.min(numberOfOptions, words.length);  
     const selectedWords: string[] = [];
     const uniqueWordsSet: Set<string> = new Set<string>();
@@ -106,7 +100,7 @@ export class CardUtilsService {
   } 
 
   //AUDIO FUNCTIONS
-
+  // Function to get the audio path
   getAudioPath(subjectArea: string, category: string, word: string): string {
     const normalizedWord: string = this.normalizeCharacters(word);
     const formattedSubjectArea: string = this.formatString(subjectArea);
@@ -114,11 +108,12 @@ export class CardUtilsService {
     return `/assets/subject-area/${formattedSubjectArea}/${formattedCategory}/audio/${normalizedWord}.mp3`;
   }
 
+  // Function to get the media path
   getMediaPath(subjectArea: string, category: string, contentMedium: string, word: string): string {
-    
-    const normalizedWord: string = this.normalizeCharacters(word);
-    const formattedSubjectArea: string = this.formatString(subjectArea);
-    const formattedCategory: string = this.formatString(category);
+    const normalizedWord: string = this.normalizeCharacters(word); // Normalize the word
+    const formattedSubjectArea: string = this.formatString(subjectArea); // Format the subject area
+    const formattedCategory: string = this.formatString(category); // Format the category
+
     if (category === 'alfabetet'){
       if (contentMedium === 'ord') {
         return word;
@@ -146,6 +141,7 @@ export class CardUtilsService {
     }
   }
 
+  // Function to play and loop through the audio when incorrect card is selected
   playIncorrectAudio(): void {
     if (this.audio) {
       this.audio.pause();
@@ -160,6 +156,16 @@ export class CardUtilsService {
   }
 
   //HELPER FUNCTIONS
+
+  // Function to shuffle an array
+  shuffleArray<T>(array: T[]): T[] {
+    return array
+      .map(value => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+  }
+
+  // Function to nomalize characters
   normalizeCharacters(input: string): string {
     return input
       .replace(/ä/g, 'a')
@@ -167,6 +173,7 @@ export class CardUtilsService {
       .replace(/ö/g, 'o');
   }
 
+  // Function to remove special characters and format the string
   formatString(input: string):string {
     return input
       .toLowerCase()        // Convert to lowercase
