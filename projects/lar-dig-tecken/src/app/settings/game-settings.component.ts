@@ -3,8 +3,17 @@ import { CommonModule } from '@angular/common';
 import { UntilDestroy } from "@ngneat/until-destroy";
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
-import { GameSettingsStateQueries } from '../settings/state/game-settings-queries'
-import { UpdateFirstPairingMode, UpdateSecondPairingMode, UpdateCategory, UpdateSubjectArea, UpdateNumberOfOptions, UpdateNumberOfRounds } from '../settings/state/game-settings-actions';
+import { GameSettingsStateQueries } from '../settings/state/game-settings-queries'// Queries
+// Actions
+import { 
+  UpdateFirstPairingMode, 
+  UpdateSecondPairingMode, 
+  UpdateCategory, 
+  UpdateSubjectArea, 
+  UpdateNumberOfOptions, 
+  UpdateNumberOfRounds 
+} from '../settings/state/game-settings-actions';
+//Interfaces
 import { CardContent } from '@games/card-content'
 import { Category, SubjectArea } from "../category/api/category"
 
@@ -17,9 +26,10 @@ import { Category, SubjectArea } from "../category/api/category"
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameSettingsComponent{
-  @Output() settingSelected = new EventEmitter<string>();
+  @Output() settingSelected = new EventEmitter<string>(); // Output to parent component
   SubjectArea = SubjectArea;
 
+  // Constructor to inject the store and element reference
   constructor(private store: Store, private eRef: ElementRef){}
 
   public firstCardOptions: CardContent[] = [
@@ -105,6 +115,7 @@ export class GameSettingsComponent{
   public isVardagsaktivitetDropdownOpen = false;
   public isVerklighetsuppfattningDropdownOpen = false;
 
+  // Selectors to retrieve the current game settings to apply different css for user to know which options is selected
   public pairingModeFirstCard$: Observable<string> = this.store.select(GameSettingsStateQueries.pairingModeFirstCard$);
   public pairingModeSecondCard$: Observable<string> = this.store.select(GameSettingsStateQueries.pairingModeSecondCard$);
   public subjectArea$: Observable<string> = this.store.select(GameSettingsStateQueries.subjectArea$);
@@ -115,8 +126,7 @@ export class GameSettingsComponent{
   buttonImg = '';
   arrowImg = 'assets/layout/icons/arrow-down.svg';
 
-
-
+  // Function to toggle the main settings dropdown
   toggleDropdown() : void {
     this.isDropdownOpen = !this.isDropdownOpen;
     if(this.isDropdownOpen){
@@ -126,6 +136,7 @@ export class GameSettingsComponent{
     }
   }
 
+  // Function to close the dropdown when clicking or tabbing outside
   @HostListener('document:click', ['$event'])
   clickOutside(event: Event) : void {
     if (this.isDropdownOpen && !this.eRef.nativeElement.contains(event.target)) {
@@ -134,6 +145,7 @@ export class GameSettingsComponent{
     }
   }
 
+  // Function to toggle different settings dropdowns
   toggleSettingOptionsDropdown(type: 'firstCard' | 'secondCard' | 'subjectArea' | 'category' | 'rounds' | 'options') : void {
     if (type === 'firstCard'){
       this.isFirstCardSettingsDropdownOpen = !this.isFirstCardSettingsDropdownOpen;
@@ -191,7 +203,7 @@ export class GameSettingsComponent{
       }
     }
   }
-
+  // Function to toggle different subject area dropdowns
   toggleSubjectAreaDropdown(type: 'estetisk verksamhet' | 'kommunikation' | 'motorik' | 'vardagsaktivitet' | 'verklighetsuppfattning') : void {
     if (type === 'estetisk verksamhet')
      this.isEstetiskVerksamhetDropdownOpen = !this.isEstetiskVerksamhetDropdownOpen;
@@ -235,6 +247,7 @@ export class GameSettingsComponent{
       }
   }
 
+  //
   updateFirstPairingMode(option: CardContent): void {
     this.store.dispatch(new UpdateFirstPairingMode(option));
   }
@@ -243,13 +256,9 @@ export class GameSettingsComponent{
     this.store.dispatch(new UpdateSecondPairingMode(option));
   }
 
-  updateSubjectArea(option: SubjectArea): void {
-    this.store.dispatch(new UpdateSubjectArea(option));
-  }
-
   updateCategory(option: Category, subjectArea: SubjectArea): void {
     this.store.dispatch(new UpdateCategory(option));
-    this.store.dispatch(new UpdateSubjectArea(subjectArea));
+    this.store.dispatch(new UpdateSubjectArea(subjectArea)); //Updates subject area based on category
   }
 
   updateNumberOfOptions(option: number): void {
