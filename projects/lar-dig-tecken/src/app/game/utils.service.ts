@@ -1,26 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { UpdateGameState, UpdateGameOver, UpdateCurrentRound, ResetCurrentRound } from './state/game.actions';
-import { UpdateFlippedState } from '../card/state/flipped.actions';
+import { Store, Select } from '@ngxs/store';
+import { Observable, BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { map, debounceTime, takeUntil } from 'rxjs/operators';
+
+//Categories
 import { Bildbegrepp, Instrument, Textilslojd, Traslojd } from '../category/api/estetisk-verksamhet';
 import { Alfabetet, EnklaOrd, Kanslor, Skolord } from '../category/api/kommunikation';
 import { Fordon, Frukt, GronsakerOchRotfrukter, Koksredskap, Livsmedel, Religion, Samhallet, Trafik } from '../category/api/vardagsaktiviteter';
 import { Idrottshall, Rorselse, Sport, Vattensakerhet } from '../category/api/motorik';
 import { Antal, Djur, Klader, Kroppen, Lagesord, Pengar, Vardagsteknik, Vaxter } from '../category/api/verklighetsuppfattning';
-import { GameSettingsState } from '../settings/state/game-settings-state';
-import { Select } from '@ngxs/store';
-import { CardUtilsService } from '../card/service/card-utils.service';
+
+//Actions
 import { InitializeCardStates } from '../card/state/card.actions';
-import { Observable, BehaviorSubject, combineLatest, Subject } from 'rxjs';
-import { map, debounceTime, takeUntil } from 'rxjs/operators';
+import { UpdateGameState, UpdateGameOver, UpdateCurrentRound, ResetCurrentRound } from './state/game.actions';
+import { UpdateFlippedState } from '../card/state/flipped.actions';
+
+//States
+import { GameSettingsState } from '../settings/state/game-settings-state';
 import { ICardFullStateModel } from '../card/state/api/card-interface';
 import { GameState } from '../game/state/game.state';
+
+//Services
+import { CardUtilsService } from '../card/service/card-utils.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
+  //Observables to get the current state
   @Select(GameSettingsState.getCategory) category$!: Observable<string>;
   @Select(GameSettingsState.getNumberOfRounds) numberOfRounds$!: Observable<number>;
   @Select(GameSettingsState.getNumberOfOptions) numberOfOptions$!: Observable<number>;
@@ -30,22 +38,25 @@ export class UtilsService {
   @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
   @Select(GameState.getCurrentRound) currentRound$!: Observable<number>;
 
+  // Unsubscribe from all observables when the service is destroyed
   private destroy$ = new Subject<void>();
   
-  // These are your original observables
-  private proceedToNextRound$ = new BehaviorSubject<boolean>(false);
-  private gameStartedSubject = new BehaviorSubject<boolean>(false);
+  // BehaviorSubject to control the boolean value
+  private proceedToNextRound$ = new BehaviorSubject<boolean>(false); // Boolean value to keep track if game can proceed to next round, to be used in slumpgenerator.service.ts
+  private gameStartedSubject = new BehaviorSubject<boolean>(false); // Boolean value to keep track if game has started, to be used in slumpgenerator.service.ts
   gameStarted = this.gameStartedSubject.asObservable();
 
-  // Expose this as an observable
+  // Expose this as an observable so that slumpgenerator.service.ts can subscribe to it
   proceedToNextRoundObservable$ = this.proceedToNextRound$.asObservable();
 
+  // Function to check if the current round is less than the number of rounds
   currentRoundLessThanNumberOfRounds(): Observable<boolean> {
     return combineLatest([this.currentRound$, this.numberOfRounds$]).pipe(
       map(([currentRound, numberOfRounds]) => currentRound < numberOfRounds)
     );
   }
 
+  // Constructor to inject the store and the card utility service
   constructor(private store: Store, private cardUtils: CardUtilsService) {
     // Automatically update the boolean whenever currentRound$ or numberOfRounds$ changes
     combineLatest([this.currentRound$, this.numberOfRounds$])
@@ -63,38 +74,36 @@ export class UtilsService {
   }
 
   // Function to start the game
-    startGame(): void {
-      this.store.dispatch(new UpdateGameState(true));
-      this.store.dispatch(new UpdateCurrentRound());
-      this.store.dispatch(new UpdateGameOver(false));
+  startGame(): void {
+    this.store.dispatch(new UpdateGameState(true)); // Dispatch an action to update the game state
+    this.store.dispatch(new UpdateCurrentRound()); // Dispatch an action to update the current round
+    this.store.dispatch(new UpdateGameOver(false)); // Dispatch an action to update the game over state
   
-      setTimeout(() => {
-        // Dispatch an action to update the FlippedState
-        this.store.dispatch(new UpdateFlippedState({ flippedClass: 'not-flipped' }));
-        
+    setTimeout(() => {
+      // Dispatch an action to update the FlippedState after delay
+      this.store.dispatch(new UpdateFlippedState({ flippedClass: 'not-flipped' }));
       }, 500);
-      
-      
-    }
+  }
 
-     // Method to initialize card states
-     reinitializeCardStates(): void {
-      
-      let selectedCategoryWords: string[] = [];
-      switch (this.store.selectSnapshot(GameSettingsState.getCategory)) {
-          //Bildbegrepp
-          case 'bildbegrepp':
-            selectedCategoryWords = Object.values(Bildbegrepp);
+  // Method to re-initialize card states
+  reinitializeCardStates(): void {
+    let selectedCategoryWords: string[] = [];
+
+    //Check the selected category from state and fetch the words accordingly
+    switch (this.store.selectSnapshot(GameSettingsState.getCategory)) {
+        //Bildbegrepp
+        case 'bildbegrepp':
+          selectedCategoryWords = Object.values(Bildbegrepp);
+          break;
+        case 'instrument':
+            selectedCategoryWords = Object.values(Instrument);
             break;
-          case 'instrument':
-              selectedCategoryWords = Object.values(Instrument);
-              break;
-          case 'textilslöjd':
-              selectedCategoryWords = Object.values(Textilslojd);
-              break;
-          case 'traslöjd':
-              selectedCategoryWords = Object.values(Traslojd);
-              break;
+        case 'textilslöjd':
+            selectedCategoryWords = Object.values(Textilslojd);
+            break;
+        case 'traslöjd':
+            selectedCategoryWords = Object.values(Traslojd);
+            break;
         //Kommunikation
         case 'alfabetet':
             selectedCategoryWords = Object.values(Alfabetet);
@@ -176,6 +185,7 @@ export class UtilsService {
             break;
       }
       
+      // Fetch the game settings from the settings state
       const numberOfOptions: number = this.store.selectSnapshot(GameSettingsState.getNumberOfOptions);
       const subjectArea: string = this.store.selectSnapshot(GameSettingsState.getSubjectArea);
       const category: string = this.store.selectSnapshot(GameSettingsState.getCategory);
@@ -198,6 +208,7 @@ export class UtilsService {
     
     }
 
+    // Method to flip cards  and reinitialize card states
     reinitializeAndFlipBack(): void {
       
       this.store.dispatch(new UpdateFlippedState({ flippedClass: 'flipped' }));
@@ -212,7 +223,9 @@ export class UtilsService {
   
     }
 
+    // Method to re-initialize the game on settings change
     initializeGameOnSettingsChange(): void {
+       //Subscribe to the observables to know when state changes and reinitialize the game
         combineLatest([this.numberOfOptions$, this.numberOfRounds$, this.category$, this.pairingModeFirst$, this.pairingModeSecond$])
           .pipe(
             debounceTime(100), // Prevent rapid consecutive updates
@@ -224,7 +237,6 @@ export class UtilsService {
               this.reinitializeAndFlipBack();
               this.store.dispatch(new ResetCurrentRound());
               this.store.dispatch(new UpdateCurrentRound());
-              
             }
             
           });
