@@ -1,19 +1,21 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from "@angular/core";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {GameSettingsComponent} from '../settings/game-settings.component'
-import {IGameSettingStateModel} from "../settings/state/api/game-settings-state-model";
-import {CardContent} from '@games/card-content'
-import {Category, SubjectArea} from '../category/api/category'
-import {RouterOutlet, Router, NavigationEnd, RouterLink} from "@angular/router";
-import {SelectedGameLinkComponent} from  "./selected-game-link/selected-game-link.component";
-import { SelectedGame } from "../selected-game/api/selected-game";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { RouterOutlet, Router, NavigationEnd, RouterLink } from "@angular/router";
 import { NgIf, CommonModule} from "@angular/common";
-import {filter} from "rxjs/operators";
-import { GameState } from "../game/state/game.state";
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { filter } from "rxjs/operators";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+// Components
+import { GameSettingsComponent } from '../settings/game-settings.component'
+import { SelectedGameLinkComponent } from  "./selected-game-link/selected-game-link.component";
+// Interfaces
+import { SelectedGame } from "../selected-game/api/selected-game";
+// States
+import { GameState } from "../game/state/game.state";
+// Actions
 import { UpdateGameOver, UpdateGameState, ResetNumberOfGamesPlayed, ResetCurrentRound } from "../game/state/game.actions";
 import { UpdateFlippedState } from "../card/state/flipped.actions";
+// Services
 import { UtilsService } from "../game/utils.service";
 
 @UntilDestroy()
@@ -25,13 +27,15 @@ import { UtilsService } from "../game/utils.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeLocationComponent implements OnInit {
+  // Selectors to retrieve state if the game has started
   @Select(GameState.getGameState) gameStarted$!: Observable<boolean>;
 
-  public selectedGameEnum = SelectedGame;
-  currentPath: string = '';
-  isHomeVisible: boolean = false;
-  arrowImg = 'assets/layout/icons/arrow-down.svg';
+  public selectedGameEnum = SelectedGame; // Enum for the selected game
+  currentPath: string = ''; // Current path of the application
+  isHomeVisible: boolean = false; // Flag to determine if the home button should be visible
+  arrowImg = 'assets/layout/icons/arrow-down.svg'; //dropdown arrow image
 
+  // Constructor to inject the router, change detector, store and utility service
   constructor(private router: Router, private cdr: ChangeDetectorRef, public store: Store, private utilsService: UtilsService){}
 
   ngOnInit(): void {
@@ -51,21 +55,12 @@ export class HomeLocationComponent implements OnInit {
     this.updateHomeVisibility()
   }
 
+  // Getter to retrieve the selected games
   get selectedGameKeys() : (keyof typeof SelectedGame)[] {
     return Object.keys(this.selectedGameEnum) as (keyof typeof SelectedGame)[];
   }
 
-  currentGameSettings: IGameSettingStateModel = {
-    numberOfOptions: 3,
-    pairingMode: {
-      first: CardContent.ILLUSTRATION,
-      second: CardContent.RITADE_TECKEN
-    },
-    subjectArea: SubjectArea.ALLA,
-    category: Category.ALLA,
-    numberOfRounds: 5
-  }
-
+  // Function to update the visibility of the home button
   updateHomeVisibility(): void {
     // Determine if the current path is the home page
     this.isHomeVisible = this.currentPath === '/';
@@ -75,8 +70,7 @@ export class HomeLocationComponent implements OnInit {
   }
 
   onHomeClick(): void {
-    // Reset the game state
-
+    // Reset the game state and reinitialize the card states
     this.store.dispatch([
       new ResetCurrentRound(),
       new UpdateGameOver(false),

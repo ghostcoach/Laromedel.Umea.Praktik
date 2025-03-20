@@ -1,7 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ElementRef, HostListener} from '@angular/core';
+import { Component, ChangeDetectionStrategy, Output, EventEmitter, ElementRef, HostListener} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UntilDestroy } from "@ngneat/until-destroy";
-import { IGameSettingStateModel } from '../settings/state/api/game-settings-state-model';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { GameSettingsStateQueries } from '../settings/state/game-settings-queries'
@@ -18,7 +17,6 @@ import { Category, SubjectArea } from "../category/api/category"
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameSettingsComponent{
-  @Input() gameSettings: IGameSettingStateModel;
   @Output() settingSelected = new EventEmitter<string>();
   SubjectArea = SubjectArea;
 
