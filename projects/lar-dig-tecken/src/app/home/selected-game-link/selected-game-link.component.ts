@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, Component, Input, Type} from "@angular/core";
-import {ActivatedRoute, ParamMap} from "@angular/router";
-import { SlumpgeneratorLocationComponent } from "../../slumpgenerator/slumpgenerator-location/slumpgenerator-location.component";
-import {UntilDestroy} from "@ngneat/until-destroy";
-import {CommonModule, NgClass} from "@angular/common";
-import {CapitalizePipe} from "@utility/capitalize.pipe";
-import {RouterLink} from "@angular/router";
+import { ChangeDetectionStrategy, Component, Input, Type, OnInit } from "@angular/core";
+import { ActivatedRoute, ParamMap, RouterLink } from "@angular/router";
+import { UntilDestroy } from "@ngneat/until-destroy";
+import { CommonModule, NgClass } from "@angular/common";
+import { CapitalizePipe } from "@utility/capitalize.pipe";
 import { SelectedGame } from "../../selected-game/api/selected-game";
+import { SlumpgeneratorLocationComponent } from "../../slumpgenerator/slumpgenerator-location/slumpgenerator-location.component";
+
 
 @UntilDestroy()
 @Component({
@@ -16,10 +16,11 @@ import { SelectedGame } from "../../selected-game/api/selected-game";
   styleUrl: './selected-game-link.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SelectedGameLinkComponent {
-  @Input() selectedGameEnum!: typeof SelectedGame;
-  @Input() selectedGameKeys!:  (keyof typeof SelectedGame)[];
-  @Input() isHomeVisible: boolean;
+export class SelectedGameLinkComponent implements OnInit {
+   // Inputs from parent component
+  @Input() selectedGameEnum!: typeof SelectedGame; // Enum for the selected game
+  @Input() selectedGameKeys!:  (keyof typeof SelectedGame)[]; // Selected game keys
+  @Input() isHomeVisible: boolean; // Flag to determine if the home button should be visible
   
   public dynamicContent: Type<string>
   currentRoute: string;
@@ -42,10 +43,6 @@ export class SelectedGameLinkComponent {
     });
 
   }
-
-  // public get selectedGameDataName(): string {
-  //   return this.selectedGame ? this.selectedGame.replace(/\s/g, "-").toLowerCase() : '';
-  // }
   
   public getSelectedGameDataName(key: keyof typeof SelectedGame): string {
     return this.selectedGameEnum[key].replace(/\s/g, "-").toLowerCase();
