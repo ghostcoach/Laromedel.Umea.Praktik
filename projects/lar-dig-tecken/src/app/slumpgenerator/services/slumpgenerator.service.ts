@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 
-import { AudioService } from '../../services/audio/audio.service';
+import { AudioService } from '../../game/audio/audio.service';
 import { CardUtilsService } from '../../card/service/card-utils.service';
 
 import { CardStates } from '../../card/state/card.state';
